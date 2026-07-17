@@ -22,7 +22,7 @@ const YEAR: Record<string, string> = {
 };
 
 /**
- * Juba work row: category·year | doubled title | 3 metrics | →
+ * Work row: category·year | doubled title | 3 metrics | →
  * Sibling dim + mint tint handled by parent `.work-list:hover` CSS.
  */
 export function CaseStudyCard({ study, className }: Props) {
@@ -69,16 +69,16 @@ export function CaseStudyCard({ study, className }: Props) {
         </div>
 
         <div className="flex shrink-0 items-start gap-6 md:gap-10">
-          <dl className="grid grid-cols-3 gap-4 sm:gap-6 md:w-[14rem] md:grid-cols-1 md:gap-4 md:text-right">
+          <dl className="flex flex-row gap-6 text-right">
             {study.metrics.slice(0, 3).map((metric) => (
               <div key={metric.label}>
                 <dd
                   data-metric-value
-                  className="font-mono-data text-lg tracking-tight text-ink md:text-xl"
+                  className="font-mono-data text-[18px] font-semibold tracking-tight text-ink"
                 >
                   {metric.value}
                 </dd>
-                <dt className="mt-1 font-mono-data text-[9px] uppercase tracking-[0.16em] text-muted">
+                <dt className="mt-1 font-mono-data text-[10px] font-normal uppercase tracking-[0.1em] text-muted">
                   {metric.label}
                 </dt>
               </div>

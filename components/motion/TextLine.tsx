@@ -15,7 +15,7 @@ type Props = {
 };
 
 /**
- * Overflow-hidden wrapper: child rises from below (Juba line reveal).
+ * Overflow-hidden wrapper: child rises from below (editorial line reveal).
  * Line-level only — not per-character.
  */
 export function TextLine({

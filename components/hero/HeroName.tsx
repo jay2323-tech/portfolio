@@ -159,7 +159,7 @@ function ProximityLine({ text, className, mouse, reduce }: LineProps) {
 }
 
 /**
- * Juba name stack — GSAP owns entrance; Framer proximity on hover.
+ * Name stack — GSAP owns entrance; Framer proximity on hover.
  */
 export function HeroName({
   first,
@@ -197,13 +197,13 @@ export function HeroName({
       >
         <ProximityLine
           text={first}
-          className="block text-[clamp(3.5rem,10vw,7rem)] font-normal leading-[0.9] text-ink"
+          className="block whitespace-nowrap text-[clamp(2.75rem,7.5vw,5.5rem)] font-normal leading-[0.9] text-ink"
           mouse={mouse}
           reduce={reduce}
         />
         <ProximityLine
           text={`${lastText}.`}
-          className="block text-[clamp(4rem,12vw,9rem)] font-bold leading-[0.88] text-mint-deep"
+          className="block whitespace-nowrap text-[clamp(3rem,9vw,7rem)] font-bold leading-[0.88] text-mint-deep"
           mouse={mouse}
           reduce={reduce}
         />

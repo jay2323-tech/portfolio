@@ -6,7 +6,6 @@ import { useReducedMotion } from "framer-motion";
 import entries from "@/content/build-log/entries.json";
 import { SectionHeader } from "@/components/chrome/SectionHeader";
 import { gsap, registerGsap, ScrollTrigger } from "@/lib/gsap/setup";
-import { cn } from "@/lib/utils";
 
 type Entry = {
   date: string;
@@ -28,11 +27,11 @@ function estimateRead(body: string) {
 }
 
 function titleFromBody(body: string) {
-  return body.length > 90 ? `${body.slice(0, 90).trim()}…` : body;
+  return body.length > 56 ? `${body.slice(0, 56).trim()}…` : body;
 }
 
 /**
- * Juba Recent Articles — section marquee title + mint L→R swipe rows.
+ * Recent Articles — section marquee title + tint/sibling-dim rows.
  */
 export function ArticlesSection() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -109,7 +108,7 @@ export function ArticlesSection() {
         headingId="articles-heading"
       />
 
-      <ul className="mt-10 md:mt-14">
+      <ul className="article-list mt-10 md:mt-14">
         {items.map((entry, i) => {
           const n = String(i + 1).padStart(3, "0");
           const title = titleFromBody(entry.body);
@@ -117,74 +116,52 @@ export function ArticlesSection() {
             <li
               key={`${entry.date}-${entry.tag ?? i}`}
               data-article-row
-              className="border-t border-ink/10 last:border-b"
+              className="article-row border-t border-ink/10 transition-[background-color,opacity] duration-250 ease-out last:border-b"
             >
               <Link
                 href="#articles"
-                className={cn(
-                  "article-row-swipe group block outline-none",
-                  "text-ink",
-                )}
+                className="group block text-ink outline-none"
               >
-                <div className="section-pad mx-auto grid max-w-[var(--content-max)] gap-3 py-8 sm:grid-cols-[4.5rem_1fr_auto] sm:items-start sm:gap-8 sm:py-10">
-                <span
-                  className={cn(
-                    "font-mono-data text-xs tracking-[0.12em] text-muted",
-                    "transition-colors duration-500 delay-100 ease-out motion-reduce:transition-none motion-reduce:delay-0",
-                    "group-hover:text-ink group-focus-visible:text-ink",
-                  )}
-                >
-                  {n}
-                </span>
+                <div className="section-pad mx-auto grid max-w-[var(--content-max)] gap-3 py-6 sm:grid-cols-[2.5rem_1fr_auto] sm:items-center sm:gap-6">
+                  <span className="min-w-[40px] font-mono-data text-xs tracking-[0.12em] text-muted">
+                    {n}
+                  </span>
 
-                <div className="min-w-0">
-                  <div
-                    className={cn(
-                      "flex flex-wrap items-center gap-x-3 gap-y-1 font-mono-data text-[10px] uppercase tracking-[0.14em] text-muted",
-                      "transition-colors duration-500 delay-100 ease-out motion-reduce:transition-none motion-reduce:delay-0",
-                      "group-hover:text-ink group-focus-visible:text-ink",
-                    )}
-                  >
-                    <time dateTime={entry.date}>{formatDate(entry.date)}</time>
-                    {entry.tag ? (
-                      <>
-                        <span className="opacity-40" aria-hidden>
-                          ·
-                        </span>
-                        <span>{entry.tag}</span>
-                      </>
-                    ) : null}
-                    <span className="opacity-40" aria-hidden>
-                      ·
-                    </span>
-                    <span>{estimateRead(entry.body)}</span>
+                  <div className="min-w-0">
+                    <div className="hidden items-center gap-x-3 font-mono-data text-[10px] uppercase tracking-[0.14em] text-muted sm:flex">
+                      <time dateTime={entry.date}>{formatDate(entry.date)}</time>
+                      {entry.tag ? (
+                        <>
+                          <span className="opacity-40" aria-hidden>
+                            ·
+                          </span>
+                          <span>{entry.tag}</span>
+                        </>
+                      ) : null}
+                      <span className="opacity-40" aria-hidden>
+                        ·
+                      </span>
+                      <span>{estimateRead(entry.body)}</span>
+                    </div>
+
+                    <h3 className="font-display mt-2 text-[clamp(1.25rem,2.6vw,1.85rem)] leading-[0.95] tracking-tight text-ink">
+                      <span className="relative z-[1] block">{title}</span>
+                      <span
+                        className="pointer-events-none -mt-[0.42em] block select-none text-ink/[0.12]"
+                        aria-hidden
+                      >
+                        {title}
+                      </span>
+                    </h3>
+
+                    <p className="mt-2 max-w-xl truncate text-sm text-muted">
+                      {entry.body}
+                    </p>
                   </div>
 
-                  <h3
-                    className={cn(
-                      "font-display mt-3 text-[clamp(1.5rem,3vw,2.25rem)] leading-[0.9] tracking-tight text-ink",
-                      "transition-colors duration-500 delay-100 ease-out motion-reduce:transition-none motion-reduce:delay-0",
-                    )}
-                  >
-                    <span className="relative z-[1] block">{title}</span>
-                    <span
-                      className="pointer-events-none -mt-[0.42em] block select-none text-ink/[0.12]"
-                      aria-hidden
-                    >
-                      {title}
-                    </span>
-                  </h3>
-                </div>
-
-                <span
-                  className={cn(
-                    "font-mono-data text-[11px] tracking-[0.14em] text-accent-clay sm:pt-1",
-                    "transition-colors duration-500 delay-100 ease-out motion-reduce:transition-none motion-reduce:delay-0",
-                    "group-hover:text-ink group-focus-visible:text-ink inline-block transition-transform duration-250 group-hover:translate-x-1",
-                  )}
-                >
-                  READ →
-                </span>
+                  <span className="work-row-arrow font-mono-data text-[11px] tracking-[0.14em] text-accent-clay transition-transform duration-250 ease-out group-hover:translate-x-1">
+                    READ →
+                  </span>
                 </div>
               </Link>
             </li>

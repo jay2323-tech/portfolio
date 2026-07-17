@@ -41,11 +41,18 @@ export function HeroDitherPortrait({
       const w = Math.max(1, Math.floor(rect.width));
       const h = Math.max(1, Math.floor(rect.height));
 
-      const logical = document.createElement("canvas");
-      logical.width = w;
-      logical.height = h;
-      const lctx = logical.getContext("2d");
-      if (!lctx) return;
+      // Dot size in CSS px. Dither at (w/DOT × h/DOT), then upscale with
+      // smoothing off — that's what makes each dithered pixel read as a
+      // visible halftone dot instead of a near-invisible fleck.
+      const DOT = 5;
+      const dw2 = Math.max(1, Math.round(w / DOT));
+      const dh2 = Math.max(1, Math.round(h / DOT));
+
+      const small = document.createElement("canvas");
+      small.width = dw2;
+      small.height = dh2;
+      const sctx = small.getContext("2d");
+      if (!sctx) return;
 
       const img = new Image();
       img.decoding = "async";
@@ -57,21 +64,24 @@ export function HeroDitherPortrait({
           img.src = src;
         });
         if (cancelled) return;
-        const scale = Math.max(w / img.naturalWidth, h / img.naturalHeight);
-        const dw = img.naturalWidth * scale;
-        const dh = img.naturalHeight * scale;
-        lctx.fillStyle = "#fafaf8";
-        lctx.fillRect(0, 0, w, h);
-        lctx.filter = "grayscale(1) contrast(1.08)";
-        lctx.drawImage(img, (w - dw) / 2, (h - dh) / 2, dw, dh);
-        lctx.filter = "none";
+        const scale = Math.max(
+          dw2 / img.naturalWidth,
+          dh2 / img.naturalHeight,
+        );
+        const sdw = img.naturalWidth * scale;
+        const sdh = img.naturalHeight * scale;
+        sctx.fillStyle = "#fafaf8";
+        sctx.fillRect(0, 0, dw2, dh2);
+        sctx.filter = "grayscale(1) contrast(1.15)";
+        sctx.drawImage(img, (dw2 - sdw) / 2, (dh2 - sdh) / 2, sdw, sdh);
+        sctx.filter = "none";
       } catch {
         if (cancelled) return;
-        drawSilhouette(lctx, w, h);
+        drawSilhouette(sctx, dw2, dh2);
       }
 
-      const dithered = ditherImageData(lctx.getImageData(0, 0, w, h), 2);
-      lctx.putImageData(dithered, 0, 0);
+      const dithered = ditherImageData(sctx.getImageData(0, 0, dw2, dh2));
+      sctx.putImageData(dithered, 0, 0);
 
       canvas!.width = Math.floor(w * dpr);
       canvas!.height = Math.floor(h * dpr);
@@ -81,7 +91,7 @@ export function HeroDitherPortrait({
       ctx!.clearRect(0, 0, canvas!.width, canvas!.height);
       ctx!.imageSmoothingEnabled = false;
       ctx!.setTransform(dpr, 0, 0, dpr, 0, 0);
-      ctx!.drawImage(logical, 0, 0, w, h);
+      ctx!.drawImage(small, 0, 0, dw2, dh2, 0, 0, w, h);
     }
 
     void renderClean();
@@ -127,14 +137,14 @@ export function HeroDitherPortrait({
       ref={wrapRef}
       data-hero-portrait
       className={cn(
-        "pointer-events-none overflow-hidden",
+        "hero-portrait-fade pointer-events-none overflow-hidden",
         className ??
           "absolute inset-y-0 right-0 w-full md:w-[48%] lg:w-[45%]",
       )}
     >
       <canvas
         ref={canvasRef}
-        className="h-full w-full object-cover opacity-90 mix-blend-multiply"
+        className="h-full w-full object-cover opacity-85 mix-blend-multiply"
         aria-hidden
       />
     </div>

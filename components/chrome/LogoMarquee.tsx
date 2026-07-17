@@ -15,7 +15,7 @@ const ORGS = [
   "PostgreSQL",
 ] as const;
 
-/** Juba tools strip — grayscale → full on hover, seamless loop */
+/** Tools strip — grayscale → full on hover, seamless loop */
 export function LogoMarquee() {
   const row = [...ORGS, ...ORGS];
 

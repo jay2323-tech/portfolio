@@ -8,9 +8,9 @@ Index for product, design, frontend, and backend documentation.
 |---|---|
 | [planning/prd.md](planning/prd.md) | Product requirements |
 | [planning/trd.md](planning/trd.md) | Technical requirements |
-| [planning/design-juba.md](planning/design-juba.md) | **Primary layout** — Mauricio Juba structure × light palette |
+| [planning/design-reference.md](planning/design-reference.md) | **Primary layout** — editorial reference structure × light palette |
 | [planning/design-merged.md](planning/design-merged.md) | Light Lab color tokens (still used) |
-| [planning/layout-merged.md](planning/layout-merged.md) | Earlier merged layout (superseded by design-juba) |
+| [planning/layout-merged.md](planning/layout-merged.md) | Earlier merged layout (superseded by design-reference) |
 | [planning/spec-sheet.md](planning/spec-sheet.md) | Component-level specs |
 | [planning/architecture.md](planning/architecture.md) | System architecture + FE/BE map |
 | [planning/design.md](planning/design.md) | Legacy dark theme (superseded) |

@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 
-/** Juba-style dual HUD: SCRL + CRSR + intro label near top */
+/** Editorial-style dual HUD: SCRL + CRSR + intro label near top */
 export function ScrollHud() {
   const [scroll, setScroll] = useState(0);
   const [cursor, setCursor] = useState({ x: 0, y: 0 });

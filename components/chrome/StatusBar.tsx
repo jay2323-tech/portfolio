@@ -4,12 +4,12 @@ import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 
 const SECTIONS = [
-  { id: "top", label: "0 — INTRO", short: "INTRO" },
-  { id: "work", label: "01 — WORK", short: "WORK" },
-  { id: "articles", label: "02 — ARTICLES", short: "ARTICLES" },
-  { id: "lab", label: "03 — LAB", short: "LAB" },
-  { id: "about", label: "04 — ABOUT", short: "ABOUT" },
-  { id: "contact", label: "05 — CONTACT", short: "CONTACT" },
+  { id: "top", index: "00", name: "INTRO" },
+  { id: "work", index: "01", name: "WORK" },
+  { id: "articles", index: "02", name: "ARTICLES" },
+  { id: "lab", index: "03", name: "LAB" },
+  { id: "about", index: "04", name: "ABOUT" },
+  { id: "contact", index: "05", name: "CONTACT" },
 ] as const;
 
 function formatClock(d: Date) {
@@ -20,8 +20,9 @@ function formatClock(d: Date) {
   const sign = offsetMin >= 0 ? "+" : "−";
   const abs = Math.abs(offsetMin);
   const oh = String(Math.floor(abs / 60)).padStart(2, "0");
-  const om = String(abs % 60).padStart(2, "0");
-  return `${hh}:${mm}:${ss} ${sign}${oh}:${om}`;
+  const om = abs % 60;
+  const offset = om === 0 ? oh : `${oh}:${String(om).padStart(2, "0")}`;
+  return { time: `${hh}:${mm}:${ss}`, offset: `${sign}${offset}` };
 }
 
 type SectionInfo = (typeof SECTIONS)[number];
@@ -42,15 +43,16 @@ function activeSection(): SectionInfo {
 }
 
 /**
- * Fixed bottom status bar — SCRL / CRSR / section / theme / clock.
- * xs: SCRL + short section only; CRSR from sm; theme/clock from md.
+ * Fixed bottom status bar — SCRL/CRSR (left), section (center), theme/clock (right).
+ * Mirrors the reference site's hud-label bar: CRSR only ≥lg, section label ≥sm,
+ * THEME text ≥sm — swatch/hex/clock always show.
  */
 export function StatusBar() {
   const [ready, setReady] = useState(false);
   const [scroll, setScroll] = useState(0);
   const [cursor, setCursor] = useState({ x: 0, y: 0 });
   const [section, setSection] = useState<SectionInfo>(SECTIONS[0]);
-  const [clock, setClock] = useState("--:--:--");
+  const [clock, setClock] = useState({ time: "--:--:--", offset: "" });
 
   useEffect(() => {
     setReady(true);
@@ -90,34 +92,35 @@ export function StatusBar() {
       aria-hidden
     >
       <div className="mx-auto flex w-full max-w-[var(--content-max)] items-center justify-between gap-2">
-        <div className="flex min-w-0 items-center gap-x-3 sm:gap-x-5">
-          <span className="shrink-0 tabular-nums">
-            SCRL {ready ? scroll.toFixed(2) : "0.00"}
+        <div className="flex min-w-0 shrink-0 items-center gap-x-3 sm:gap-x-5">
+          <span className="tabular-nums">
+            SCRL <span className="text-ink">{ready ? scroll.toFixed(2) : "0.00"}</span>
           </span>
-          <span className="hidden shrink-0 tabular-nums sm:inline">
+          <span className="hidden tabular-nums lg:inline">
             CRSR{" "}
             {ready
-              ? `${cursor.x.toFixed(0)}.${String(Math.floor(cursor.y)).padStart(3, "0")}`
-              : "0.000"}
-          </span>
-          <span className="truncate sm:hidden">
-            {ready ? section.short : "INTRO"}
-          </span>
-          <span className="hidden truncate sm:inline">
-            {ready ? section.label : "0 — INTRO"}
+              ? `${String(Math.round(cursor.x)).padStart(3, "0")}.${String(Math.round(cursor.y)).padStart(3, "0")}`
+              : "000.000"}
           </span>
         </div>
 
-        <div className="hidden shrink-0 items-center gap-3 md:flex lg:gap-5">
+        <span className="hidden truncate sm:inline">
+          <span className="text-ink">{ready ? section.index : "00"}</span> —{" "}
+          {ready ? section.name : "INTRO"}
+        </span>
+
+        <div className="flex shrink-0 items-center gap-3 lg:gap-5">
           <span className="inline-flex items-center gap-1.5">
-            THEME
+            <span className="hidden sm:inline">THEME</span>
             <span
               className="inline-block h-2.5 w-2.5 border border-ink/15"
               style={{ background: "var(--mint)" }}
             />
-            #C3FFFC
+            <span className="text-ink normal-case">#c3fffc</span>
           </span>
-          <span className="tabular-nums">{clock}</span>
+          <span className="tabular-nums">
+            {clock.time} <span className="opacity-75">{clock.offset}</span>
+          </span>
         </div>
       </div>
     </div>

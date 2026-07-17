@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 import { useAsk } from "@/components/ask-my-work/AskContext";
 
-/** Mirrors Mauricio Juba nav: 01/WORK · 02/ARTICLES · 03/LAB · 04/ABOUT · 05/CONTACT */
+/** Mirrors the reference nav: 01/WORK · 02/ARTICLES · 03/LAB · 04/ABOUT · 05/CONTACT */
 const links = [
   { href: "#work", index: "01", label: "WORK" },
   { href: "#articles", index: "02", label: "ARTICLES" },
