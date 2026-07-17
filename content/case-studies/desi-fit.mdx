@@ -1,0 +1,41 @@
+---
+slug: desi-fit
+title: DesiFit
+problem: Health and fitness products that handle personal data cannot ship “move fast” without a compliance story — especially under India’s DPDP Act.
+status: development
+statusLabel: IN DEVELOPMENT
+metrics:
+  - label: focus
+    value: DPDP-ready
+  - label: data
+    value: consent-first
+  - label: surface
+    value: product+policy
+tags:
+  - DPDP
+  - Privacy
+  - Product
+  - Compliance UX
+eyebrow: CASE STUDY · IN DEVELOPMENT
+headline: Ship a fitness product without treating personal data as an afterthought.
+who: DesiFit — a fitness/product surface where user health-adjacent data, consent, and retention rules have to be designed in, not patched on after launch.
+constraints:
+  - India’s Digital Personal Data Protection (DPDP) Act shapes what can be collected, why, and for how long.
+  - "Solo-built product decisions — every new field is a compliance liability."
+  - Users must understand consent in plain language — not a 40-page policy dump.
+  - Prefer minimizing data over “collect everything for later ML.”
+architectureSummary: Product flows collect only what a feature needs; consent and purpose are recorded at capture time; retention and deletion paths are explicit. Architecture favors clear data boundaries between profile, activity, and any third-party integrations so a deletion request is executable, not aspirational.
+decisions:
+  - title: Purpose limitation over analytics maximalism
+    body: Declined “just in case” event tracking that would widen the personal-data surface. Less fuel for growth dashboards; fewer nightmares under a DPDP inquiry.
+  - title: Consent as product UI, not a footer link
+    body: Built consent and purpose copy into the flow where data is requested. Legal text still exists — but the product has to explain itself at the moment of collection.
+  - title: Deletion as a real path
+    body: Designed account/data deletion as a feature with a clear backend path early. Retrofitting erasure onto a tangled data model is how compliance projects explode.
+whatBroke: Early wireframes assumed a typical SaaS analytics stack. Mapping those events against “purpose” and retention made half the tracking plan indefensible. The reset hurt velocity for a week and saved a rewrite later. Compliance is an architecture constraint, not a checklist at the end.
+links:
+  - label: Case study
+    href: /work/desi-fit
+---
+
+DesiFit is where product ambition meets DPDP reality — consent-first data design for a fitness experience that has to be able to explain, limit, and delete what it holds.

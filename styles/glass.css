@@ -1,0 +1,88 @@
+/**
+ * Light surfaces — paper cards + soft frosted Ask panel.
+ * Dark liquid-glass tiers retired for Lab Editorial theme.
+ */
+
+:root {
+  --glass-blur: 16px;
+  --glass-sat: 1.2;
+  --paper-border: rgba(20, 20, 20, 0.08);
+  --paper-shadow: 0 12px 40px -16px rgba(20, 20, 20, 0.18);
+}
+
+.paper-card {
+  position: relative;
+  background: var(--surface);
+  border: 1px solid var(--paper-border);
+  border-radius: var(--radius-card);
+  box-shadow: var(--paper-shadow);
+  color: var(--ink);
+}
+
+.paper-card-hover {
+  transition:
+    transform 180ms var(--ease-smooth),
+    box-shadow 180ms var(--ease-smooth);
+}
+
+.paper-card-hover:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 18px 48px -16px rgba(20, 20, 20, 0.22);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .paper-card-hover,
+  .paper-card-hover:hover {
+    transform: none;
+  }
+}
+
+/* Light frosted panel (Ask widget) */
+.glass-shell,
+.glass-surface,
+.glass-overlay,
+.glass-pill {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  color: var(--ink);
+  border: 1px solid rgba(20, 20, 20, 0.1);
+  background: color-mix(in srgb, var(--surface) 88%, var(--mint) 12%);
+  backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-sat));
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-sat));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.7),
+    0 12px 32px -12px rgba(20, 20, 20, 0.15);
+}
+
+.glass-surface-hover {
+  transition:
+    border-color 180ms var(--ease-smooth),
+    box-shadow 180ms var(--ease-smooth);
+}
+
+.glass-surface-hover:hover {
+  border-color: color-mix(in srgb, var(--accent-clay) 40%, transparent);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.8),
+    0 16px 40px -12px rgba(199, 125, 60, 0.2);
+}
+
+.liquid-glass-clay {
+  border-color: color-mix(in srgb, var(--accent-clay) 35%, rgba(20, 20, 20, 0.08));
+  background: color-mix(in srgb, var(--surface) 85%, var(--butter) 15%);
+}
+
+.motion-press {
+  transition: transform 120ms var(--ease-smooth);
+}
+
+.motion-press:active {
+  transform: scale(0.98);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .motion-press:active {
+    transform: none;
+  }
+}

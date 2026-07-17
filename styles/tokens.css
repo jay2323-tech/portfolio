@@ -1,0 +1,64 @@
+/* Design tokens — design-merged.md (Light Lab Editorial) */
+:root {
+  /* Core light palette */
+  --bg: #fafaf8;
+  --surface: #ffffff;
+  --ink: #141414;
+  --muted: #6b7280;
+  --mint: #c3fffc;
+  --mint-deep: #5ecfc9;
+  --blush: #f4e4e0;
+  --sky: #e3edf5;
+  --butter: #fff4d6;
+  --accent-clay: #c77d3c;
+  --ok-signal: #5fa88f;
+
+  /* Legacy aliases (compat with existing class names) */
+  --ink-950: #141414;
+  --ink-800: #1f2430;
+  --paper-50: #fafaf8;
+  --paper-100: #ffffff;
+  --text-muted: var(--muted);
+
+  /* Semantic surfaces */
+  --bg-dark: var(--ink);
+  --bg-light: var(--bg);
+  --surface-dark: var(--ink-800);
+  --surface-light: var(--surface);
+  --text-on-dark: #fafaf8;
+  --text-on-light: var(--ink);
+  --accent: var(--accent-clay);
+
+  /* Type scale */
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1.125rem;
+  --text-lg: 1.25rem;
+  --text-xl: 1.75rem;
+  --text-2xl: 2.5rem;
+  --text-3xl: 3.5rem;
+
+  /* Radii */
+  --radius-btn: 12px;
+  --radius-pill: 999px;
+  --radius-card: 16px;
+  --radius-hero: 24px;
+
+  /* Spacing */
+  --section-gap-desktop: 140px;
+  --section-gap-mobile: 80px;
+  --content-max: 1400px;
+
+  /* Motion */
+  --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Z-index — layout-merged.md */
+  --z-content: 0;
+  --z-nav: 10;
+  --z-tooltip: 20;
+  --z-hud: 25;
+  --z-ask-pill: 30;
+  --z-ask-panel: 40;
+  --z-modal: 50;
+}
