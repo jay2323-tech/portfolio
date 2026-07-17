@@ -11,10 +11,13 @@ function luminance(r: number, g: number, b: number) {
 }
 
 /**
- * Apply 4×4 Bayer ordered dither to ImageData.
+ * Apply 4×4 Bayer ordered dither to ImageData, one dot per source pixel.
+ * Call this on a *downsampled* buffer, then scale the result back up with
+ * imageSmoothingEnabled = false — that's what turns single dithered pixels
+ * into visible halftone dots instead of a near-invisible speckle.
  * Writes dark ink dots on transparent (light-site friendly).
  */
-export function ditherImageData(src: ImageData, cell = 2): ImageData {
+export function ditherImageData(src: ImageData): ImageData {
   const { width, height, data } = src;
   const out = new ImageData(width, height);
   const od = out.data;
@@ -22,26 +25,21 @@ export function ditherImageData(src: ImageData, cell = 2): ImageData {
   for (let y = 0; y < height; y++) {
     for (let x = 0; x < width; x++) {
       const i = (y * width + x) * 4;
-      const L = luminance(data[i], data[i + 1], data[i + 2]);
       const a = data[i + 3] / 255;
       if (a < 0.08) {
         od[i + 3] = 0;
         continue;
       }
 
-      const threshold =
-        ((BAYER_4[y % 4][x % 4] + 0.5) / 16) * 255;
-      // Darker source luminance → more dots
-      const on = L * a < threshold;
+      const L = luminance(data[i], data[i + 1], data[i + 2]);
+      const threshold = ((BAYER_4[y % 4][x % 4] + 0.5) / 16) * 255;
+      const on = L < threshold;
 
-      // Only paint every `cell` for a coarser halftone look
-      const paint = on && x % cell === 0 && y % cell === 0;
-
-      if (paint) {
+      if (on) {
         od[i] = 20;
         od[i + 1] = 20;
         od[i + 2] = 20;
-        od[i + 3] = 200;
+        od[i + 3] = 235;
       } else {
         od[i + 3] = 0;
       }

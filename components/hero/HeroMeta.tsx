@@ -9,7 +9,7 @@ type Props = {
   style?: MotionStyle;
 };
 
-/** Juba meta: horizontal square-bullet stats — GSAP via [data-hero-meta]. */
+/** Hero meta: horizontal square-bullet stats — GSAP via [data-hero-meta]. */
 export function HeroMeta({ lines, className, style }: Props) {
   return (
     <motion.div data-hero-meta style={style} className={className}>

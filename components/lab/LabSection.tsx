@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useReducedMotion } from "framer-motion";
 import { ArchitectureDiagramCanvas } from "@/components/architecture-diagram/ArchitectureDiagram";
 import { SectionHeader } from "@/components/chrome/SectionHeader";
@@ -37,12 +37,13 @@ const EXPERIMENTS = [
 ] as const;
 
 /**
- * Juba Experiment Lab — section marquee + experiment rows + Ask / diagram.
+ * Experiment Lab — section marquee + experiment rows + Ask / diagram.
  */
 export function LabSection() {
   const { openAsk } = useAsk();
   const sectionRef = useRef<HTMLElement>(null);
   const reduce = useReducedMotion();
+  const [diagramOpen, setDiagramOpen] = useState(true);
 
   useEffect(() => {
     if (reduce || !sectionRef.current) return;
@@ -185,12 +186,23 @@ export function LabSection() {
         className="section-pad mx-auto mt-10 max-w-[var(--content-max)] scroll-mt-24 md:mt-14"
       >
         <div className="border border-ink/10 bg-sky/35 px-5 py-8 md:px-8 md:py-10">
-          <p className="font-mono-data text-[10px] tracking-[0.16em] text-muted">
-            DIAGRAM · COMPANYBRAIN
-          </p>
-          <div className="mt-4">
-            <ArchitectureDiagramCanvas />
-          </div>
+          <button
+            type="button"
+            onClick={() => setDiagramOpen((v) => !v)}
+            aria-expanded={diagramOpen}
+            aria-controls="lab-diagram-panel"
+            className="flex w-full items-center justify-between gap-4 font-mono-data text-[10px] tracking-[0.16em] text-muted"
+          >
+            <span>DIAGRAM · COMPANYBRAIN</span>
+            <span aria-hidden className="text-ink">
+              {diagramOpen ? "▴ COLLAPSE" : "▾ EXPAND"}
+            </span>
+          </button>
+          {diagramOpen && (
+            <div id="lab-diagram-panel" className="mt-4">
+              <ArchitectureDiagramCanvas />
+            </div>
+          )}
         </div>
       </div>
 

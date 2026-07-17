@@ -18,7 +18,7 @@ const META = [
 ] as const;
 
 /**
- * Juba hero — stacked on ≤md (portrait above name), absolute on desktop.
+ * Hero — stacked on ≤md (portrait above name), absolute on desktop.
  */
 export function Hero() {
   const sectionRef = useRef<HTMLElement>(null);

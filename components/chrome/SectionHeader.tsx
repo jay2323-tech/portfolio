@@ -21,7 +21,7 @@ type Props = {
 };
 
 /**
- * Juba section chrome: index + meta + H2,
+ * Section chrome: index + meta + H2,
  * or index + meta + SectionMarquee title wheel.
  */
 export function SectionHeader({

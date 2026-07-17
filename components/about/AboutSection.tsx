@@ -69,21 +69,21 @@ const COMPETENCIES = [
 ] as const;
 
 const TOOLKIT = [
-  { name: "Claude / GPT", role: "Generation" },
-  { name: "Qdrant", role: "Vectors" },
-  { name: "FastAPI", role: "API" },
-  { name: "Next.js", role: "Frontend" },
-  { name: "TypeScript", role: "Typing" },
-  { name: "Python", role: "Pipelines" },
-  { name: "PostgreSQL", role: "Data" },
-  { name: "Vercel", role: "Deploy" },
+  { name: "Claude / GPT", role: "Generation", initial: "C", tint: "var(--mint)" },
+  { name: "Qdrant", role: "Vectors", initial: "Q", tint: "var(--accent-clay)" },
+  { name: "FastAPI", role: "API", initial: "F", tint: "var(--sky)" },
+  { name: "Next.js", role: "Frontend", initial: "N", tint: "var(--ink)" },
+  { name: "TypeScript", role: "Typing", initial: "TS", tint: "var(--sky)" },
+  { name: "Python", role: "Pipelines", initial: "PY", tint: "var(--butter)" },
+  { name: "PostgreSQL", role: "Data", initial: "PG", tint: "var(--blush)" },
+  { name: "Vercel", role: "Deploy", initial: "V", tint: "var(--ink)" },
 ] as const;
 
 const STATEMENT =
   "Building production RAG and computer-vision systems — as product and as code.";
 
 /**
- * Juba About — two-column intro + timelines, foundations, toolkit hover.
+ * About — two-column intro + timelines, foundations, toolkit hover.
  */
 export function AboutSection() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -272,16 +272,23 @@ export function AboutSection() {
           <h4 className="font-mono-data text-[10px] tracking-[0.18em] text-muted">
             MY TOOLKIT
           </h4>
-          <ul className="mt-6 grid list-none gap-3 sm:grid-cols-2 md:grid-cols-4">
+          <ul className="mt-6 grid list-none grid-cols-2 gap-3 md:grid-cols-4">
             {TOOLKIT.map((t) => (
               <li key={t.name}>
                 <div
                   className={cn(
-                    "toolkit-item border border-ink/10 px-4 py-4",
+                    "toolkit-item rounded-sm border border-ink/10 px-4 py-4",
                     "transition-[opacity,filter,border-color,background-color] duration-300 ease-out",
                   )}
                 >
-                  <p className="font-medium text-ink">{t.name}</p>
+                  <span
+                    aria-hidden
+                    className="flex h-10 w-10 items-center justify-center rounded-sm font-mono-data text-xs font-semibold text-bg"
+                    style={{ background: t.tint }}
+                  >
+                    {t.initial}
+                  </span>
+                  <p className="mt-3 font-medium text-ink">{t.name}</p>
                   <p className="mt-1 font-mono-data text-[10px] tracking-[0.12em] text-muted">
                     {t.role}
                   </p>

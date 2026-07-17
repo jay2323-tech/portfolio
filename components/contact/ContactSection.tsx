@@ -31,7 +31,7 @@ const LINKS = [
 ] as const;
 
 /**
- * Juba Contact — LETS TALK marquee, link rows with ↗, bottom-border form.
+ * Contact — LETS TALK marquee, link rows with ↗, bottom-border form.
  */
 export function ContactSection() {
   const [path, setPath] = useState<Path>("hiring");

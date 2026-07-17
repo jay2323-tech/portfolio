@@ -1,11 +1,10 @@
-# Design — Mauricio Juba layout × Light Lab palette
+# Design — Editorial reference layout × Light Lab palette
 
-Primary reference: https://mauriciojuba.com/  
-Colors: keep current light tokens (`design-merged.md`). Structure/components: match Juba exactly.
+Colors: keep current light tokens (`design-merged.md`). Structure/components: match the reference layout exactly.
 
 ## Section map
 
-| Juba | Ours | Component |
+| Reference | Ours | Component |
 |---|---|---|
 | Top bar + MENU + GET IN TOUCH | Nav | `components/nav/Nav.tsx` |
 | SCRL / CRSR HUD | Dual HUD | `components/chrome/ScrollHud.tsx` |
@@ -18,7 +17,7 @@ Colors: keep current light tokens (`design-merged.md`). Structure/components: ma
 | 05 LET'S TALK | Contact | `components/contact/*` |
 | Footer | Footer | `components/Footer.tsx` |
 
-## Juba UI patterns to replicate
+## UI patterns to replicate
 
 1. **Numbered section headers** — `01` + looping marquee title (`FEATUREDWORK`)
 2. **Meta rows** — mono uppercase tracking (`10+ YEARS…`, `BASED IN…`)
@@ -39,11 +38,11 @@ Colors: keep current light tokens (`design-merged.md`). Structure/components: ma
 ## Drop / demote
 
 - Studio Modular soft color-block cards as primary pattern
-- SplitHeadline “retrieval → production” band (optional later)
-- Soft paper-card-only look where Juba uses denser list/metric layouts
-- Side RAG panel in hero (removed — pure Juba type composition)
+- SplitHeadline "retrieval → production" band (optional later)
+- Soft paper-card-only look where the reference uses denser list/metric layouts
+- Side RAG panel in hero (removed — pure editorial type composition)
 
-## Hero component inventory (exact Juba intro)
+## Hero component inventory (exact reference intro)
 
 | Piece | File |
 |---|---|

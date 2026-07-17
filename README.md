@@ -2,7 +2,7 @@
 
 Premium portfolio site proving production RAG skill — live retrieval over Jayanth's own work.
 
-**Visual direction:** Light Lab Editorial (Studio Modular warmth + Mauricio Juba structure).
+**Visual direction:** Light Lab Editorial (Studio Modular warmth + editorial reference structure).
 
 ## Dev
 

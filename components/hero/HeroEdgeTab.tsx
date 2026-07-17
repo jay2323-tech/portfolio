@@ -7,7 +7,7 @@ type Props = {
   className?: string;
 };
 
-/** Fixed right-edge rotated tab (Juba “Nominee” pattern). */
+/** Fixed right-edge rotated tab ("Nominee" pattern). */
 export function HeroEdgeTab({ label = "OPEN", className }: Props) {
   return (
     <div

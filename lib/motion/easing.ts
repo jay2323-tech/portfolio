@@ -1,4 +1,4 @@
-/** Shared editorial ease — Juba-style decelerate */
+/** Shared editorial ease — smooth decelerate */
 export const editorialEase = [0.16, 1, 0.3, 1] as const;
 
 export const editorialTransition = {

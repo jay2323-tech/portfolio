@@ -9,7 +9,7 @@ type Props = {
   path: Path;
 };
 
-/** Juba-style contact form: NAME / EMAIL / MESSAGE rows */
+/** Editorial-style contact form: NAME / EMAIL / MESSAGE rows */
 export function ContactForm({ path }: Props) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");

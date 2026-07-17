@@ -16,7 +16,7 @@ function prefersCoarsePointer() {
 }
 
 /**
- * Juba section title: infinite wheel + scroll scrub (scrub off on touch).
+ * Section title: infinite wheel + scroll scrub (scrub off on touch).
  */
 export function SectionMarquee({ text, className }: Props) {
   const rootRef = useRef<HTMLDivElement>(null);
@@ -25,8 +25,8 @@ export function SectionMarquee({ text, className }: Props) {
   const reduce = useReducedMotion();
   const [coarse, setCoarse] = useState(false);
 
-  const unit = `${text}\u00A0·\u00A0`;
-  const sequence = unit.repeat(8);
+  const joined = text.replace(/\s+/g, "");
+  const sequence = joined.repeat(8);
 
   useEffect(() => {
     setCoarse(prefersCoarsePointer());

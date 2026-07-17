@@ -1,6 +1,6 @@
 # Design System — Light Lab Editorial (primary)
 
-Merges Studio Modular warmth with Mauricio Juba playful structure. Supersedes `design.md` (dark theme).
+Merges Studio Modular warmth with editorial reference structure. Supersedes `design.md` (dark theme).
 
 ## Thesis
 

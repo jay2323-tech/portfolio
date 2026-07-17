@@ -10,7 +10,7 @@ type Props = {
   delay?: number;
 };
 
-/** Juba-style ▼ SCROLL cue — entrance owned by parent GSAP when delay=0. */
+/** Editorial-style ▼ SCROLL cue — entrance owned by parent GSAP when delay=0. */
 export function HeroScrollCue({
   href = "#work",
   className,
