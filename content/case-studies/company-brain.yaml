@@ -1,0 +1,62 @@
+title: CompanyBrain
+problem: >-
+  Enterprise knowledge is trapped across docs, tickets, and tribal memory —
+  answers need citations, not vibes.
+status: development
+statusLabel: IN DEVELOPMENT
+domain: Graph RAG
+year: "2025"
+coverImage: /images/work/company-brain.svg
+metrics:
+  - label: retrieval
+    value: hybrid+graph
+  - label: stream
+    value: SSE
+  - label: store
+    value: Qdrant
+tags:
+  - FastAPI
+  - Graph RAG
+  - Qdrant
+  - React
+eyebrow: CASE STUDY · IN DEVELOPMENT
+headline: Org knowledge that answers with sources — not a chatbot that guesses.
+who: >-
+  Built for teams that need an internal assistant grounded in their own
+  documents, org graph, and policies — not a generic LLM wrapper.
+constraints:
+  - Solo-built product surface (frontend + RAG orchestration) against a FastAPI backend.
+  - Must stream answers with thinking/token separation and visible retrieval provenance.
+  - Hybrid search + graph RAG over a vector store — no dump-the-wiki-into-the-prompt shortcut.
+  - Observability matters — latency, routing, and hallucination forensics are first-class UI surfaces.
+architectureSummary: >-
+  Org/Team/User context hits a FastAPI orchestration layer. Hybrid search and
+  graph RAG retrieve from Qdrant; the model stream returns over SSE while the
+  UI surfaces retrieved chunks, confidence, and routing so operators can inspect
+  why an answer was produced.
+decisions:
+  - title: Hybrid search + graph over vector-only
+    body: >-
+      Pure dense retrieval missed org-structure questions (“who owns X on this
+      team?”). Adding graph-aware retrieval costs complexity but makes answers
+      inspectable against real relationships instead of nearest-neighbor prose.
+  - title: SSE streaming with thinking separation
+    body: >-
+      Chose Server-Sent Events over a single JSON blob so the UI can show
+      retrieval and reasoning stages live. That makes the pipeline demoable —
+      the same pattern this portfolio site uses.
+  - title: Qdrant instead of a managed mega-stack
+    body: >-
+      Kept the vector layer to Qdrant for predictable latency and cost at
+      portfolio/enterprise-doc scale. Revisit only if corpus size or multi-tenant
+      isolation forces a different store.
+whatBroke: >-
+  Early prompts answered fluently while citing the wrong chunk. The fix was not
+  a bigger model — it was forcing retrieved chunk metadata into the UI and
+  scoring path so bad retrieval became visible. Also underestimated how much
+  admin/observability UI the “chat” product actually needs once people trust it
+  with real decisions.
+links:
+  - label: Case study
+    href: /work/company-brain
+    external: false

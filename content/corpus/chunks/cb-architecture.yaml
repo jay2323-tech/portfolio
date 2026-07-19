@@ -1,0 +1,4 @@
+title: "CompanyBrain — architecture"
+source: architecture
+content: "CompanyBrain architecture: Org/Team/User context hits a FastAPI orchestration layer. Hybrid search and graph RAG retrieve from Qdrant; the model stream returns over SSE while the UI surfaces retrieved chunks, confidence, and routing so operators can inspect why an answer was produced. Flow: Org → FastAPI → Hybrid + Graph RAG → Qdrant and LLM providers."
+href: "/work/company-brain#company-brain-architecture"

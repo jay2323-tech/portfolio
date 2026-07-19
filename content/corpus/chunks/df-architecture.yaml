@@ -1,0 +1,4 @@
+title: "DesiFit — architecture"
+source: case-study
+content: "DesiFit product flows collect only what a feature needs; consent and purpose are recorded at capture time; retention and deletion paths are explicit. Clear data boundaries between profile, activity, and third-party integrations so a deletion request is executable."
+href: "/work/desi-fit#desi-fit-architecture"

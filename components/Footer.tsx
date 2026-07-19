@@ -1,3 +1,5 @@
+import { Magnetic } from "@/components/chrome/Magnetic";
+
 export function Footer() {
   const year = new Date().getFullYear();
 
@@ -7,12 +9,14 @@ export function Footer() {
         <p className="font-mono-data text-[11px] tracking-[0.14em] text-muted">
           © {year} JAYANTH KRISHNA
         </p>
-        <a
-          href="#top"
-          className="font-mono-data text-[11px] tracking-[0.14em] text-ink transition-colors hover:text-accent-clay"
-        >
-          BACK TO TOP ↑
-        </a>
+        <Magnetic strength={14}>
+          <a
+            href="#top"
+            className="font-mono-data text-[11px] tracking-[0.14em] text-ink transition-colors hover:text-accent-clay"
+          >
+            BACK TO TOP ↑
+          </a>
+        </Magnetic>
       </div>
     </footer>
   );

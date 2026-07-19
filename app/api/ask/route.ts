@@ -44,7 +44,7 @@ export async function POST(req: Request) {
       {
         error: "rate_limited",
         message:
-          "You've hit the ask limit for this hour. Email hello@jayanthkrishna.dev if you want to go deeper.",
+          "You've hit the ask limit for this hour. Email cvjayanth005@gmail.com if you want to go deeper.",
       },
       { status: 429 },
     );

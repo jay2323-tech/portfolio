@@ -42,7 +42,7 @@ export async function askStream(
       rateLimited: true,
       message:
         data.message ??
-        "You've hit the ask limit. Email hello@jayanthkrishna.dev to go deeper.",
+        "You've hit the ask limit. Email cvjayanth005@gmail.com to go deeper.",
     };
     handlers.onError?.(result.message!);
     return result;

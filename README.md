@@ -13,9 +13,26 @@ npm run dev
 
 Open [http://localhost:2005](http://localhost:2005). Fallback: `npm run dev:alt` → 2026.
 
+### CMS (Keystatic)
+
+Edit content in the browser:
+
 ```bash
-npm run embed-corpus   # after corpus / case study content changes
+npm run dev
+# → http://localhost:2005/keystatic
 ```
+
+Collections: case studies, articles, RAG corpus. Singletons: hero, about, lab, contact, settings.
+
+Changes write YAML under `content/` (git diffs). After editing **RAG corpus** chunks:
+
+```bash
+npm run embed-corpus
+```
+
+That syncs `content/corpus/corpus.json` and regenerates `corpus-embeddings.json` so Ask My Work stays current.
+
+For production editing on Vercel, set `NEXT_PUBLIC_KEYSTATIC_GITHUB_REPO=owner/repo` (see `.env.example`).
 
 ## Docs
 
@@ -36,4 +53,4 @@ Set env vars from `.env.example` in the Vercel dashboard.
 
 ## Stack
 
-Next.js 15 · Tailwind 4 · TypeScript · Framer Motion · local/optional OpenAI+Anthropic RAG
+Next.js 15 · Tailwind 4 · TypeScript · Framer Motion · GSAP · Keystatic · local/optional OpenAI+Anthropic RAG

@@ -1,0 +1,4 @@
+title: "Factory Attendance — what broke"
+source: case-study
+content: "Lighting and angle changes at real entrances killed early match rates that looked fine in controlled tests. Had to redesign capture guidance and fallbacks (retry, supervisor override). Learned that live means on-call for the first weeks of shift changes — documentation alone is not a handoff."
+href: "/work/factory-attendance#factory-attendance-what-broke"

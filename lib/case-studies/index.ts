@@ -1,71 +1,46 @@
-import fs from "fs";
-import path from "path";
-import matter from "gray-matter";
-import type { CaseStudy, CaseStudyMetric, CaseStudyStatus } from "./types";
+import type { CaseStudy, CaseStudyStatus } from "@/lib/case-studies/types";
+import { getReader } from "@/lib/content/reader";
 
-const CONTENT_DIR = path.join(process.cwd(), "content/case-studies");
-
-function asStringArray(value: unknown): string[] {
-  if (!Array.isArray(value)) return [];
-  return value.map((item) => {
-    if (typeof item === "string") return item;
-    if (item && typeof item === "object") {
-      return Object.entries(item as Record<string, unknown>)
-        .map(([k, v]) => `${k}: ${String(v)}`)
-        .join(", ");
-    }
-    return String(item);
-  });
-}
-
-function asMetrics(value: unknown): CaseStudyMetric[] {
-  if (!Array.isArray(value)) return [];
-  return value.map((item) => {
-    const row = item as { label?: string; value?: string };
-    return { label: String(row.label ?? ""), value: String(row.value ?? "") };
-  });
-}
-
-function asDecisions(value: unknown): CaseStudy["decisions"] {
-  if (!Array.isArray(value)) return [];
-  return value.map((item) => {
-    const row = item as { title?: string; body?: string };
-    return { title: String(row.title ?? ""), body: String(row.body ?? "") };
-  });
-}
-
-function asLinks(value: unknown): CaseStudy["links"] {
-  if (!Array.isArray(value)) return [];
-  return value.map((item) => {
-    const row = item as { label?: string; href?: string; external?: boolean };
-    return {
-      label: String(row.label ?? ""),
-      href: String(row.href ?? "#"),
-      external: Boolean(row.external),
-    };
-  });
-}
-
-function parseCaseStudy(slug: string, raw: string): CaseStudy {
-  const { data } = matter(raw);
+function asCaseStudy(
+  slug: string,
+  data: NonNullable<
+    Awaited<
+      ReturnType<ReturnType<typeof getReader>["collections"]["caseStudies"]["read"]>
+    >
+  >,
+): CaseStudy {
   const status = (data.status as CaseStudyStatus) ?? "development";
-
   return {
-    slug: String(data.slug ?? slug),
-    title: String(data.title ?? slug),
-    problem: String(data.problem ?? ""),
+    slug,
+    title: data.title,
+    problem: data.problem ?? "",
     status,
-    statusLabel: String(data.statusLabel ?? status.toUpperCase()),
-    metrics: asMetrics(data.metrics),
-    tags: asStringArray(data.tags).slice(0, 4),
-    eyebrow: String(data.eyebrow ?? "CASE STUDY"),
-    headline: String(data.headline ?? data.title ?? ""),
-    who: String(data.who ?? ""),
-    constraints: asStringArray(data.constraints),
-    architectureSummary: String(data.architectureSummary ?? ""),
-    decisions: asDecisions(data.decisions),
-    whatBroke: String(data.whatBroke ?? ""),
-    links: asLinks(data.links),
+    statusLabel: data.statusLabel || status.toUpperCase(),
+    domain: data.domain || "Product",
+    year: data.year || "2025",
+    coverImage:
+      data.coverImage ||
+      `/images/work/${slug}.svg`,
+    metrics: (data.metrics ?? []).map((m) => ({
+      label: m.label ?? "",
+      value: m.value ?? "",
+    })),
+    tags: (data.tags ?? []).filter(Boolean).slice(0, 4),
+    eyebrow: data.eyebrow || "CASE STUDY",
+    headline: data.headline || data.title,
+    who: data.who ?? "",
+    constraints: (data.constraints ?? []).filter(Boolean),
+    architectureSummary: data.architectureSummary ?? "",
+    decisions: (data.decisions ?? []).map((d) => ({
+      title: d.title ?? "",
+      body: d.body ?? "",
+    })),
+    whatBroke: data.whatBroke ?? "",
+    links: (data.links ?? []).map((l) => ({
+      label: l.label ?? "",
+      href: l.href || "#",
+      external: Boolean(l.external),
+    })),
     sectionIds: {
       context: `${slug}-context`,
       architecture: `${slug}-architecture`,
@@ -76,25 +51,30 @@ function parseCaseStudy(slug: string, raw: string): CaseStudy {
   };
 }
 
-export function getCaseStudySlugs(): string[] {
-  if (!fs.existsSync(CONTENT_DIR)) return [];
-  return fs
-    .readdirSync(CONTENT_DIR)
-    .filter((file) => file.endsWith(".mdx"))
-    .map((file) => file.replace(/\.mdx$/, ""));
+export async function getCaseStudySlugs(): Promise<string[]> {
+  const reader = getReader();
+  return reader.collections.caseStudies.list();
 }
 
-export function getCaseStudy(slug: string): CaseStudy | null {
-  const filePath = path.join(CONTENT_DIR, `${slug}.mdx`);
-  if (!fs.existsSync(filePath)) return null;
-  return parseCaseStudy(slug, fs.readFileSync(filePath, "utf8"));
+export async function getCaseStudy(slug: string): Promise<CaseStudy | null> {
+  const reader = getReader();
+  const data = await reader.collections.caseStudies.read(slug);
+  if (!data) return null;
+  return asCaseStudy(slug, data);
 }
 
-export function getAllCaseStudies(): CaseStudy[] {
-  const order = ["company-brain", "factory-attendance", "desi-fit"];
-  const studies = getCaseStudySlugs()
-    .map((slug) => getCaseStudy(slug))
-    .filter((study): study is CaseStudy => study !== null);
+export async function getAllCaseStudies(): Promise<CaseStudy[]> {
+  const reader = getReader();
+  const settings = await reader.singletons.settings.read();
+  const order = settings?.workOrder?.filter(Boolean) ?? [
+    "company-brain",
+    "factory-attendance",
+    "desi-fit",
+  ];
+  const slugs = await reader.collections.caseStudies.list();
+  const studies = (
+    await Promise.all(slugs.map((slug) => getCaseStudy(slug)))
+  ).filter((s): s is CaseStudy => s !== null);
 
   return studies.sort((a, b) => {
     const ai = order.indexOf(a.slug);

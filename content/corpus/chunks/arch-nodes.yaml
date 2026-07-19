@@ -1,0 +1,4 @@
+title: "Architecture diagram nodes"
+source: architecture
+content: "Interactive architecture diagram nodes: Org/Team/User scopes every query to the org graph. FastAPI handles auth, routing, and SSE streaming. Hybrid + Graph RAG fuses dense and sparse search with graph hops. Qdrant stores embeddings. LLM providers generate answers with retrieved chunks in context."
+href: "/#architecture"

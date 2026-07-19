@@ -1,0 +1,4 @@
+title: "Core skills"
+source: resume
+content: "Production RAG, hybrid search, graph RAG, Qdrant, FastAPI, Next.js, React, TypeScript, SSE streaming, computer vision for attendance, privacy-aware product design under India's DPDP Act, observability for LLM systems (latency, routing, hallucination forensics)."
+href: "/#architecture"

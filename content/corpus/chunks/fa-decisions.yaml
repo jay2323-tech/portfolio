@@ -1,0 +1,4 @@
+title: "Factory Attendance — decisions"
+source: case-study
+content: "Optimized for shift-change latency, not demo accuracy — a slow queue is a failed product. Ambiguous punches go to a human exception queue instead of silent auto-approve. Reports were a first-class surface early, not a CSV bolt-on at the end."
+href: "/work/factory-attendance#factory-attendance-decisions"

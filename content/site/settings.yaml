@@ -1,0 +1,15 @@
+portrait: /portrait.jpg
+logoMarquee:
+  - FastAPI
+  - Qdrant
+  - Next.js
+  - Anthropic
+  - OpenAI
+  - TypeScript
+  - Python
+  - Vercel
+  - PostgreSQL
+workOrder:
+  - company-brain
+  - factory-attendance
+  - desi-fit

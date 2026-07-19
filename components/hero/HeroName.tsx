@@ -139,6 +139,7 @@ function ProximityLine({ text, className, mouse, reduce }: LineProps) {
         <span
           key={`${char}-${i}`}
           data-hero-letter
+          data-char={char === " " ? "\u00A0" : char}
           className="inline-block will-change-transform"
           style={{ transformOrigin: "50% 70%" }}
           aria-hidden
@@ -202,7 +203,7 @@ export function HeroName({
           reduce={reduce}
         />
         <ProximityLine
-          text={`${lastText}.`}
+          text={lastText}
           className="block whitespace-nowrap text-[clamp(3rem,9vw,7rem)] font-bold leading-[0.88] text-mint-deep"
           mouse={mouse}
           reduce={reduce}

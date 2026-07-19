@@ -1,0 +1,4 @@
+title: "CompanyBrain — decisions"
+source: case-study
+content: "Key decisions: (1) Hybrid search plus graph over vector-only — pure dense retrieval missed org-structure questions like who owns X on a team. (2) SSE streaming with thinking separation so the UI can show retrieval and reasoning stages live. (3) Qdrant instead of a managed mega-stack for predictable latency and cost at enterprise-doc scale."
+href: "/work/company-brain#company-brain-decisions"

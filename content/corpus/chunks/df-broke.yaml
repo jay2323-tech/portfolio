@@ -1,0 +1,4 @@
+title: "DesiFit — what broke"
+source: case-study
+content: "Early DesiFit wireframes assumed a typical SaaS analytics stack. Mapping those events against purpose and retention made half the tracking plan indefensible. The reset hurt velocity for a week and saved a rewrite. Compliance is an architecture constraint, not a checklist at the end."
+href: "/work/desi-fit#desi-fit-what-broke"

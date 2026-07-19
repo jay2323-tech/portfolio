@@ -1,9 +1,14 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { useAsk } from "@/components/ask-my-work/AskContext";
+import { Magnetic } from "@/components/chrome/Magnetic";
+import { scrambleText } from "@/lib/motion/scramble";
+import { staggerContainer, slideInRight } from "@/lib/motion/variants";
+import { editorialTransition } from "@/lib/motion/easing";
 
 /** Mirrors the reference nav: 01/WORK · 02/ARTICLES · 03/LAB · 04/ABOUT · 05/CONTACT */
 const links = [
@@ -13,6 +18,49 @@ const links = [
   { href: "#about", index: "04", label: "ABOUT" },
   { href: "#contact", index: "05", label: "CONTACT" },
 ] as const;
+
+type NavLinkProps = {
+  href: string;
+  index: string;
+  label: string;
+};
+
+/** Desktop link — decodes from scrambled glyphs to its label on hover. */
+function NavLink({ href, index, label }: NavLinkProps) {
+  const labelRef = useRef<HTMLSpanElement>(null);
+  const cancelRef = useRef<(() => void) | null>(null);
+  const reduce = useReducedMotion();
+
+  function onEnter() {
+    if (reduce || !labelRef.current) return;
+    cancelRef.current?.();
+    cancelRef.current = scrambleText({
+      text: label,
+      charDuration: 22,
+      cycles: 2,
+      onUpdate: (display) => {
+        if (labelRef.current) labelRef.current.textContent = display;
+      },
+    });
+  }
+
+  function onLeave() {
+    cancelRef.current?.();
+    if (labelRef.current) labelRef.current.textContent = label;
+  }
+
+  return (
+    <a
+      href={href}
+      data-cursor="view"
+      className="nav-link font-mono-data px-2 py-1 text-[10px] tracking-[0.14em] text-muted hover:text-ink"
+      onMouseEnter={onEnter}
+      onMouseLeave={onLeave}
+    >
+      {index}/<span ref={labelRef}>{label}</span>
+    </a>
+  );
+}
 
 export function Nav() {
   const [open, setOpen] = useState(false);
@@ -35,6 +83,7 @@ export function Nav() {
   }, [open]);
 
   return (
+    <>
     <header
       className={cn(
         "sticky top-0 z-[var(--z-nav)] w-full border-b border-ink/10 transition-all duration-300",
@@ -52,6 +101,7 @@ export function Nav() {
       >
         <Link
           href="/"
+          data-cursor="view"
           className="shrink-0 font-mono-data text-[11px] tracking-[0.12em] text-ink"
           onClick={() => setOpen(false)}
         >
@@ -61,30 +111,31 @@ export function Nav() {
         <ul className="hidden items-center gap-1 xl:flex">
           {links.map((link) => (
             <li key={link.href}>
-              <a
-                href={link.href}
-                className="nav-link font-mono-data px-2 py-1 text-[10px] tracking-[0.14em] text-muted hover:text-ink"
-              >
-                {link.index}/{link.label}
-              </a>
+              <NavLink href={link.href} index={link.index} label={link.label} />
             </li>
           ))}
         </ul>
 
         <div className="flex items-center gap-2 sm:gap-3">
-          <a
-            href="#contact"
-            className="nav-link hidden font-mono-data text-[10px] tracking-[0.14em] text-ink sm:inline"
-          >
-            GET IN TOUCH
-          </a>
-          <button
-            type="button"
-            onClick={() => openAsk()}
-            className="btn-pill btn-pill-primary motion-press text-[10px] tracking-wide"
-          >
-            ASK
-          </button>
+          <Magnetic strength={10} className="hidden sm:inline-flex">
+            <a
+              href="#contact"
+              data-cursor="open"
+              className="nav-link font-mono-data text-[10px] tracking-[0.14em] text-ink"
+            >
+              GET IN TOUCH
+            </a>
+          </Magnetic>
+          <Magnetic strength={12}>
+            <button
+              type="button"
+              data-cursor="ask"
+              onClick={() => openAsk()}
+              className="btn-pill btn-pill-primary motion-press text-[10px] tracking-wide"
+            >
+              ASK
+            </button>
+          </Magnetic>
           <button
             type="button"
             className="inline-flex h-9 items-center justify-center rounded-[var(--radius-btn)] border border-ink/15 px-2.5 font-mono-data text-[10px] tracking-wider text-ink xl:hidden"
@@ -97,64 +148,83 @@ export function Nav() {
           </button>
         </div>
       </nav>
-
-      {open && (
-        <div
-          id="mobile-nav"
-          className="fixed inset-0 z-[var(--z-modal)] flex flex-col bg-bg xl:hidden"
-          role="dialog"
-          aria-modal="true"
-          aria-label="Menu"
-        >
-          <div className="section-pad flex h-14 items-center justify-between border-b border-ink/10">
-            <span className="font-mono-data text-[11px] tracking-[0.14em] text-ink">
-              MENU
-            </span>
-            <button
-              type="button"
-              className="font-mono-data text-[10px] tracking-wider text-muted"
-              onClick={() => setOpen(false)}
-            >
-              CLOSE ✕
-            </button>
-          </div>
-          <ul className="section-pad flex flex-1 flex-col justify-center gap-1 py-10">
-            {links.map((link) => (
-              <li key={link.href}>
-                <a
-                  href={link.href}
-            className="flex items-baseline gap-4 py-3 font-display text-[clamp(2rem,10vw,2.5rem)] tracking-tight text-ink"
-                  onClick={() => setOpen(false)}
-                >
-                  <span className="font-mono-data text-sm text-muted">
-                    {link.index}
-                  </span>
-                  {link.label}
-                </a>
-              </li>
-            ))}
-          </ul>
-          <div className="section-pad flex flex-col gap-3 border-t border-ink/10 py-6">
-            <a
-              href="#contact"
-              className="btn-pill btn-pill-outline w-full text-center"
-              onClick={() => setOpen(false)}
-            >
-              GET IN TOUCH
-            </a>
-            <button
-              type="button"
-              onClick={() => {
-                setOpen(false);
-                openAsk();
-              }}
-              className="btn-pill btn-pill-primary w-full"
-            >
-              ASK MY WORK
-            </button>
-          </div>
-        </div>
-      )}
     </header>
+
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            key="mobile-nav"
+            id="mobile-nav"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.25 }}
+            className="fixed inset-0 z-[var(--z-modal)] flex flex-col bg-bg/97 backdrop-blur-xl xl:hidden"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Menu"
+          >
+            <div className="section-pad flex h-14 items-center justify-between border-b border-ink/10">
+              <span className="font-mono-data text-[11px] tracking-[0.14em] text-ink">
+                MENU
+              </span>
+              <button
+                type="button"
+                className="font-mono-data text-[10px] tracking-wider text-muted"
+                onClick={() => setOpen(false)}
+              >
+                CLOSE ✕
+              </button>
+            </div>
+            <motion.ul
+              variants={staggerContainer(0.06, 0.1)}
+              initial="hidden"
+              animate="visible"
+              exit="hidden"
+              className="section-pad flex flex-1 flex-col justify-center gap-1 py-10"
+            >
+              {links.map((link) => (
+                <motion.li key={link.href} variants={slideInRight}>
+                  <a
+                    href={link.href}
+                    className="flex items-baseline gap-4 py-3 font-display text-[clamp(2rem,10vw,2.5rem)] tracking-tight text-ink"
+                    onClick={() => setOpen(false)}
+                  >
+                    <span className="font-mono-data text-sm text-muted">
+                      {link.index}
+                    </span>
+                    {link.label}
+                  </a>
+                </motion.li>
+              ))}
+            </motion.ul>
+            <motion.div
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ ...editorialTransition, delay: 0.3 }}
+              className="section-pad flex flex-col gap-3 border-t border-ink/10 py-6"
+            >
+              <a
+                href="#contact"
+                className="btn-pill btn-pill-outline w-full text-center"
+                onClick={() => setOpen(false)}
+              >
+                GET IN TOUCH
+              </a>
+              <button
+                type="button"
+                onClick={() => {
+                  setOpen(false);
+                  openAsk();
+                }}
+                className="btn-pill btn-pill-primary w-full"
+              >
+                ASK MY WORK
+              </button>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
   );
 }

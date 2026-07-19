@@ -1,14 +1,8 @@
 import Image from "next/image";
-import entries from "@/content/build-log/entries.json";
 import { SectionIndex } from "@/components/chrome/SectionIndex";
 import { MarqueeText } from "@/components/chrome/MarqueeText";
 import { cn } from "@/lib/utils";
-
-type Entry = {
-  date: string;
-  tag?: string;
-  body: string;
-};
+import type { ArticleEntry } from "@/lib/content/site";
 
 const BLOCKS = [
   {
@@ -37,11 +31,12 @@ function formatDate(iso: string) {
   });
 }
 
-export function BuildLogList() {
-  const items = (entries as Entry[])
-    .slice()
-    .sort((a, b) => (a.date < b.date ? 1 : -1))
-    .slice(0, 3);
+type Props = {
+  entries: ArticleEntry[];
+};
+
+export function BuildLogList({ entries }: Props) {
+  const items = entries.slice(0, 3);
 
   return (
     <section
@@ -66,7 +61,7 @@ export function BuildLogList() {
           const style = BLOCKS[i % BLOCKS.length];
           return (
             <li
-              key={`${entry.date}-${entry.tag ?? "log"}`}
+              key={entry.slug}
               className={cn(
                 "relative overflow-hidden rounded-[var(--radius-card)] p-6",
                 style.bg,

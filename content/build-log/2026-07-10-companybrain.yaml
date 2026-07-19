@@ -1,0 +1,6 @@
+title: CompanyBrain chat hardening
+date: "2026-07-10"
+tag: CompanyBrain
+body: >-
+  Hardening the Graph RAG chat path: SSE streaming, retrieval provenance in the
+  UI, and admin surfaces for latency and routing.
