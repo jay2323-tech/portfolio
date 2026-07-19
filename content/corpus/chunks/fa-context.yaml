@@ -1,0 +1,4 @@
+title: "Factory Attendance — context"
+source: case-study
+content: "Built for a manufacturing site that needed reliable daily attendance without clipboard chaos or buddy-punching. Constraints: production environment where downtime is serious; varied lighting and shift-change queues; reports ops and payroll can use; solo delivery with clear handoff for on-site staff. Status: live in production."
+href: "/work/factory-attendance#factory-attendance-context"

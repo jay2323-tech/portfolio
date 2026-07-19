@@ -1,0 +1,4 @@
+title: "Factory Attendance — architecture"
+source: case-study
+content: "Capture devices on the floor feed a recognition pipeline; verified punches land in a cloud attendance store; ops get daily reports and exception queues instead of spreadsheets. The hard part is shift-change failure modes, not the model alone. Stack: face recognition, edge to cloud, ops tooling, reports."
+href: "/work/factory-attendance#factory-attendance-architecture"

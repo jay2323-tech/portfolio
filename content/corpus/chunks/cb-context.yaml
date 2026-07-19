@@ -1,0 +1,4 @@
+title: "CompanyBrain — context"
+source: case-study
+content: "Built for teams that need an internal assistant grounded in their own documents and org graph. Constraints: solo-built product surface against a FastAPI backend; must stream answers with thinking/token separation and visible retrieval provenance; hybrid search plus graph RAG over a vector store; observability (latency, routing, hallucination forensics) is first-class."
+href: "/work/company-brain#company-brain-context"

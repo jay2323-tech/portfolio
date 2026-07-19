@@ -12,8 +12,14 @@ export type CaseStudy = {
   problem: string;
   status: CaseStudyStatus;
   statusLabel: string;
+  /** Card category label */
+  domain: string;
+  /** Card year */
+  year: string;
   metrics: CaseStudyMetric[];
   tags: string[];
+  /** Stage / card cover under /public */
+  coverImage: string;
   /** Detail page */
   eyebrow: string;
   headline: string;

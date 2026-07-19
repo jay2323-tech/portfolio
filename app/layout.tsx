@@ -1,37 +1,32 @@
 import type { Metadata } from "next";
-import { Fraunces, Geist, Geist_Mono } from "next/font/google";
-import { Nav } from "@/components/nav/Nav";
-import { GrainOverlay } from "@/components/chrome/GrainOverlay";
-import { StatusBar } from "@/components/chrome/StatusBar";
-import { AskProvider } from "@/components/ask-my-work/AskContext";
-import { AskWidget } from "@/components/ask-my-work/AskWidget";
-import { SmoothScrollProvider } from "@/components/providers/SmoothScroll";
+import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 
-const fraunces = Fraunces({
+const inter = Inter({
   subsets: ["latin"],
-  variable: "--font-fraunces",
+  variable: "--font-body",
   display: "swap",
 });
 
-const geist = Geist({
+const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
-  variable: "--font-geist",
+  variable: "--font-mono-jb",
   display: "swap",
+  weight: ["400", "500", "600"],
 });
 
-const geistMono = Geist_Mono({
-  subsets: ["latin"],
-  variable: "--font-geist-mono",
-  display: "swap",
-});
+// Display face (Satoshi) loads via Fontshare CDN in globals.css → --font-display
 
 export const metadata: Metadata = {
   title: "Jayanth Krishna — AI Engineer",
   description:
     "AI Engineer building production RAG systems. Portfolio with live retrieval over his own work.",
   icons: {
-    icon: "/favicon.svg",
+    icon: [
+      { url: "/favicon.png", type: "image/png", sizes: "32x32" },
+      { url: "/favicon-48.png", type: "image/png", sizes: "48x48" },
+    ],
+    apple: [{ url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
   },
 };
 
@@ -44,19 +39,10 @@ export default function RootLayout({
     <html
       lang="en"
       id="top"
-      className={`${fraunces.variable} ${geist.variable} ${geistMono.variable}`}
+      data-accent="mint"
+      className={`${inter.variable} ${jetbrainsMono.variable}`}
     >
-      <body className="font-sans antialiased pb-8">
-        <SmoothScrollProvider>
-          <AskProvider>
-            <GrainOverlay />
-            <Nav />
-            <main className="relative z-[1]">{children}</main>
-            <StatusBar />
-            <AskWidget />
-          </AskProvider>
-        </SmoothScrollProvider>
-      </body>
+      <body className="font-sans antialiased">{children}</body>
     </html>
   );
 }

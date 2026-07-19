@@ -1,0 +1,4 @@
+title: "CompanyBrain — what broke"
+source: case-study
+content: "Early CompanyBrain prompts answered fluently while citing the wrong chunk. The fix was not a bigger model — it was forcing retrieved chunk metadata into the UI and scoring path so bad retrieval became visible. Also underestimated how much admin and observability UI a trusted chat product needs."
+href: "/work/company-brain#company-brain-what-broke"

@@ -5,38 +5,35 @@ import { useReducedMotion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { SectionHeader } from "@/components/chrome/SectionHeader";
 import { ContactForm } from "./ContactForm";
+import { Magnetic } from "@/components/chrome/Magnetic";
 import { gsap, registerGsap, ScrollTrigger } from "@/lib/gsap/setup";
 
 type Path = "hiring" | "project";
 
-const LINKS = [
-  {
-    label: "EMAIL",
-    href: "mailto:hello@jayanthkrishna.dev",
-    display: "hello@jayanthkrishna.dev",
-    external: false,
-  },
-  {
-    label: "LINKEDIN",
-    href: "https://linkedin.com",
-    display: "linkedin.com/in/…",
-    external: true,
-  },
-  {
-    label: "GITHUB",
-    href: "https://github.com",
-    display: "github.com/…",
-    external: true,
-  },
-] as const;
+type ContactLink = {
+  label: string;
+  href: string;
+  display: string;
+  external: boolean;
+};
+
+type Props = {
+  links: ContactLink[];
+};
 
 /**
  * Contact — LETS TALK marquee, link rows with ↗, bottom-border form.
  */
-export function ContactSection() {
+export function ContactSection({ links }: Props) {
   const [path, setPath] = useState<Path>("hiring");
   const sectionRef = useRef<HTMLElement>(null);
   const reduce = useReducedMotion();
+  const emailLink =
+    links.find((l) => l.href.startsWith("mailto:")) ?? links[0];
+  const emailDisplay =
+    emailLink?.display ?? "cvjayanth005@gmail.com";
+  const emailHref =
+    emailLink?.href ?? "mailto:cvjayanth005@gmail.com";
 
   useEffect(() => {
     if (reduce || !sectionRef.current) return;
@@ -80,7 +77,7 @@ export function ContactSection() {
         index="05"
         meta="OPEN TO ROLES"
         title="Let's talk"
-        bgMarquee="LETS TALK"
+        bgMarquee="LET'S TALK"
         headingId="contact-heading"
       />
 
@@ -98,68 +95,95 @@ export function ContactSection() {
           data-contact-block
           className="mt-12 divide-y divide-ink/10 border-y border-ink/10"
         >
-          {LINKS.map((link) => (
+          {links.map((link) => (
             <li key={link.label}>
-              <a
-                href={link.href}
-                {...(link.external
-                  ? { target: "_blank", rel: "noopener noreferrer" }
-                  : {})}
-                className="contact-link group flex flex-wrap items-baseline justify-between gap-2 py-5"
-              >
-                <span className="font-mono-data text-[10px] tracking-[0.16em] text-muted transition-colors group-hover:text-ink">
-                  {link.label}
-                </span>
-                <span className="font-mono-data text-sm text-ink transition-transform duration-250 ease-out group-hover:translate-x-1 group-hover:text-accent-clay">
-                  {link.display}
-                  <span className="ml-1 inline-block transition-transform duration-250 group-hover:-translate-y-0.5 group-hover:translate-x-0.5">
-                    ↗
+              <Magnetic strength={6} className="block w-full">
+                <a
+                  href={link.href}
+                  {...(link.external
+                    ? { target: "_blank", rel: "noopener noreferrer" }
+                    : {})}
+                  className="contact-link group flex w-full flex-wrap items-baseline justify-between gap-2 py-5"
+                >
+                  <span className="font-mono-data text-[10px] tracking-[0.16em] text-muted transition-colors group-hover:text-ink">
+                    {link.label}
                   </span>
-                </span>
-              </a>
+                  <span className="font-mono-data text-sm text-ink transition-transform duration-250 ease-out group-hover:translate-x-1 group-hover:text-accent-clay">
+                    {link.display}
+                    <span className="arrow-morph ml-1 inline-block">
+                      ↗
+                    </span>
+                  </span>
+                </a>
+              </Magnetic>
             </li>
           ))}
         </ul>
 
         <div data-contact-block className="mt-14 md:mt-16">
-          <h3 className="font-mono-data text-[10px] tracking-[0.18em] text-muted">
-            SEND A MESSAGE
-          </h3>
+          <div className="border-y border-dotted border-ink/25 py-10 md:py-12">
+            <div className="border border-ink/15 bg-surface/60 px-5 py-8 md:px-8 md:py-10">
+              <h3 className="font-mono-data text-[10px] tracking-[0.18em] text-muted">
+                SEND A MESSAGE
+              </h3>
 
-          <div className="mt-6 flex flex-wrap gap-3">
-            <button
-              type="button"
-              onClick={() => setPath("hiring")}
-              className={cn(
-                "font-mono-data border px-3 py-2 text-[10px] tracking-[0.14em] transition-colors",
-                path === "hiring"
-                  ? "border-ink bg-ink text-bg"
-                  : "border-ink/15 text-ink hover:border-ink/40",
-              )}
-            >
-              HIRING
-            </button>
-            <button
-              type="button"
-              onClick={() => setPath("project")}
-              className={cn(
-                "font-mono-data border px-3 py-2 text-[10px] tracking-[0.14em] transition-colors",
-                path === "project"
-                  ? "border-ink bg-ink text-bg"
-                  : "border-ink/15 text-ink hover:border-ink/40",
-              )}
-            >
-              PROJECT
-            </button>
+              <div className="mt-6 flex flex-wrap gap-3">
+                <button
+                  type="button"
+                  onClick={() => setPath("hiring")}
+                  className={cn(
+                    "font-mono-data border px-3 py-2 text-[10px] tracking-[0.14em] transition-colors",
+                    path === "hiring"
+                      ? "border-ink bg-ink text-bg"
+                      : "border-ink/15 text-ink hover:border-ink/40",
+                  )}
+                >
+                  HIRING
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setPath("project")}
+                  className={cn(
+                    "font-mono-data border px-3 py-2 text-[10px] tracking-[0.14em] transition-colors",
+                    path === "project"
+                      ? "border-ink bg-ink text-bg"
+                      : "border-ink/15 text-ink hover:border-ink/40",
+                  )}
+                >
+                  PROJECT
+                </button>
+              </div>
+
+              <div className="mt-10 max-w-xl">
+                <ContactForm path={path} />
+              </div>
+
+              <p className="mt-8 font-mono-data text-[10px] tracking-[0.12em] text-muted">
+                OR WRITE DIRECT TO{" "}
+                <a
+                  href={emailHref}
+                  className="text-ink underline-offset-4 transition-colors hover:text-accent-clay hover:underline"
+                >
+                  {emailDisplay.toUpperCase()}
+                </a>
+              </p>
+            </div>
           </div>
+        </div>
 
-          <div className="mt-10 max-w-xl">
-            <ContactForm path={path} />
-          </div>
-
-          <p className="mt-8 font-mono-data text-[10px] tracking-[0.12em] text-muted">
-            OR WRITE DIRECT TO HELLO@JAYANTHKRISHNA.DEV
-          </p>
+        <div
+          data-contact-block
+          className="mt-12 flex justify-end md:mt-16"
+        >
+          <Magnetic strength={14}>
+            <a
+              href="#top"
+              data-cursor="view"
+              className="font-mono-data text-[11px] tracking-[0.14em] text-ink transition-colors hover:text-accent-clay"
+            >
+              BACK TO TOP ↑
+            </a>
+          </Magnetic>
         </div>
       </div>
     </section>

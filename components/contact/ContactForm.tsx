@@ -1,7 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useReducedMotion } from "framer-motion";
 import { cn } from "@/lib/utils";
+import { Magnetic } from "@/components/chrome/Magnetic";
+import { ConfettiBurst } from "./ConfettiBurst";
 
 type Path = "hiring" | "project";
 
@@ -9,7 +12,9 @@ type Props = {
   path: Path;
 };
 
-/** Editorial-style contact form: NAME / EMAIL / MESSAGE rows */
+/**
+ * Contact form — Juba-style dotted underlines + submit morph.
+ */
 export function ContactForm({ path }: Props) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -19,6 +24,22 @@ export function ContactForm({ path }: Props) {
     "idle",
   );
   const [error, setError] = useState<string | null>(null);
+  const [showConfetti, setShowConfetti] = useState(true);
+  const btnRef = useRef<HTMLButtonElement>(null);
+  const reduce = useReducedMotion();
+
+  useEffect(() => {
+    if (status !== "ok" || reduce || !btnRef.current) return;
+    const el = btnRef.current;
+    el.animate(
+      [
+        { transform: "scale(1)" },
+        { transform: "scale(1.06)" },
+        { transform: "scale(1)" },
+      ],
+      { duration: 420, easing: "cubic-bezier(0.34, 1.56, 0.64, 1)" },
+    );
+  }, [status, reduce]);
 
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -46,97 +67,122 @@ export function ContactForm({ path }: Props) {
         return;
       }
       setStatus("ok");
+      setShowConfetti(true);
       setName("");
       setEmail("");
       setCompany("");
       setMessage("");
     } catch {
       setStatus("err");
-      setError("Network error. Email hello@jayanthkrishna.dev directly.");
+      setError("Network error. Email cvjayanth005@gmail.com directly.");
     }
   }
 
   if (status === "ok") {
     return (
-      <div className="border border-ink/10 bg-surface p-6">
+      <div className="relative overflow-hidden border border-ink/15 p-6">
+        {showConfetti && !reduce && (
+          <ConfettiBurst onDone={() => setShowConfetti(false)} />
+        )}
         <p className="font-mono-data text-[10px] tracking-[0.16em] text-ok-signal">
-          SENT
+          ✓ SENT
         </p>
         <p className="mt-3 text-ink">
           Got it — I&apos;ll reply within 48 hours.
         </p>
+        <button
+          type="button"
+          className="mt-4 font-mono-data text-[10px] tracking-[0.14em] text-muted underline-offset-4 hover:text-ink hover:underline"
+          onClick={() => setStatus("idle")}
+        >
+          SEND ANOTHER
+        </button>
       </div>
     );
   }
 
-  const field =
-    "mt-1 w-full border-0 border-b border-ink/20 bg-transparent px-0 py-2 text-ink placeholder:text-muted focus:border-accent-clay focus:outline-none";
-
   return (
-    <form onSubmit={onSubmit} className="space-y-6">
+    <form onSubmit={onSubmit} className="relative space-y-10">
       <p className="font-mono-data text-[10px] tracking-[0.14em] text-muted">
         {path === "hiring"
           ? "INCLUDE COMPANY, ROLE, AND TIMELINE."
           : "INCLUDE BUDGET, TIMELINE, AND THE PROBLEM."}
       </p>
-      <label className="block">
-        <span className="font-mono-data text-[10px] tracking-[0.16em] text-muted">
-          NAME
-        </span>
+
+      <label className="contact-dot-field">
+        <span className="contact-dot-label">NAME</span>
         <input
           required
           value={name}
           onChange={(e) => setName(e.target.value)}
-          className={field}
+          className="contact-dot-input"
         />
       </label>
-      <label className="block">
-        <span className="font-mono-data text-[10px] tracking-[0.16em] text-muted">
-          EMAIL
-        </span>
+
+      <label className="contact-dot-field">
+        <span className="contact-dot-label">EMAIL</span>
         <input
           required
           type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className={field}
+          className="contact-dot-input"
         />
       </label>
-      <label className="block">
-        <span className="font-mono-data text-[10px] tracking-[0.16em] text-muted">
+
+      <label className="contact-dot-field">
+        <span className="contact-dot-label">
           {path === "hiring" ? "COMPANY / ROLE" : "COMPANY"}
         </span>
         <input
           value={company}
           onChange={(e) => setCompany(e.target.value)}
-          className={field}
+          className="contact-dot-input"
         />
       </label>
-      <label className="block">
-        <span className="font-mono-data text-[10px] tracking-[0.16em] text-muted">
-          MESSAGE
-        </span>
+
+      <label className="contact-dot-field contact-dot-message">
+        <span className="contact-dot-label">MESSAGE</span>
         <textarea
           required
-          rows={4}
+          rows={5}
           value={message}
           onChange={(e) => setMessage(e.target.value)}
-          className={cn(field, "resize-y")}
+          className="contact-dot-input"
         />
       </label>
+
       {error && (
         <p className="font-mono-data text-[11px] text-accent-clay">{error}</p>
       )}
-      <button
-        type="submit"
-        disabled={status === "sending"}
-        className={cn(
-          "font-mono-data text-[11px] tracking-[0.16em] text-ink underline-offset-4 hover:text-accent-clay hover:underline",
-          status === "sending" && "opacity-60",
-        )}
-      >
-        {status === "sending" ? "SENDING…" : "SEND ↗"}
-      </button>
+
+      <Magnetic strength={10}>
+        <button
+          ref={btnRef}
+          type="submit"
+          disabled={status === "sending"}
+          data-cursor="open"
+          className={cn(
+            "contact-submit inline-flex items-center justify-center overflow-hidden",
+            "font-mono-data text-[11px] tracking-[0.16em] text-bg",
+            "rounded-[var(--radius-btn)] bg-ink transition-[width,background-color] duration-400 ease-out",
+            status === "sending" ? "h-10 w-10" : "h-10 min-w-[7.5rem] px-5",
+            status === "sending" && "opacity-90",
+          )}
+        >
+          {status === "sending" ? (
+            <span
+              className="contact-submit-spinner block h-4 w-4 rounded-full border-2 border-bg/30 border-t-bg"
+              aria-hidden
+            />
+          ) : (
+            "SEND ↗"
+          )}
+          <span className="sr-only">
+            {status === "sending" ? "Sending" : "Send message"}
+          </span>
+        </button>
+      </Magnetic>
     </form>
   );
 }

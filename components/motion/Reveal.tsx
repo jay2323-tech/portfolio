@@ -1,8 +1,9 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
 import type { ReactNode } from "react";
 import { editorialEase } from "@/lib/motion/easing";
+import { useSafeReducedMotion } from "@/lib/motion/useSafeReducedMotion";
 
 type Props = {
   children: ReactNode;
@@ -15,7 +16,7 @@ export function Reveal({
   className,
   delay = 0,
 }: Props) {
-  const reduce = useReducedMotion();
+  const reduce = useSafeReducedMotion();
 
   if (reduce) {
     return <div className={className}>{children}</div>;

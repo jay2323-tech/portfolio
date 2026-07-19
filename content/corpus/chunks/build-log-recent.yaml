@@ -1,0 +1,4 @@
+title: "Recent build log"
+source: build-log
+content: "Recent work: portfolio rebuild with Next.js and glass design tokens; CompanyBrain Graph RAG chat path hardening with SSE and retrieval provenance; factory attendance report edge cases; DesiFit DPDP data-flow mapping that cut planned analytics events."
+href: "/#build-log"

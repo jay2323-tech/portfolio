@@ -1,49 +1,29 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { useReducedMotion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { ArchitectureDiagramCanvas } from "@/components/architecture-diagram/ArchitectureDiagram";
+import { LabNetworkCanvas } from "./LabNetworkCanvas";
 import { SectionHeader } from "@/components/chrome/SectionHeader";
 import { useAsk } from "@/components/ask-my-work/AskContext";
 import { gsap, registerGsap, ScrollTrigger } from "@/lib/gsap/setup";
+import { onRowGlowMove } from "@/lib/motion/rowGlow";
 import { cn } from "@/lib/utils";
+import type { SiteLab } from "@/lib/content/reader";
 
-const EXPERIMENTS = [
-  {
-    n: "001",
-    tags: ["TYPESCRIPT", "RAG", "SSE"],
-    title: "ASK-MY-WORK",
-    body: "A live retrieval widget over this portfolio corpus — hybrid lexical + dense ranking, streamed answers, clickable source chips. The site proves the skill it describes.",
-    cta: "OPEN ASK →",
-    action: "ask" as const,
-  },
-  {
-    n: "002",
-    tags: ["SVG", "SYSTEMS", "INTERACTIVE"],
-    title: "COMPANYBRAIN-ARCH",
-    body: "Interactive architecture diagram for CompanyBrain — hover/focus nodes, highlight edges, deep-link into the case study. Proof that system design can be explored, not just illustrated.",
-    cta: "SEE DIAGRAM ↓",
-    action: "diagram" as const,
-  },
-  {
-    n: "003",
-    tags: ["HYBRID", "CORPUS", "LOCAL"],
-    title: "PORTFOLIO-CORPUS",
-    body: "Curated chunk store with build-time embeddings and a serverless retrieve path — no vector DB required at this scale. Rate-limited, inspectable, cheap to run.",
-    cta: "VIEW WORK →",
-    href: "/#work",
-    action: "link" as const,
-  },
-] as const;
+type Props = {
+  content: SiteLab;
+};
 
 /**
  * Experiment Lab — section marquee + experiment rows + Ask / diagram.
  */
-export function LabSection() {
+export function LabSection({ content }: Props) {
   const { openAsk } = useAsk();
   const sectionRef = useRef<HTMLElement>(null);
   const reduce = useReducedMotion();
   const [diagramOpen, setDiagramOpen] = useState(true);
+  const experiments = content.experiments ?? [];
 
   useEffect(() => {
     if (reduce || !sectionRef.current) return;
@@ -76,10 +56,17 @@ export function LabSection() {
       rows.forEach((row) => {
         gsap.fromTo(
           row,
-          { y: 30, opacity: 0 },
+          {
+            y: 30,
+            opacity: 0,
+            rotateX: -12,
+            transformPerspective: 900,
+            transformOrigin: "50% 100%",
+          },
           {
             y: 0,
             opacity: 1,
+            rotateX: 0,
             duration: 0.65,
             ease: "power2.out",
             clearProps: "transform,opacity",
@@ -106,18 +93,21 @@ export function LabSection() {
     >
       <SectionHeader
         index="03"
-        meta="PROOF OF BUILD"
+        meta={content.meta || "PROOF OF BUILD"}
         title="Experiment lab"
         bgMarquee="EXPERIMENT LAB"
         headingId="lab-heading"
       />
 
-      <ul className="lab-list mt-10 md:mt-14">
-        {EXPERIMENTS.map((exp) => (
+      <div className="relative">
+        <LabNetworkCanvas />
+        <ul className="lab-list relative mt-10 md:mt-14">
+        {experiments.map((exp) => (
           <li
             key={exp.n}
             data-lab-row
-            className="lab-row group border-t border-ink/10 transition-[background-color,opacity] duration-250 ease-out last:border-b"
+            onMouseMove={onRowGlowMove}
+            className="lab-row row-glow group border-t border-ink/10 transition-[background-color,opacity] duration-250 ease-out last:border-b"
           >
             <div className="section-pad mx-auto grid max-w-[var(--content-max)] gap-4 py-10 md:grid-cols-[minmax(0,1fr)_auto] md:items-start md:gap-10 md:py-12">
               <div className="min-w-0">
@@ -127,13 +117,7 @@ export function LabSection() {
                   {exp.tags.join(" · ")}
                 </p>
                 <h3 className="font-display mt-3 text-[clamp(1.75rem,3.5vw,2.75rem)] leading-[0.85] tracking-tight text-ink transition-transform duration-250 ease-out origin-left group-hover:scale-[1.02]">
-                  <span className="relative z-[1] block">{exp.title}</span>
-                  <span
-                    className="pointer-events-none -mt-[0.42em] block select-none text-ink/[0.12]"
-                    aria-hidden
-                  >
-                    {exp.title}
-                  </span>
+                  {exp.title}
                 </h3>
                 <p className="mt-4 max-w-2xl text-sm leading-relaxed text-muted md:text-base">
                   {exp.body}
@@ -164,7 +148,7 @@ export function LabSection() {
                     {exp.cta}
                   </a>
                 )}
-                {exp.action === "link" && "href" in exp && (
+                {exp.action === "link" && exp.href && (
                   <a
                     href={exp.href}
                     className={cn(
@@ -179,7 +163,8 @@ export function LabSection() {
             </div>
           </li>
         ))}
-      </ul>
+        </ul>
+      </div>
 
       <div
         id="lab-diagram"
@@ -198,11 +183,23 @@ export function LabSection() {
               {diagramOpen ? "▴ COLLAPSE" : "▾ EXPAND"}
             </span>
           </button>
-          {diagramOpen && (
-            <div id="lab-diagram-panel" className="mt-4">
-              <ArchitectureDiagramCanvas />
-            </div>
-          )}
+          <AnimatePresence initial={false}>
+            {diagramOpen && (
+              <motion.div
+                key="lab-diagram-panel"
+                id="lab-diagram-panel"
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: "auto", opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                className="overflow-hidden"
+              >
+                <div className="mt-4">
+                  <ArchitectureDiagramCanvas />
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       </div>
 

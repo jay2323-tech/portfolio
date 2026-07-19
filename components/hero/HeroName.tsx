@@ -1,7 +1,8 @@
 "use client";
 
 import { useCallback, useEffect, useRef } from "react";
-import { motion, useReducedMotion, type MotionValue } from "framer-motion";
+import { motion, type MotionValue } from "framer-motion";
+import { useSafeReducedMotion } from "@/lib/motion/useSafeReducedMotion";
 import { cn } from "@/lib/utils";
 
 type Props = {
@@ -47,7 +48,7 @@ type LineProps = {
   text: string;
   className?: string;
   mouse: React.MutableRefObject<MouseState>;
-  reduce: boolean | null;
+  reduce: boolean;
 };
 
 /**
@@ -139,6 +140,7 @@ function ProximityLine({ text, className, mouse, reduce }: LineProps) {
         <span
           key={`${char}-${i}`}
           data-hero-letter
+          data-char={char === " " ? "\u00A0" : char}
           className="inline-block will-change-transform"
           style={{ transformOrigin: "50% 70%" }}
           aria-hidden
@@ -169,7 +171,7 @@ export function HeroName({
   y,
   opacity,
 }: Props) {
-  const reduce = useReducedMotion();
+  const reduce = useSafeReducedMotion();
   const mouse = useRef<MouseState>({ x: 0, y: 0, inside: false });
   const lastText = last.replace(/\.$/, "");
 
@@ -202,7 +204,7 @@ export function HeroName({
           reduce={reduce}
         />
         <ProximityLine
-          text={`${lastText}.`}
+          text={lastText}
           className="block whitespace-nowrap text-[clamp(3rem,9vw,7rem)] font-bold leading-[0.88] text-mint-deep"
           mouse={mouse}
           reduce={reduce}

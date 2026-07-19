@@ -1,0 +1,13 @@
+links:
+  - label: EMAIL
+    href: mailto:cvjayanth005@gmail.com
+    display: cvjayanth005@gmail.com
+    external: true
+  - label: LINKEDIN
+    href: https://linkedin.com
+    display: linkedin.com/in/…
+    external: true
+  - label: GITHUB
+    href: https://github.com
+    display: github.com/…
+    external: true

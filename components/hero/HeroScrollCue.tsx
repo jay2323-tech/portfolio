@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useReducedMotion, type MotionValue } from "framer-motion";
+import { motion, type MotionValue } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 type Props = {
@@ -10,40 +10,47 @@ type Props = {
   delay?: number;
 };
 
-/** Editorial-style ▼ SCROLL cue — entrance owned by parent GSAP when delay=0. */
+/** ▼ SCROLL cue — looping draw-on line + fade/opacity owned by parent GSAP. */
 export function HeroScrollCue({
   href = "#work",
   className,
   opacity,
 }: Props) {
-  const reduce = useReducedMotion();
-
   return (
     <motion.div style={opacity != null ? { opacity } : undefined}>
       <a
         href={href}
+        data-cursor="view"
         className={cn(
-          "inline-flex items-center gap-2 font-mono-data text-[11px] tracking-[0.18em] text-ink",
+          "group inline-flex flex-col items-center gap-2 font-mono-data text-[11px] tracking-[0.18em] text-ink",
           "transition-colors hover:text-accent-clay",
           className,
         )}
       >
-        <motion.span
+        <svg
+          width="14"
+          height="22"
+          viewBox="0 0 14 22"
+          fill="none"
           aria-hidden
-          className="inline-block text-sm leading-none"
-          animate={reduce ? undefined : { y: [0, 4, 0] }}
-          transition={
-            reduce
-              ? undefined
-              : {
-                  duration: 1.6,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }
-          }
+          className="scroll-cue-svg text-current"
         >
-          ▼
-        </motion.span>
+          <path
+            d="M7 1V19"
+            stroke="currentColor"
+            strokeWidth="1.4"
+            strokeLinecap="round"
+            className="scroll-cue-line"
+          />
+          <path
+            d="M2 14L7 20L12 14"
+            stroke="currentColor"
+            strokeWidth="1.4"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="scroll-cue-chevron"
+          />
+        </svg>
         SCROLL
       </a>
     </motion.div>

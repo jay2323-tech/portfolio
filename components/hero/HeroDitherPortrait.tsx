@@ -12,9 +12,64 @@ type Props = {
   src?: string;
 };
 
+/** Draws the source image into a canvas at (w/dot × h/dot) then dithers it. */
+async function renderDither(
+  canvas: HTMLCanvasElement,
+  img: HTMLImageElement | null,
+  w: number,
+  h: number,
+  dot: number,
+) {
+  const dw = Math.max(1, Math.round(w / dot));
+  const dh = Math.max(1, Math.round(h / dot));
+  canvas.width = dw;
+  canvas.height = dh;
+  const ctx = canvas.getContext("2d");
+  if (!ctx) return;
+
+  if (img) {
+    const scale = Math.max(dw / img.naturalWidth, dh / img.naturalHeight);
+    const sdw = img.naturalWidth * scale;
+    const sdh = img.naturalHeight * scale;
+    ctx.fillStyle = "#fafaf8";
+    ctx.fillRect(0, 0, dw, dh);
+    ctx.filter = "grayscale(1) contrast(1.15)";
+    ctx.drawImage(img, (dw - sdw) / 2, (dh - sdh) / 2, sdw, sdh);
+    ctx.filter = "none";
+  } else {
+    drawSilhouette(ctx, dw, dh);
+  }
+
+  const dithered = ditherImageData(ctx.getImageData(0, 0, dw, dh));
+  ctx.putImageData(dithered, 0, 0);
+}
+
+/** Blit a small dithered buffer onto the visible canvas at (w × h), crisp. */
+function blit(
+  visible: HTMLCanvasElement,
+  small: HTMLCanvasElement,
+  w: number,
+  h: number,
+  dpr: number,
+) {
+  const ctx = visible.getContext("2d");
+  if (!ctx) return;
+  visible.width = Math.floor(w * dpr);
+  visible.height = Math.floor(h * dpr);
+  visible.style.width = `${w}px`;
+  visible.style.height = `${h}px`;
+  ctx.setTransform(1, 0, 0, 1, 0, 0);
+  ctx.clearRect(0, 0, visible.width, visible.height);
+  ctx.imageSmoothingEnabled = false;
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  ctx.drawImage(small, 0, 0, small.width, small.height, 0, 0, w, h);
+}
+
 /**
  * Bayer 4×4 dithered portrait — right visual plane.
- * Parallax scrub via ScrollTrigger (~0.6×).
+ * Parallax scrub via ScrollTrigger (~0.6×). A second, finer-grained dither
+ * pass is revealed in a soft circle that follows the cursor — a "detail
+ * spotlight" on top of the coarse base halftone.
  */
 export function HeroDitherPortrait({
   className,
@@ -22,15 +77,14 @@ export function HeroDitherPortrait({
 }: Props) {
   const wrapRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const detailRef = useRef<HTMLCanvasElement>(null);
   const reduce = useReducedMotion();
 
   useEffect(() => {
     const canvas = canvasRef.current;
+    const detail = detailRef.current;
     const wrap = wrapRef.current;
-    if (!canvas || !wrap) return;
-
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
+    if (!canvas || !detail || !wrap) return;
 
     let cancelled = false;
     let parallaxTween: gsap.core.Tween | undefined;
@@ -41,22 +95,9 @@ export function HeroDitherPortrait({
       const w = Math.max(1, Math.floor(rect.width));
       const h = Math.max(1, Math.floor(rect.height));
 
-      // Dot size in CSS px. Dither at (w/DOT × h/DOT), then upscale with
-      // smoothing off — that's what makes each dithered pixel read as a
-      // visible halftone dot instead of a near-invisible fleck.
-      const DOT = 5;
-      const dw2 = Math.max(1, Math.round(w / DOT));
-      const dh2 = Math.max(1, Math.round(h / DOT));
-
-      const small = document.createElement("canvas");
-      small.width = dw2;
-      small.height = dh2;
-      const sctx = small.getContext("2d");
-      if (!sctx) return;
-
       const img = new Image();
       img.decoding = "async";
-
+      let loaded: HTMLImageElement | null = null;
       try {
         await new Promise<void>((resolve, reject) => {
           img.onload = () => resolve();
@@ -64,34 +105,20 @@ export function HeroDitherPortrait({
           img.src = src;
         });
         if (cancelled) return;
-        const scale = Math.max(
-          dw2 / img.naturalWidth,
-          dh2 / img.naturalHeight,
-        );
-        const sdw = img.naturalWidth * scale;
-        const sdh = img.naturalHeight * scale;
-        sctx.fillStyle = "#fafaf8";
-        sctx.fillRect(0, 0, dw2, dh2);
-        sctx.filter = "grayscale(1) contrast(1.15)";
-        sctx.drawImage(img, (dw2 - sdw) / 2, (dh2 - sdh) / 2, sdw, sdh);
-        sctx.filter = "none";
+        loaded = img;
       } catch {
         if (cancelled) return;
-        drawSilhouette(sctx, dw2, dh2);
       }
 
-      const dithered = ditherImageData(sctx.getImageData(0, 0, dw2, dh2));
-      sctx.putImageData(dithered, 0, 0);
+      // Base layer: coarse dots (dot=5), always visible.
+      const small = document.createElement("canvas");
+      await renderDither(small, loaded, w, h, 5);
+      blit(canvas!, small, w, h, dpr);
 
-      canvas!.width = Math.floor(w * dpr);
-      canvas!.height = Math.floor(h * dpr);
-      canvas!.style.width = `${w}px`;
-      canvas!.style.height = `${h}px`;
-      ctx!.setTransform(1, 0, 0, 1, 0, 0);
-      ctx!.clearRect(0, 0, canvas!.width, canvas!.height);
-      ctx!.imageSmoothingEnabled = false;
-      ctx!.setTransform(dpr, 0, 0, dpr, 0, 0);
-      ctx!.drawImage(small, 0, 0, dw2, dh2, 0, 0, w, h);
+      // Detail layer: fine dots (dot=2), revealed only near the cursor.
+      const fine = document.createElement("canvas");
+      await renderDither(fine, loaded, w, h, 2);
+      blit(detail!, fine, w, h, dpr);
     }
 
     void renderClean();
@@ -132,6 +159,40 @@ export function HeroDitherPortrait({
     };
   }, [src, reduce]);
 
+  // Cursor-follow detail spotlight. The wrap is pointer-events-none (it must
+  // stay click-through), so this listens on window like CustomCursor does
+  // and hit-tests the wrap's rect manually instead of relying on DOM events.
+  useEffect(() => {
+    if (reduce) return;
+    const wrap = wrapRef.current;
+    const detail = detailRef.current;
+    if (!wrap || !detail) return;
+    if (window.matchMedia("(pointer: coarse)").matches) return;
+
+    function onMove(e: MouseEvent) {
+      const rect = wrap!.getBoundingClientRect();
+      const inside =
+        e.clientX >= rect.left &&
+        e.clientX <= rect.right &&
+        e.clientY >= rect.top &&
+        e.clientY <= rect.bottom;
+
+      if (!inside) {
+        detail!.style.opacity = "0";
+        return;
+      }
+
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      detail!.style.maskImage = `radial-gradient(circle 160px at ${x}px ${y}px, black 0%, transparent 100%)`;
+      detail!.style.webkitMaskImage = detail!.style.maskImage;
+      detail!.style.opacity = "1";
+    }
+
+    window.addEventListener("mousemove", onMove, { passive: true });
+    return () => window.removeEventListener("mousemove", onMove);
+  }, [reduce]);
+
   return (
     <div
       ref={wrapRef}
@@ -145,6 +206,11 @@ export function HeroDitherPortrait({
       <canvas
         ref={canvasRef}
         className="h-full w-full object-cover opacity-85 mix-blend-multiply"
+        aria-hidden
+      />
+      <canvas
+        ref={detailRef}
+        className="absolute inset-0 h-full w-full object-cover opacity-0 mix-blend-multiply transition-opacity duration-300 ease-out"
         aria-hidden
       />
     </div>

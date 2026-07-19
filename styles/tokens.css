@@ -61,4 +61,17 @@
   --z-ask-pill: 30;
   --z-ask-panel: 40;
   --z-modal: 50;
+  --z-cursor: 60;
+  --z-preloader: 70;
+}
+
+/* Light accent variants (THEME chip) — not dark mode */
+html[data-accent="blush"] {
+  --mint: #f4e4e0;
+  --mint-deep: #d4a89e;
+}
+
+html[data-accent="sky"] {
+  --mint: #e3edf5;
+  --mint-deep: #8eacbf;
 }

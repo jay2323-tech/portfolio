@@ -1,13 +1,13 @@
 "use client";
 
-import { useReducedMotion } from "framer-motion";
+import { useSafeReducedMotion } from "@/lib/motion/useSafeReducedMotion";
 
 /**
  * Fixed site-wide film-grain overlay.
- * Hidden when prefers-reduced-motion.
+ * Hidden when prefers-reduced-motion (after mount — SSR always renders).
  */
 export function GrainOverlay() {
-  const reduce = useReducedMotion();
+  const reduce = useSafeReducedMotion();
   if (reduce) return null;
 
   return (

@@ -8,6 +8,12 @@
   --glass-sat: 1.2;
   --paper-border: rgba(20, 20, 20, 0.08);
   --paper-shadow: 0 12px 40px -16px rgba(20, 20, 20, 0.18);
+
+  /* iOS-style scale+blur recede (ScaleBlurLayer) */
+  --recede-scale: 0.9;
+  --recede-blur: 14px;
+  --recede-radius: 22px;
+  --recede-dim: 0.22;
 }
 
 .paper-card {

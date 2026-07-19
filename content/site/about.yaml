@@ -1,0 +1,86 @@
+coordinates: 12.9716° N, 77.5946° E — BENGALURU
+statement: Building production RAG and computer-vision systems — as product and as code.
+blurb: >-
+  This site is itself a demo: Ask My Work retrieves over my case studies with
+  sources you can inspect.
+facts:
+  - LOCATION — BENGALURU, INDIA
+  - RELOCATION — OPEN, GLOBAL
+  - OPEN TO — INTERNSHIPS · FREELANCE · FULL-TIME
+resumeHref: mailto:cvjayanth005@gmail.com
+resumeLabel: DOWNLOAD RESUMÉ / CV →
+experience:
+  - org: PORTFOLIO / FREELANCE
+    role: AI ENGINEER
+    years: '[2024—]'
+  - org: COMPANYBRAIN
+    role: GRAPH RAG PRODUCT
+    years: '[2025—]'
+  - org: FACTORY ATTENDANCE
+    role: CV SYSTEM · PRODUCTION
+    years: '[2024—]'
+  - org: DESIFIT
+    role: DPDP-AWARE PRODUCT
+    years: '[2025—]'
+study:
+  - title: B.TECH · COMPUTER SCIENCE
+    place: In progress / recent
+    years: '[—]'
+foundations:
+  - 'n': '01'
+    title: Prove, don't claim
+    body: >-
+      Ship systems you can inspect — retrieval traces, metrics, and tradeoffs in
+      the open.
+  - 'n': '02'
+    title: Constraints first
+    body: >-
+      Compliance, latency, and ops limits shape the architecture before the demo
+      does.
+  - 'n': '03'
+    title: Earn the outcome
+    body: Measured impact — uptime, latency, citations — proof over opinion.
+  - 'n': '04'
+    title: Handoff that sticks
+    body: >-
+      Docs and runbooks — if it only works while I'm watching logs, it isn't
+      done.
+competencies:
+  - AI & Retrieval Systems
+  - Full-stack Delivery
+  - System Architecture
+  - Evaluation & Observability
+  - Product Engineering
+toolkit:
+  - name: Claude / GPT
+    role: Generation
+    initial: C
+    tint: var(--mint)
+  - name: Qdrant
+    role: Vectors
+    initial: Q
+    tint: var(--accent-clay)
+  - name: FastAPI
+    role: API
+    initial: F
+    tint: var(--sky)
+  - name: Next.js
+    role: Frontend
+    initial: 'N'
+    tint: var(--ink)
+  - name: TypeScript
+    role: Typing
+    initial: TS
+    tint: var(--sky)
+  - name: Python
+    role: Pipelines
+    initial: PY
+    tint: var(--butter)
+  - name: PostgreSQL
+    role: Data
+    initial: PG
+    tint: var(--blush)
+  - name: Vercel
+    role: Deploy
+    initial: V
+    tint: var(--ink)

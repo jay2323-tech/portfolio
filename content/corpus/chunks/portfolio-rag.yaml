@@ -1,0 +1,4 @@
+title: "This portfolio's RAG"
+source: resume
+content: "This portfolio site itself runs a live RAG pipeline over Jayanth's case studies and resume. Ask My Work retrieves curated chunks with cosine similarity over precomputed embeddings, then streams an answer with clickable source chips. It demonstrates production RAG skill instead of only describing it."
+href: "/#ask"

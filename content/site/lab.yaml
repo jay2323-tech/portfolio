@@ -1,0 +1,41 @@
+meta: PROOF OF BUILD
+experiments:
+  - n: "001"
+    tags:
+      - TYPESCRIPT
+      - RAG
+      - SSE
+    title: ASK-MY-WORK
+    body: >-
+      A live retrieval widget over this portfolio corpus — hybrid lexical +
+      dense ranking, streamed answers, clickable source chips. The site proves
+      the skill it describes.
+    cta: OPEN ASK →
+    action: ask
+    href: ""
+  - n: "002"
+    tags:
+      - SVG
+      - SYSTEMS
+      - INTERACTIVE
+    title: COMPANYBRAIN-ARCH
+    body: >-
+      Interactive architecture diagram for CompanyBrain — hover/focus nodes,
+      highlight edges, deep-link into the case study. Proof that system design
+      can be explored, not just illustrated.
+    cta: SEE DIAGRAM ↓
+    action: diagram
+    href: ""
+  - n: "003"
+    tags:
+      - HYBRID
+      - CORPUS
+      - LOCAL
+    title: PORTFOLIO-CORPUS
+    body: >-
+      Curated chunk store with build-time embeddings and a serverless retrieve
+      path — no vector DB required at this scale. Rate-limited, inspectable,
+      cheap to run.
+    cta: VIEW WORK →
+    action: link
+    href: /#work

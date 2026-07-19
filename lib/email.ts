@@ -13,7 +13,7 @@ type ContactPayload = {
 export async function sendContactEmail(
   payload: ContactPayload,
 ): Promise<{ ok: boolean; error?: string }> {
-  const to = process.env.CONTACT_TO_EMAIL || "hello@jayanthkrishna.dev";
+  const to = process.env.CONTACT_TO_EMAIL || "cvjayanth005@gmail.com";
   const apiKey = process.env.RESEND_API_KEY;
   const subject =
     payload.path === "hiring"
