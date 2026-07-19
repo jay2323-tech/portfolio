@@ -1,9 +1,9 @@
 "use client";
 
 import { ReactLenis, useLenis } from "lenis/react";
-import { useReducedMotion } from "framer-motion";
 import { useEffect, useState, type ReactNode } from "react";
 import { setupGsapWithLenis, registerGsap } from "@/lib/gsap/setup";
+import { useSafeReducedMotion } from "@/lib/motion/useSafeReducedMotion";
 import "lenis/dist/lenis.css";
 
 type Props = {
@@ -39,16 +39,20 @@ function useCoarsePointer() {
 /**
  * Site-wide Lenis smooth scroll + GSAP ticker sync.
  * Off for reduced-motion and coarse pointers (native momentum).
+ * Always wraps with Lenis until after mount so SSR HTML matches hydration.
  */
 export function SmoothScrollProvider({ children }: Props) {
-  const reduce = useReducedMotion();
+  const reduce = useSafeReducedMotion();
   const coarse = useCoarsePointer();
+  const [ready, setReady] = useState(false);
 
   useEffect(() => {
     registerGsap();
+    setReady(true);
   }, []);
 
-  if (reduce || coarse) {
+  // Match SSR (Lenis on) until client preferences are known.
+  if (ready && (reduce || coarse)) {
     return <>{children}</>;
   }
 

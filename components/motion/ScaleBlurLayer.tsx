@@ -18,8 +18,9 @@
  */
 
 import { useEffect, useState } from "react";
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
 import { useReceded } from "./RecedeContext";
+import { useSafeReducedMotion } from "@/lib/motion/useSafeReducedMotion";
 import { cn } from "@/lib/utils";
 
 const SPRING = {
@@ -67,7 +68,7 @@ type Props = {
 
 export function ScaleBlurLayer({ children, className, active }: Props) {
   const { isReceded } = useReceded();
-  const reduce = useReducedMotion();
+  const reduce = useSafeReducedMotion();
   const on = active ?? isReceded;
   const [tokens, setTokens] = useState<RecedeTokens>(DEFAULTS);
 

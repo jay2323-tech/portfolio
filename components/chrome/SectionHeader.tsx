@@ -1,11 +1,11 @@
 "use client";
 
 import { useEffect, useMemo, useRef } from "react";
-import { useReducedMotion } from "framer-motion";
 import { SectionMarquee } from "./SectionMarquee";
 import { MarqueeText } from "./MarqueeText";
 import { gsap, registerGsap, ScrollTrigger } from "@/lib/gsap/setup";
 import { countUp, parseLeadingCount } from "@/lib/motion/countUp";
+import { useSafeReducedMotion } from "@/lib/motion/useSafeReducedMotion";
 import { cn } from "@/lib/utils";
 
 type Props = {
@@ -35,7 +35,7 @@ export function SectionHeader({
   headingId,
 }: Props) {
   const rootRef = useRef<HTMLDivElement>(null);
-  const reduce = useReducedMotion();
+  const reduce = useSafeReducedMotion();
   const parsed = useMemo(
     () => (meta ? parseLeadingCount(meta) : null),
     [meta],

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { useReducedMotion } from "framer-motion";
+import { useSafeReducedMotion } from "@/lib/motion/useSafeReducedMotion";
 import { cn } from "@/lib/utils";
 
 const COLORS = ["#c3fffc", "#c77d3c", "#e3edf5", "#f4e4e0"];
@@ -36,7 +36,7 @@ function makeMotes(w: number, h: number): Mote[] {
  */
 export function HeroParticles({ className }: { className?: string }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const reduce = useReducedMotion();
+  const reduce = useSafeReducedMotion();
 
   useEffect(() => {
     if (reduce) return;

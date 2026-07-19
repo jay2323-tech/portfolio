@@ -22,7 +22,11 @@ export const metadata: Metadata = {
   description:
     "AI Engineer building production RAG systems. Portfolio with live retrieval over his own work.",
   icons: {
-    icon: "/favicon.svg",
+    icon: [
+      { url: "/favicon.png", type: "image/png", sizes: "32x32" },
+      { url: "/favicon-48.png", type: "image/png", sizes: "48x48" },
+    ],
+    apple: [{ url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
   },
 };
 

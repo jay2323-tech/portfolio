@@ -170,6 +170,21 @@ export function ContactSection({ links }: Props) {
             </div>
           </div>
         </div>
+
+        <div
+          data-contact-block
+          className="mt-12 flex justify-end md:mt-16"
+        >
+          <Magnetic strength={14}>
+            <a
+              href="#top"
+              data-cursor="view"
+              className="font-mono-data text-[11px] tracking-[0.14em] text-ink transition-colors hover:text-accent-clay"
+            >
+              BACK TO TOP ↑
+            </a>
+          </Magnetic>
+        </div>
       </div>
     </section>
   );

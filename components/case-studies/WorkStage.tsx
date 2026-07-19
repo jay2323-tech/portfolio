@@ -3,9 +3,9 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { useReducedMotion } from "framer-motion";
 import { WorkStageMarquee } from "./WorkStageMarquee";
 import { gsap, registerGsap, ScrollTrigger } from "@/lib/gsap/setup";
+import { useSafeReducedMotion } from "@/lib/motion/useSafeReducedMotion";
 import { cn } from "@/lib/utils";
 import type { CaseStudy } from "@/lib/case-studies/types";
 
@@ -22,7 +22,7 @@ export function WorkStage({ studies }: Props) {
   const pinRef = useRef<HTMLDivElement>(null);
   const stackRef = useRef<HTMLDivElement>(null);
   const marqueeScrubRef = useRef<HTMLDivElement>(null);
-  const reduce = useReducedMotion();
+  const reduce = useSafeReducedMotion();
   const [active, setActive] = useState(0);
   const activeRef = useRef(0);
 

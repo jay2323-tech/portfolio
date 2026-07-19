@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
+import { useSafeReducedMotion } from "@/lib/motion/useSafeReducedMotion";
 
 type Props = {
   text: string;
@@ -20,7 +21,7 @@ type Props = {
 export function StreamingText({ text }: Props) {
   const [prevText, setPrevText] = useState("");
   const [chunks, setChunks] = useState<string[]>([]);
-  const reduce = useReducedMotion();
+  const reduce = useSafeReducedMotion();
 
   if (text !== prevText) {
     const grew = text.startsWith(prevText);

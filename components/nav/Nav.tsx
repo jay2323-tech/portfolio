@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
@@ -93,30 +94,35 @@ export function Nav() {
       )}
     >
       <nav
-        className={cn(
-          "section-pad mx-auto flex max-w-[var(--content-max)] items-center justify-between gap-3 transition-[height] duration-300",
-          compressed ? "h-12" : "h-14",
-        )}
+        className="relative flex h-14 w-full items-center px-4 md:px-6"
         aria-label="Primary"
       >
         <Link
           href="/"
           data-cursor="view"
-          className="shrink-0 font-mono-data text-[11px] tracking-[0.12em] text-ink"
+          className="relative z-10 flex shrink-0 items-center"
           onClick={() => setOpen(false)}
+          aria-label="Jayanth Krishna — home"
         >
-          JAYANTH. <span className="text-muted">PORTFOLIO/2026</span>
+          <Image
+            src="/logo-jk.png"
+            alt=""
+            width={46}
+            height={38}
+            priority
+            className="h-[38px] w-auto object-contain object-left"
+          />
         </Link>
 
-        <ul className="hidden items-center gap-1 xl:flex">
+        <ul className="pointer-events-none absolute inset-0 hidden items-center justify-center gap-1 xl:flex">
           {links.map((link) => (
-            <li key={link.href}>
+            <li key={link.href} className="pointer-events-auto">
               <NavLink href={link.href} index={link.index} label={link.label} />
             </li>
           ))}
         </ul>
 
-        <div className="flex items-center gap-2 sm:gap-3">
+        <div className="relative z-10 ml-auto flex shrink-0 items-center gap-2 sm:gap-3">
           <Magnetic strength={10} className="hidden sm:inline-flex">
             <a
               href="#contact"

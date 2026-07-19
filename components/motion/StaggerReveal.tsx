@@ -1,8 +1,9 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
 import type { ReactNode } from "react";
 import { staggerContainer, fadeUp } from "@/lib/motion/variants";
+import { useSafeReducedMotion } from "@/lib/motion/useSafeReducedMotion";
 import { cn } from "@/lib/utils";
 
 type Props = {
@@ -30,7 +31,7 @@ export function StaggerReveal({
   as = "div",
   mode = "inView",
 }: Props) {
-  const reduce = useReducedMotion();
+  const reduce = useSafeReducedMotion();
   const MotionTag =
     as === "ul" ? motion.ul : as === "ol" ? motion.ol : motion.div;
 
@@ -72,7 +73,7 @@ export function StaggerItem({
   children: ReactNode;
   className?: string;
 }) {
-  const reduce = useReducedMotion();
+  const reduce = useSafeReducedMotion();
 
   if (reduce) {
     return <div className={className}>{children}</div>;
@@ -93,7 +94,7 @@ export function StaggerItemLi({
   children: ReactNode;
   className?: string;
 }) {
-  const reduce = useReducedMotion();
+  const reduce = useSafeReducedMotion();
 
   if (reduce) {
     return <li className={className}>{children}</li>;

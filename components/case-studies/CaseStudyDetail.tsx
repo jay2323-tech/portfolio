@@ -1,16 +1,11 @@
 "use client";
 
-import { useLayoutEffect, useRef, useState } from "react";
+import { useLayoutEffect, useRef } from "react";
 import Link from "next/link";
-import { useReducedMotion } from "framer-motion";
 import { ArchitectureDiagramCanvas } from "@/components/architecture-diagram/ArchitectureDiagram";
 import { gsap, registerGsap } from "@/lib/gsap/setup";
-import {
-  consumeWorkFlip,
-  peekWorkFlip,
-  playWorkFlip,
-} from "@/lib/motion/flipNav";
-import { cn } from "@/lib/utils";
+import { consumeWorkFlip, playWorkFlip } from "@/lib/motion/flipNav";
+import { useSafeReducedMotion } from "@/lib/motion/useSafeReducedMotion";
 import type { CaseStudy } from "@/lib/case-studies/types";
 
 type Props = {
@@ -26,10 +21,7 @@ export function CaseStudyDetail({ study }: Props) {
   const descRef = useRef<HTMLParagraphElement>(null);
   const metricsRef = useRef<HTMLDListElement>(null);
   const bodyRef = useRef<HTMLDivElement>(null);
-  const reduce = useReducedMotion();
-  const [pendingFlip] = useState(() =>
-    reduce ? false : Boolean(peekWorkFlip(study.slug)),
-  );
+  const reduce = useSafeReducedMotion();
 
   useLayoutEffect(() => {
     if (reduce || !titleRef.current) return;
@@ -38,6 +30,9 @@ export function CaseStudyDetail({ study }: Props) {
     registerGsap();
 
     if (payload) {
+      // Hide non-FLIP targets before paint (sessionStorage can't run during SSR).
+      if (descRef.current) gsap.set(descRef.current, { opacity: 0 });
+      if (metricsRef.current) gsap.set(metricsRef.current, { opacity: 0 });
       if (bodyRef.current) gsap.set(bodyRef.current, { opacity: 0, y: 18 });
 
       const flips: Promise<void>[] = [];
@@ -113,20 +108,14 @@ export function CaseStudyDetail({ study }: Props) {
 
       <p
         ref={descRef}
-        className={cn(
-          "mt-5 max-w-3xl text-lg leading-snug text-muted md:text-xl will-change-transform",
-          pendingFlip && "opacity-0",
-        )}
+        className="mt-5 max-w-3xl text-lg leading-snug text-muted md:text-xl will-change-transform"
       >
         {study.headline}
       </p>
 
       <dl
         ref={metricsRef}
-        className={cn(
-          "mt-10 grid grid-cols-2 gap-6 border-y border-ink/8 py-8 sm:grid-cols-3 will-change-transform",
-          pendingFlip && "opacity-0",
-        )}
+        className="mt-10 grid grid-cols-2 gap-6 border-y border-ink/8 py-8 sm:grid-cols-3 will-change-transform"
       >
         {study.metrics.map((metric) => (
           <div key={metric.label}>
@@ -140,10 +129,7 @@ export function CaseStudyDetail({ study }: Props) {
         ))}
       </dl>
 
-      <div
-        ref={bodyRef}
-        className={cn(pendingFlip && "opacity-0")}
-      >
+      <div ref={bodyRef}>
         <section id={study.sectionIds.context} className="mt-14 scroll-mt-24">
           <h2 className="font-mono-data text-xs uppercase tracking-wider text-accent-clay">
             Context

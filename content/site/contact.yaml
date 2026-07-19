@@ -2,7 +2,7 @@ links:
   - label: EMAIL
     href: mailto:cvjayanth005@gmail.com
     display: cvjayanth005@gmail.com
-    external: false
+    external: true
   - label: LINKEDIN
     href: https://linkedin.com
     display: linkedin.com/in/…

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { useReducedMotion } from "framer-motion";
+import { useSafeReducedMotion } from "@/lib/motion/useSafeReducedMotion";
 import { cn } from "@/lib/utils";
 
 const COUNT = 26;
@@ -30,7 +30,7 @@ function makeNodes(w: number, h: number): Node[] {
  */
 export function LabNetworkCanvas({ className }: { className?: string }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const reduce = useReducedMotion();
+  const reduce = useSafeReducedMotion();
 
   useEffect(() => {
     if (reduce) return;

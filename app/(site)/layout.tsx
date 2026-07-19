@@ -1,4 +1,3 @@
-import { MotionConfig } from "framer-motion";
 import { Nav } from "@/components/nav/Nav";
 import { GrainOverlay } from "@/components/chrome/GrainOverlay";
 import { StatusBar } from "@/components/chrome/StatusBar";
@@ -8,6 +7,7 @@ import { Preloader } from "@/components/chrome/Preloader";
 import { AskProvider } from "@/components/ask-my-work/AskContext";
 import { AskWidget } from "@/components/ask-my-work/AskWidget";
 import { RecedeProvider } from "@/components/motion/RecedeContext";
+import { SafeMotionConfig } from "@/components/providers/SafeMotionConfig";
 import { SmoothScrollProvider } from "@/components/providers/SmoothScroll";
 
 export default function SiteLayout({
@@ -16,7 +16,7 @@ export default function SiteLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <MotionConfig reducedMotion="user">
+    <SafeMotionConfig>
       <div className="pb-8">
         <SmoothScrollProvider>
           <AskProvider>
@@ -33,6 +33,6 @@ export default function SiteLayout({
           </AskProvider>
         </SmoothScrollProvider>
       </div>
-    </MotionConfig>
+    </SafeMotionConfig>
   );
 }
