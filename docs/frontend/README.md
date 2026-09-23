@@ -1,6 +1,6 @@
-# Frontend map
+# Portfolio Frontend
 
-UI, motion, and light theme. Does not own RAG retrieval logic.
+Source map for the Next.js pages, shared components, styling, and motion. Retrieval and answer-generation logic live in the backend modules.
 
 ## Paths
 
@@ -33,7 +33,7 @@ components/
 
 ## Design source of truth
 
-See [../planning/design-merged.md](../planning/design-merged.md) and [../planning/layout-merged.md](../planning/layout-merged.md).
+Start with [the current design reference](../planning/design-reference.md). The merged design and layout documents retain earlier design decisions.
 
 ## Motion rules
 

@@ -1,6 +1,6 @@
-# Portfolio docs
+# Portfolio Documentation
 
-Index for product, design, frontend, and backend documentation.
+Implementation and planning references for the portfolio. Start with the frontend and backend maps for code ownership; planning documents describe design intent and may include historical decisions.
 
 ## Planning
 

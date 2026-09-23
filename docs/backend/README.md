@@ -1,6 +1,6 @@
-# Backend map
+# Portfolio Backend
 
-Server routes, RAG pipeline, and content embedding. No separate Node server — Next.js App Router API routes on Vercel.
+Next.js API routes implement portfolio question answering and contact submission. The retrieval pipeline, provider integration, and corpus-generation scripts are grouped below.
 
 ## Paths
 
