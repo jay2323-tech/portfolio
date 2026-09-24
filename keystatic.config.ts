@@ -32,6 +32,26 @@ export default config({
         statusLabel: fields.text({ label: "Status label" }),
         domain: fields.text({ label: "Domain / category" }),
         year: fields.text({ label: "Year" }),
+        role: fields.text({ label: "My role" }),
+        timeframe: fields.text({ label: "Timeframe" }),
+        summary: fields.text({ label: "Short summary", multiline: true }),
+        evidence: fields.array(fields.object({
+          title: fields.text({ label: "Title" }),
+          kind: fields.select({ label: "Evidence type", options: [
+            { label: "Screenshot", value: "screenshot" },
+            { label: "Recording", value: "recording" },
+            { label: "Diagram", value: "diagram" },
+            { label: "Source code", value: "code" },
+            { label: "Written account", value: "narrative" },
+          ], defaultValue: "narrative" }),
+          href: fields.text({ label: "Public path or URL" }),
+          caption: fields.text({ label: "Caption / context", multiline: true }),
+        }), { label: "Evidence", itemLabel: (props) => props.fields.title.value || "Evidence" }),
+        resultContext: fields.text({ label: "Results and measurement context", multiline: true }),
+        limitations: fields.array(fields.text({ label: "Limitation", multiline: true }), { label: "Limitations" }),
+        demoSlug: fields.text({ label: "Primary experiment slug" }),
+        relatedNoteSlugs: fields.array(fields.text({ label: "Note slug" }), { label: "Related notes" }),
+        relatedExperimentSlugs: fields.array(fields.text({ label: "Experiment slug" }), { label: "Related experiments" }),
         coverImage: fields.text({
           label: "Cover image path",
           description: "Public path, e.g. /images/work/company-brain.svg",
@@ -42,7 +62,7 @@ export default config({
             value: fields.text({ label: "Value" }),
           }),
           {
-            label: "Metrics",
+            label: "System facts (legacy metrics)",
             itemLabel: (props) =>
               props.fields.label.value || props.fields.value.value || "Metric",
           },
@@ -99,11 +119,50 @@ export default config({
         title: fields.slug({ name: { label: "Label" } }),
         date: fields.date({ label: "Date", validation: { isRequired: true } }),
         tag: fields.text({ label: "Tag" }),
+        publication: fields.select({ label: "Publication", options: [
+          { label: "Draft", value: "draft" },
+          { label: "Published", value: "published" },
+        ], defaultValue: "draft" }),
+        summary: fields.text({ label: "Summary", multiline: true }),
+        relatedProjectSlugs: fields.array(fields.text({ label: "Project slug" }), { label: "Related projects" }),
+        relatedExperimentSlugs: fields.array(fields.text({ label: "Experiment slug" }), { label: "Related experiments" }),
+        media: fields.array(fields.object({
+          src: fields.text({ label: "Public media path" }),
+          alt: fields.text({ label: "Alternative text" }),
+          caption: fields.text({ label: "Caption" }),
+        }), { label: "Media", itemLabel: (props) => props.fields.alt.value || "Media" }),
         body: fields.text({
-          label: "Body",
+          label: "Body (Markdown)",
           multiline: true,
           validation: { isRequired: true },
         }),
+      },
+    }),
+    experiments: collection({
+      label: "Experiments",
+      slugField: "title",
+      path: "content/experiments/*",
+      format: { data: "yaml" },
+      schema: {
+        title: fields.slug({ name: { label: "Title" } }),
+        description: fields.text({ label: "Description", multiline: true }),
+        status: fields.select({ label: "Availability", options: [
+          { label: "Planned — hidden", value: "planned" },
+          { label: "Ready — public", value: "ready" },
+        ], defaultValue: "planned" }),
+        executionMode: fields.select({ label: "Execution mode", options: [
+          { label: "Simulation", value: "simulation" },
+          { label: "Live", value: "live" },
+          { label: "Recorded", value: "recorded" },
+        ], defaultValue: "simulation" }),
+        relatedProjectSlug: fields.text({ label: "Related project slug" }),
+        relatedNoteSlugs: fields.array(fields.text({ label: "Note slug" }), { label: "Related notes" }),
+        sampleInputs: fields.array(fields.object({
+          label: fields.text({ label: "Label" }),
+          value: fields.text({ label: "Input", multiline: true }),
+        }), { label: "Sample inputs", itemLabel: (props) => props.fields.label.value || "Input" }),
+        explanation: fields.text({ label: "Explanation (Markdown)", multiline: true }),
+        limitations: fields.array(fields.text({ label: "Limitation", multiline: true }), { label: "Limitations" }),
       },
     }),
     corpus: collection({

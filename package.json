@@ -5,10 +5,12 @@
   "scripts": {
     "dev": "next dev -p 2005",
     "dev:alt": "next dev -p 2026",
-    "build": "next build",
+    "build": "npm run check:content && next build",
     "start": "next start -p 2005",
     "lint": "next lint",
-    "embed-corpus": "tsx scripts/embed-corpus.ts"
+    "embed-corpus": "tsx scripts/embed-corpus.ts",
+    "check:content": "tsx scripts/validate-content.ts",
+    "test:content": "tsx --test tests/content.test.ts"
   },
   "dependencies": {
     "@keystatic/core": "^0.5.51",

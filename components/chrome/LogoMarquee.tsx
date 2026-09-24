@@ -80,7 +80,7 @@ export function LogoMarquee({ items = DEFAULT_ORGS }: Props) {
 
   return (
     <section
-      className="border-b border-ink/8 py-10 md:py-12"
+      className="overflow-x-clip border-b border-ink/8 py-10 md:py-12"
       aria-labelledby="orgs-heading"
     >
       <div className="section-pad mx-auto max-w-[var(--content-max)]">

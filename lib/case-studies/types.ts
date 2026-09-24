@@ -16,6 +16,15 @@ export type CaseStudy = {
   domain: string;
   /** Card year */
   year: string;
+  role: string;
+  timeframe: string;
+  summary: string;
+  evidence: { title: string; kind: "screenshot" | "recording" | "diagram" | "code" | "narrative"; href: string; caption: string }[];
+  resultContext: string;
+  limitations: string[];
+  demoSlug: string | null;
+  relatedNoteSlugs: string[];
+  relatedExperimentSlugs: string[];
   metrics: CaseStudyMetric[];
   tags: string[];
   /** Stage / card cover under /public */

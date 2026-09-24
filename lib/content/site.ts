@@ -13,6 +13,11 @@ export type ArticleEntry = {
   tag?: string;
   body: string;
   label: string;
+  publication: "draft" | "published";
+  summary: string;
+  relatedProjectSlugs: string[];
+  relatedExperimentSlugs: string[];
+  media: { src: string; alt: string; caption: string }[];
 };
 
 export type CorpusEntry = {
@@ -43,7 +48,7 @@ export async function getSettings(): Promise<SiteSettings | null> {
   return getReader().singletons.settings.read();
 }
 
-export async function getArticles(): Promise<ArticleEntry[]> {
+export async function getAllArticles(): Promise<ArticleEntry[]> {
   const reader = getReader();
   const slugs = await reader.collections.articles.list();
   const entries: ArticleEntry[] = [];
@@ -56,9 +61,22 @@ export async function getArticles(): Promise<ArticleEntry[]> {
       date: data.date,
       tag: data.tag || undefined,
       body: data.body,
+      publication: data.publication ?? "draft",
+      summary: data.summary || data.body,
+      relatedProjectSlugs: [...(data.relatedProjectSlugs ?? [])].filter(Boolean),
+      relatedExperimentSlugs: [...(data.relatedExperimentSlugs ?? [])].filter(Boolean),
+      media: (data.media ?? []).map((item) => ({ ...item })),
     });
   }
   return entries.sort((a, b) => (a.date < b.date ? 1 : -1));
+}
+
+export async function getArticles(): Promise<ArticleEntry[]> {
+  return (await getAllArticles()).filter((entry) => entry.publication === "published");
+}
+
+export async function getArticle(slug: string): Promise<ArticleEntry | null> {
+  return (await getArticles()).find((entry) => entry.slug === slug) ?? null;
 }
 
 export async function getCorpusChunks(): Promise<CorpusEntry[]> {

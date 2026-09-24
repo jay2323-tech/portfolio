@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import Link from "next/link";
 import { useReducedMotion } from "framer-motion";
 import { gsap, registerGsap } from "@/lib/gsap/setup";
+import { useAsk } from "./AskContext";
 import { cn } from "@/lib/utils";
 import type { RetrievedMeta } from "@/lib/rag/client";
 
@@ -14,6 +15,7 @@ type Props = {
 
 /** Citation chips — stagger fade-up when sources arrive. */
 export function SourceChips({ chunks, className }: Props) {
+  const { closeAsk } = useAsk();
   const listRef = useRef<HTMLUListElement>(null);
   const reduce = useReducedMotion();
 
@@ -49,6 +51,7 @@ export function SourceChips({ chunks, className }: Props) {
           <li key={chunk.id} data-source-chip>
             <Link
               href={href}
+              onClick={closeAsk}
               data-cursor="view"
               className="inline-flex max-w-full items-center gap-2 rounded-full border border-ink/12 bg-bg px-2.5 py-1 font-mono-data text-[10px] text-ink transition-colors hover:border-accent-clay/50 hover:text-accent-clay"
               title={chunk.title}

@@ -58,3 +58,12 @@ links:
   - label: Case study
     href: /work/factory-attendance
     external: false
+role: "Solo delivery and operational handoff"
+timeframe: "2024"
+summary: "Attendance capture, exception handling, and reports for a factory floor."
+evidence: [{"title": "Architecture and decisions", "kind": "narrative", "href": "/work/factory-attendance#factory-attendance-architecture", "caption": "Authored case-study explanation; not an independently measured result."}]
+resultContext: "Existing system facts describe implementation choices. No measured outcome dataset is attached."
+limitations: ["Public product screenshots and measurement evidence are not yet attached."]
+demoSlug: "shift-simulator"
+relatedNoteSlugs: ["2026-06-22-freelance"]
+relatedExperimentSlugs: ["shift-simulator"]

@@ -133,7 +133,7 @@ export function StatusBar() {
               scale: 1,
               duration: 0.4,
               ease: "power2.out",
-              clearProps: "color,scale",
+              clearProps: "color,transform",
             },
           );
         }

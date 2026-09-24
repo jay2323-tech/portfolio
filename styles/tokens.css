@@ -53,6 +53,11 @@
   --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 
+  /* Collage tilt — deterministic scrapbook angles (never Math.random at render) */
+  --tilt-sm: -1.5deg;
+  --tilt-md: 2deg;
+  --tilt-lg: -3deg;
+
   /* Z-index — layout-merged.md */
   --z-content: 0;
   --z-nav: 10;

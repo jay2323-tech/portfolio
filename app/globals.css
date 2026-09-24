@@ -4,7 +4,7 @@
  * closest free grotesk on Fontshare. To use real Neue Montreal later: drop
  * woff2 files in /public/fonts/ and swap the @import for @font-face rules.
  */
-@import url("https://api.fontshare.com/v2/css?f[]=satoshi@400,500,600,700&display=swap");
+@import url("https://api.fontshare.com/v2/css?f[]=satoshi@400,500,600,700,900&display=swap");
 
 @import "tailwindcss";
 @import "../styles/tokens.css";
@@ -69,23 +69,7 @@
   body {
     margin: 0;
     min-height: 100dvh;
-    background:
-      radial-gradient(
-        ellipse 90% 60% at 100% 0%,
-        color-mix(in srgb, var(--mint) 42%, transparent),
-        transparent 55%
-      ),
-      radial-gradient(
-        ellipse 70% 50% at 0% 100%,
-        color-mix(in srgb, var(--blush) 55%, transparent),
-        transparent 50%
-      ),
-      radial-gradient(
-        ellipse 50% 40% at 80% 90%,
-        color-mix(in srgb, var(--butter) 40%, transparent),
-        transparent 45%
-      ),
-      var(--bg);
+    background: var(--bg);
     color: var(--ink);
     font-family: var(--font-sans);
     font-size: var(--text-base);
@@ -326,7 +310,7 @@
   /* Nav — underline slides in from left */
   .nav-link {
     position: relative;
-    display: inline-block;
+    display: inline-flex;
   }
 
   .nav-link::after {
@@ -539,12 +523,23 @@
   [data-hero-word],
   [data-hero-chip],
   [data-hero-portrait],
-  [data-hero-cue] {
+  [data-hero-cue],
+  [data-hero-sticker] {
     opacity: 0;
   }
 
   [data-hero-letter] {
     /* scramble sets opacity; start visible shell with placeholder glyphs */
+    opacity: 1;
+  }
+
+  /* Keep the collage readable before hydration or if JavaScript fails.
+     Its layout effect establishes animation styles before the client paints. */
+  .hero-collage [data-hero-word],
+  .hero-collage [data-hero-chip],
+  .hero-collage [data-hero-portrait],
+  .hero-collage [data-hero-cue],
+  .hero-collage [data-hero-sticker] {
     opacity: 1;
   }
 
@@ -791,6 +786,87 @@
     background: color-mix(in srgb, var(--sky) 22%, var(--surface));
   }
 
+  /* ── Collage primitives (Phase 0) ──────────────────────────────
+     Paper cards, stickers, torn edges. Deterministic tilt via
+     --card-tilt / --sticker-rot custom props (never Math.random). */
+  .paper-card {
+    position: relative;
+    background: var(--surface);
+    border: 1px solid rgba(20, 20, 20, 0.08);
+    border-radius: var(--radius-card);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.85),
+      0 24px 60px -30px rgba(20, 20, 20, 0.3);
+    transform: rotate(var(--card-tilt, 0deg));
+    transition:
+      transform 0.4s var(--ease-out-expo),
+      box-shadow 0.4s var(--ease-out-expo);
+  }
+
+  .paper-card[data-tint="mint"] {
+    background: color-mix(in srgb, var(--mint) 22%, var(--surface));
+  }
+  .paper-card[data-tint="sky"] {
+    background: color-mix(in srgb, var(--sky) 40%, var(--surface));
+  }
+  .paper-card[data-tint="blush"] {
+    background: color-mix(in srgb, var(--blush) 40%, var(--surface));
+  }
+  .paper-card[data-tint="butter"] {
+    background: color-mix(in srgb, var(--butter) 45%, var(--surface));
+  }
+
+  .paper-card--hover:hover {
+    transform: rotate(0deg) translateY(-5px);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.9),
+      0 34px 70px -28px rgba(20, 20, 20, 0.38);
+  }
+
+  .collage-sticker {
+    position: absolute;
+    display: block;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  @keyframes collage-float {
+    0%,
+    100% {
+      transform: rotate(var(--sticker-rot, 0deg)) translateY(0);
+    }
+    50% {
+      transform: rotate(var(--sticker-rot, 0deg)) translateY(-8px);
+    }
+  }
+
+  .collage-sticker--float {
+    animation: collage-float 5s ease-in-out infinite;
+  }
+
+  .torn-edge {
+    position: absolute;
+    left: 0;
+    right: 0;
+    pointer-events: none;
+    line-height: 0;
+  }
+
+  .torn-edge svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .paper-card {
+      transition: none;
+    }
+    .collage-sticker--float {
+      animation: none;
+    }
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .contact-submit-spinner {
       animation: none;
@@ -807,11 +883,12 @@
     [data-hero-chip],
     [data-hero-portrait],
     [data-hero-cue],
+    [data-hero-sticker],
     [data-section-heading] {
-      opacity: 1;
-      filter: none;
-      transform: none;
-      clip-path: none;
+      opacity: 1 !important;
+      filter: none !important;
+      transform: none !important;
+      clip-path: none !important;
     }
 
     .work-row,
@@ -827,3 +904,8 @@
     }
   }
 }
+
+/* The header owns Ask; no floating control covers the reading surface. */
+.ask-modal { position: fixed; inset: auto 24px 24px auto; margin: 0; padding: 0; max-width: calc(100vw - 32px); border: 0; border-radius: 16px; background: var(--bg); }
+.ask-modal::backdrop { background: #14141455; backdrop-filter: blur(2px); }
+@media (max-width: 767px) { .ask-modal { inset: auto 16px 16px; width: calc(100vw - 32px); } }

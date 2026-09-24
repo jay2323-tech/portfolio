@@ -1,9 +1,7 @@
+import { AnchorNavigation } from "@/components/nav/AnchorNavigation";
 import { Nav } from "@/components/nav/Nav";
 import { GrainOverlay } from "@/components/chrome/GrainOverlay";
-import { StatusBar } from "@/components/chrome/StatusBar";
 import { ScrollProgressBar } from "@/components/chrome/ScrollProgressBar";
-import { CustomCursor } from "@/components/chrome/CustomCursor";
-import { Preloader } from "@/components/chrome/Preloader";
 import { AskProvider } from "@/components/ask-my-work/AskContext";
 import { AskWidget } from "@/components/ask-my-work/AskWidget";
 import { RecedeProvider } from "@/components/motion/RecedeContext";
@@ -17,17 +15,15 @@ export default function SiteLayout({
 }>) {
   return (
     <SafeMotionConfig>
-      <div className="pb-8">
+      <div className="min-h-screen">
         <SmoothScrollProvider>
           <AskProvider>
             <RecedeProvider>
-              <Preloader />
               <GrainOverlay />
               <ScrollProgressBar />
-              <CustomCursor />
+              <AnchorNavigation />
               <Nav />
               <main className="relative z-[1]">{children}</main>
-              <StatusBar />
               <AskWidget />
             </RecedeProvider>
           </AskProvider>

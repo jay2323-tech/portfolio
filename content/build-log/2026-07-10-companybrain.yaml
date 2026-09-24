@@ -4,3 +4,8 @@ tag: CompanyBrain
 body: >-
   Hardening the Graph RAG chat path: SSE streaming, retrieval provenance in the
   UI, and admin surfaces for latency and routing.
+publication: published
+summary: "Hardening streaming, provenance, and operator surfaces."
+relatedProjectSlugs: ["company-brain"]
+relatedExperimentSlugs: ["retrieval-challenge"]
+media: []

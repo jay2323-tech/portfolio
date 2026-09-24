@@ -36,9 +36,11 @@ For production editing on Vercel, set `NEXT_PUBLIC_KEYSTATIC_GITHUB_REPO=owner/r
 
 ## Docs
 
+**Current redesign plan:** [`PLAN.md`](PLAN.md) — Jayanth’s Workbench, phase-by-phase tasks, completion gates, and the checkpoint for resuming work.
+
 All specs live under [`docs/`](docs/README.md):
 
-- Planning: [`docs/planning/`](docs/planning/) — start with [`design-merged.md`](docs/planning/design-merged.md) and [`layout-merged.md`](docs/planning/layout-merged.md)
+- Planning: start with [`PLAN.md`](PLAN.md); [`docs/planning/`](docs/planning/) contains supporting and historical specifications.
 - Frontend map: [`docs/frontend/README.md`](docs/frontend/README.md)
 - Backend map: [`docs/backend/README.md`](docs/backend/README.md)
 - Deploy: [`docs/planning/deploy-checklist.md`](docs/planning/deploy-checklist.md)

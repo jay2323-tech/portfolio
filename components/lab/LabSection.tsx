@@ -88,7 +88,7 @@ export function LabSection({ content }: Props) {
     <section
       ref={sectionRef}
       id="lab"
-      className="scroll-mt-20 border-b border-ink/8 bg-tint-mint py-[var(--section-gap-mobile)] md:py-[var(--section-gap-desktop)]"
+      className="overflow-x-clip scroll-mt-20 border-b border-ink/8 bg-tint-mint py-[var(--section-gap-mobile)] md:py-[var(--section-gap-desktop)]"
       aria-labelledby="lab-heading"
     >
       <SectionHeader

@@ -58,3 +58,12 @@ links:
   - label: Case study
     href: /work/desi-fit
     external: false
+role: "Product and data-flow design"
+timeframe: "2025"
+summary: "A fitness product with explicit purpose, consent, and retention boundaries."
+evidence: [{"title": "Architecture and decisions", "kind": "narrative", "href": "/work/desi-fit#desi-fit-architecture", "caption": "Authored case-study explanation; not an independently measured result."}]
+resultContext: "Existing system facts describe implementation choices. No measured outcome dataset is attached."
+limitations: ["Public product screenshots and measurement evidence are not yet attached."]
+demoSlug: "data-journey"
+relatedNoteSlugs: ["2026-06-01-desifit"]
+relatedExperimentSlugs: ["data-journey"]

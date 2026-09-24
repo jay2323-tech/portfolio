@@ -1,0 +1,9 @@
+title: "Retrieval challenge"
+description: "Compare a fictional question with a small source set and inspect why a citation fits or fails."
+status: "planned"
+executionMode: "simulation"
+relatedProjectSlug: "company-brain"
+relatedNoteSlugs: ["2026-05-12-companybrain", "2026-07-10-companybrain"]
+sampleInputs: [{"label": "Ambiguous ownership", "value": "Who owns onboarding?"}]
+explanation: "A planned deterministic simulation using fictional documents. The implementation will expose retrieved chunks and explain citation mismatches."
+limitations: ["Does not connect to CompanyBrain or its private documents.", "Does not measure a live model or retrieval service."]

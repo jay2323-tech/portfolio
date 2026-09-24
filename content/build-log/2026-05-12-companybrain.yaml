@@ -4,3 +4,8 @@ tag: CompanyBrain
 body: >-
   Qdrant hybrid retrieval + graph context wired end to end; started treating
   observability as part of the product, not an afterthought.
+publication: published
+summary: "Wiring hybrid retrieval and graph context into one observable path."
+relatedProjectSlugs: ["company-brain"]
+relatedExperimentSlugs: ["retrieval-challenge"]
+media: []

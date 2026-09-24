@@ -4,3 +4,8 @@ tag: Freelance
 body: >-
   Factory attendance still in daily use — spent a week on report edge cases
   around shift-change exceptions.
+publication: published
+summary: "Working through attendance reports around shift changes."
+relatedProjectSlugs: ["factory-attendance"]
+relatedExperimentSlugs: ["shift-simulator"]
+media: []

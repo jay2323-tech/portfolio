@@ -1,6 +1,5 @@
-import { Hero } from "@/components/hero/Hero";
+import { WorkbenchHero } from "@/components/hero/WorkbenchHero";
 import { LogoMarquee } from "@/components/chrome/LogoMarquee";
-import { CaseStudiesSection } from "@/components/case-studies/CaseStudiesSection";
 import { ArticlesSection } from "@/components/articles/ArticlesSection";
 import { LabSection } from "@/components/lab/LabSection";
 import { AboutSection } from "@/components/about/AboutSection";
@@ -11,17 +10,15 @@ import {
   getAbout,
   getArticles,
   getContact,
-  getHero,
   getLab,
   getSettings,
   portraitSrc,
 } from "@/lib/content/site";
 
 export default async function HomePage() {
-  const [studies, hero, about, lab, contact, settings, articles] =
+  const [studies, about, lab, contact, settings, articles] =
     await Promise.all([
       getAllCaseStudies(),
-      getHero(),
       getAbout(),
       getLab(),
       getContact(),
@@ -35,27 +32,8 @@ export default async function HomePage() {
 
   return (
     <>
-      <Hero
-        firstName={hero?.firstName ?? "JAYANTH"}
-        lastName={hero?.lastName ?? "KRISHNA"}
-        roleTitle={hero?.roleTitle ?? "AI ENGINEER"}
-        roleSubtitle={
-          hero?.roleSubtitle ?? "PRODUCTION RAG · SYSTEMS · FULL-STACK"
-        }
-        metaLines={
-          hero?.metaLines?.filter(Boolean)?.length
-            ? hero.metaLines.filter(Boolean)
-            : [
-                "3 SYSTEMS SHIPPED / IN BUILD",
-                "BASED IN BENGALURU, INDIA",
-                "OPEN TO WORK ALL AROUND",
-              ]
-        }
-        edgeTabLabel={hero?.edgeTabLabel ?? "OPEN"}
-        portraitSrc={portraitSrc(settings)}
-      />
+      <WorkbenchHero studies={studies} portrait={portraitSrc(settings)} />
       <LogoMarquee items={settings?.logoMarquee?.filter(Boolean)} />
-      <CaseStudiesSection studies={studies} />
       <ArticlesSection entries={articles} />
       <LabSection content={lab} />
       <AboutSection content={about} />

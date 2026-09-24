@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { useReducedMotion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import {
   EXAMPLE_QUESTIONS,
@@ -38,6 +39,7 @@ type Props = {
  * Ask panel — SSE answer + retrieval stage chips driven by real stream events.
  */
 export function ChatPanel({ onClose }: Props) {
+  const reduce = useReducedMotion();
   const { draft, setDraft } = useAsk();
   const [input, setInput] = useState(draft);
   const [messages, setMessages] = useState<Message[]>([]);
@@ -67,7 +69,7 @@ export function ChatPanel({ onClose }: Props) {
 
   /* Idle typewriter through example questions */
   useEffect(() => {
-    if (busy || focused || input || messages.length > 0) {
+    if (reduce || busy || focused || input || messages.length > 0) {
       setPlaceholder(
         softCapped
           ? "Session limit reached — email instead"
@@ -107,7 +109,7 @@ export function ChatPanel({ onClose }: Props) {
 
     timer = window.setTimeout(tick, 600);
     return () => window.clearTimeout(timer);
-  }, [busy, focused, input, messages.length, softCapped]);
+  }, [reduce, busy, focused, input, messages.length, softCapped]);
 
   function lightStage(id: StageId) {
     setStageActive(id);
@@ -236,7 +238,6 @@ export function ChatPanel({ onClose }: Props) {
         "paper-card flex h-[min(70dvh,560px)] w-full flex-col overflow-hidden md:h-[520px] md:w-[380px]",
         "border-accent-clay/25 text-ink shadow-2xl",
       )}
-      role="dialog"
       aria-label="Ask My Work"
     >
       <header className="flex items-center justify-between border-b border-ink/8 bg-surface px-4 py-3">

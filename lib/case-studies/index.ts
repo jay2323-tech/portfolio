@@ -18,6 +18,17 @@ function asCaseStudy(
     statusLabel: data.statusLabel || status.toUpperCase(),
     domain: data.domain || "Product",
     year: data.year || "2025",
+    role: data.role ?? "",
+    timeframe: data.timeframe || data.year || "",
+    summary: data.summary || data.problem || "",
+    evidence: (data.evidence ?? []).map((entry) => ({
+      title: entry.title, kind: entry.kind, href: entry.href, caption: entry.caption,
+    })),
+    resultContext: data.resultContext ?? "",
+    limitations: [...(data.limitations ?? [])].filter(Boolean),
+    demoSlug: data.demoSlug || null,
+    relatedNoteSlugs: [...(data.relatedNoteSlugs ?? [])].filter(Boolean),
+    relatedExperimentSlugs: [...(data.relatedExperimentSlugs ?? [])].filter(Boolean),
     coverImage:
       data.coverImage ||
       `/images/work/${slug}.svg`,

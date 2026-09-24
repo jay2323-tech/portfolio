@@ -101,7 +101,7 @@ export function ArticlesSection({ entries }: Props) {
     <section
       ref={sectionRef}
       id="articles"
-      className="scroll-mt-20 border-b border-ink/8 bg-tint-blush py-[var(--section-gap-mobile)] md:py-[var(--section-gap-desktop)]"
+      className="overflow-x-clip scroll-mt-20 border-b border-ink/8 bg-tint-blush py-[var(--section-gap-mobile)] md:py-[var(--section-gap-desktop)]"
       aria-labelledby="articles-heading"
     >
       <SectionHeader
@@ -124,7 +124,7 @@ export function ArticlesSection({ entries }: Props) {
               className="row-glow border-t border-ink/10 last:border-b"
             >
               <Link
-                href="#articles"
+                href={`/notes/${entry.slug}`}
                 data-cursor="view"
                 className={cn(
                   "article-row-swipe group block text-ink outline-none",

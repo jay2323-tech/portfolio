@@ -1,0 +1,14 @@
+.dialog { position: fixed; inset: 0 0 0 auto; width: min(540px, 100%); max-width: 100%; height: 100dvh; max-height: 100dvh; margin: 0 0 0 auto; padding: 0; border: 0; background: var(--bg); color: var(--ink); box-shadow: -12px 0 60px #14141425; }
+.dialog::backdrop { background: #14141466; backdrop-filter: blur(3px); }
+.sheet { padding: 28px 32px 48px; }
+.sheet header { position: sticky; top: -28px; background: var(--bg); z-index: 1; padding-top: 12px; display: flex; align-items: center; justify-content: space-between; gap: 16px; border-bottom: 1px solid #14141425; padding-bottom: 20px; font: 11px var(--font-mono); letter-spacing: .08em; }
+.sheet button { width: 44px; height: 44px; display: grid; place-items: center; border: 1px solid #14141430; border-radius: 50%; cursor: pointer; }
+.sheet h2 { font: 700 42px/1.05 var(--font-display); letter-spacing: -.04em; margin: 32px 0 20px; }
+.summary { font-size: 18px; line-height: 1.65; }
+.sheet section { margin-top: 32px; border-top: 1px solid #14141425; padding-top: 24px; }
+.number { font: 12px var(--font-mono); color: #8e4c22; }
+.sheet h3 { font-size: 23px; font-weight: 600; margin: 8px 0 12px; }
+.sheet section p { font-size: 16px; line-height: 1.75; }
+.sheet a { display: inline-flex; align-items: center; gap: 12px; min-height: 44px; margin-top: 32px; text-decoration: underline; text-underline-offset: 6px; }
+.sheet :focus-visible { outline: 2px solid var(--ink); outline-offset: 5px; }
+@media(max-width:600px) { .sheet { padding: 20px 24px 40px; } }

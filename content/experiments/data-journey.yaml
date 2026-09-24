@@ -1,0 +1,9 @@
+title: "Data journey"
+description: "Trace a fictional profile field from collection through retention and deletion."
+status: "planned"
+executionMode: "simulation"
+relatedProjectSlug: "desi-fit"
+relatedNoteSlugs: ["2026-06-01-desifit"]
+sampleInputs: [{"label": "Delete a fictional profile", "value": "Remove sample profile A and inspect its linked activity records."}]
+explanation: "A planned deterministic illustration of data-purpose and deletion boundaries. Fixtures will be fictional and resettable."
+limitations: ["Does not process personal health data.", "Illustrates product decisions; does not establish legal compliance."]

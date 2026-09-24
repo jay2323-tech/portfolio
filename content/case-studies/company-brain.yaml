@@ -60,3 +60,12 @@ links:
   - label: Case study
     href: /work/company-brain
     external: false
+role: "Frontend and RAG orchestration"
+timeframe: "2025"
+summary: "A knowledge assistant built around retrieval provenance and inspectable answers."
+evidence: [{"title": "Architecture and decisions", "kind": "narrative", "href": "/work/company-brain#company-brain-architecture", "caption": "Authored case-study explanation; not an independently measured result."}]
+resultContext: "Existing system facts describe implementation choices. No measured outcome dataset is attached."
+limitations: ["Public product screenshots and measurement evidence are not yet attached."]
+demoSlug: "retrieval-challenge"
+relatedNoteSlugs: ["2026-05-12-companybrain", "2026-07-10-companybrain"]
+relatedExperimentSlugs: ["retrieval-challenge"]
