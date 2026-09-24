@@ -476,3 +476,11 @@ Never remove build-folder isolation to solve a temporary preview problem. Check 
 - WorkBuddy is a local prototype, not production. Source-reported test counts are dated and explicitly not rerun for the portfolio. No repository URL invented.
 - Rebuilt local embeddings; four content tests and production build passed. Existing three image lint warnings remain unrelated. Desktop deck and mobile case-study checked in browser.
 - Next remains Phase 4 homepage sections, with WorkBuddy as the third project.
+
+### 2026-09-24 — Production motion repair
+
+- Restored Field Notes microinteractions: portrait/note lift, action arrows, button feedback, subtle sparkle drift, and inspector entrance/backdrop.
+- Removed entrance animation from the pinned container to avoid transformed pin geometry; entrances run on individual objects with visible defaults.
+- Deck initialization now observes card dimensions even when the first layout cannot fit. Font readiness, viewport changes and reduced-motion changes all retry or tear down the enhancement; cleanup restores visible, accessible cards.
+- Verified optimized `next build` + `next start` at localhost:2006: desktop chapter changes, mobile fallback, desktop reactivation, compiled animation styles, inspector open, and zero overflow. Reduced-motion CSS/logic reviewed; OS preference emulation not performed.
+- GitHub reports previous production at 0156a39. Its listed Vercel URL requires login in the QA browser; direct deployed visual confirmation remains unavailable until an accessible production URL/session is provided.

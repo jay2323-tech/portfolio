@@ -25,3 +25,7 @@ Latest captures: `deck-desktop-home.png`, `deck-factory.png`, `deck-desifit.png`
 ## Remaining scope
 
 Phase 4 lower homepage sections; deeper evidence/case studies and runnable experiments in later phases. Existing missing social URLs/resume/outcome evidence remain content inventory items. No fabricated live traces or performance outcomes added.
+
+## Production motion follow-up — 2026-09-24
+
+The optimized production build now includes object entrances, hover/focus/press feedback, sparkle drift and inspector entrance. The scroll deck retries its fit check after font/layout changes, observes even while disabled, and cleans up on viewport/preference changes. Browser checks at localhost:2006 confirmed desktop chapter transitions, mobile readable fallback, desktop reactivation and inspector animation names in computed CSS. No horizontal overflow. Production build passed with the existing three image warnings. Vercel's listed URL redirects to login, so this is local production verification, not a claim of deployed visual QA.

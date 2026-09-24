@@ -39,7 +39,7 @@
 .otherProjects a:hover h2 { text-decoration: underline; text-underline-offset: 5px; }
 .buildNote { display: flex; align-items: center; gap: 10px; width: fit-content; margin: 35px 0 0 auto; font: 10px/1.6 var(--font-mono); color: #535b64; }
 .hero :is(a,button):focus-visible { outline: 2px solid #141414; outline-offset: 6px; }
-@media(min-width:900px) and (prefers-reduced-motion:no-preference) { .intro { animation: settle .55s ease-out both; } .workbench { animation: settle .7s ease-out both; } @keyframes settle { from { translate: 0 12px; } to { translate: 0 0; } } }
+
 @media(max-width:1150px) { .scribble { right: 1%; gap: 32px; } .scribble span { font-size: 18px; } .folio { padding-left: 75px; padding-right: 24px; } .index { left: 22px; width: 32px; font-size: 18px; } .personal { padding-right: 0; } .projectIntro p { font-size: 13px; } .otherProjects a { gap: 14px; } .otherProjects h2 { font-size: 20px; } }
 @media(max-width:900px) { .hero { padding: 30px 24px 40px; } .intro { margin-bottom: 30px; } .intro h1 { font-size: clamp(43px,11vw,82px); line-height: .94; } .intro > p { font-size: 13px; line-height: 1.7; max-width: 35ch; margin: 17px 0 0; } .scribble { display: none; } .workbench { display: flex; flex-direction: column; gap: 35px; } .projects { width: 100%; order: 0; } .personal { order: 1; display: grid; grid-template-columns: 40% 1fr; gap: 16px 22px; align-items: center; } .photo { grid-row: span 2; margin: 0; padding: 8px 8px 12px; } .photoWindow { height: 175px; } .photo figcaption { font-size: 12px; } .personal > p { font-size: 16px; margin: 0; } .about { font-size: 15px; gap: 8px; } .folio { transform: none; padding: 24px 20px; margin-bottom: 24px; } .index { position: static; border: none; display: block; margin-bottom: 12px; font-size: 13px; width: auto; padding: 0; } .clip { right: 12px; top: -16px; width: 32px; } .projectIntro { max-width: none; } .projectIntro h2 { font-size: 31px; } .projectIntro p { font-size: 13px; line-height: 1.7; } .note { background: #fff4d6; position: static; width: 155px; margin: 20px 0 4px auto; display: block; transform: rotate(2deg); } .diagram { margin-top: 16px; } .diagram img { height: auto; aspect-ratio: auto; min-height: 110px; object-fit: contain; } .diagram figcaption { font-size: 10px; } .actions { gap: 12px; } .primary { width: 100%; font-size: 16px; padding: 12px 16px; } .inspect { font-size: 12px; min-height: 48px; } .otherProjects a { flex-wrap: wrap; gap: 6px 12px; padding: 14px 0; position: relative; } .rowIndex { padding: 5px 10px 5px 0; font-size: 12px; } .otherProjects h2 { font-size: 19px; } .otherProjects .status { margin-left: 38px; font-size: 10px; } .rowArrow { position: absolute; right: 0; top: 22px; margin: 0; width: 20px; } .buildNote { margin-top: 32px; font-size: 9px; } }
 @media(max-width:360px) { .hero { padding-inline: 20px; } .personal { grid-template-columns: 1fr; } .photo { width: 180px; margin: auto; grid-row: auto; } .otherProjects h2 { font-size: 16px; } }
@@ -82,4 +82,28 @@
   .systemFacts > p { font-size: 14px; }
   .systemFacts dl { margin-top: 14px; padding-top: 12px; }
   .primary { min-height: 46px; font-size: 16px; }
+}
+
+/* Animate individual objects, never the container ScrollTrigger pins. */
+@media (prefers-reduced-motion: no-preference) {
+  .intro { animation: settle-in 650ms cubic-bezier(.2,.7,.2,1); }
+  .photo { animation: settle-in 800ms cubic-bezier(.2,.7,.2,1); }
+  .folioContent { animation: settle-in 900ms cubic-bezier(.2,.7,.2,1); }
+  .primary, .photo, .note, .textNote { transition: translate 240ms ease, rotate 300ms ease, box-shadow 240ms ease, background-color 180ms ease; }
+  .primary svg, .inspect svg, .about svg, .deckNav svg, .buildNote svg { transition: transform 240ms cubic-bezier(.2,.7,.2,1); }
+  .primary:active { translate: 0 1px; }
+  .primary:focus-visible svg { transform: translateX(4px); }
+  .inspect:focus-visible svg, .about:focus-visible svg, .deckNav a:focus-visible svg, .buildNote:focus-visible svg { transform: translate(2px,-2px); }
+  .deckNav a { transition: border-color 220ms ease, color 220ms ease; }
+  .scribble img { animation: sparkle-drift 6s ease-in-out infinite; }
+  @keyframes settle-in { from { translate: 0 14px; } to { translate: 0 0; } }
+  @keyframes sparkle-drift { 0%,100% { translate: 0 0; rotate: -5deg; } 50% { translate: 0 -5px; rotate: 6deg; } }
+}
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .photo:hover { translate: 0 -4px; rotate: 2deg; box-shadow: 0 14px 26px #29241b24; }
+  .note:hover, .textNote:hover { translate: 0 -3px; rotate: -2deg; box-shadow: 0 12px 20px #29241b24; }
+  .primary:hover { translate: 0 -2px; box-shadow: 0 6px 16px #8c4b2026; }
+  .primary:hover svg { transform: translateX(4px); }
+  .inspect:hover svg, .about:hover svg, .deckNav a:hover svg, .buildNote:hover svg { transform: translate(2px,-2px); }
+  .deckNav a:hover { border-color: var(--accent-clay); color: #8e4c22; }
 }
