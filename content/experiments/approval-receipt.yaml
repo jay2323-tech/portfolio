@@ -1,0 +1,21 @@
+{
+  "title": "Approval receipt",
+  "description": "Explore how a proposal, approval and execution receipt differ.",
+  "status": "planned",
+  "executionMode": "simulation",
+  "relatedProjectSlug": "workbuddy",
+  "relatedNoteSlugs": [
+    "2026-09-24-workbuddy"
+  ],
+  "sampleInputs": [
+    {
+      "label": "Inspect a sample receipt",
+      "value": "Compare an applied change with a failed verification check."
+    }
+  ],
+  "explanation": "Planned fictional, deterministic walkthrough of proposal approval and execution outcomes. It will not execute code or modify repositories.",
+  "limitations": [
+    "Not implemented or publicly runnable yet.",
+    "Illustrates the workflow; does not prove agent reliability."
+  ]
+}

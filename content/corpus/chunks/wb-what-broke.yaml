@@ -1,0 +1,6 @@
+{
+  "title": "WorkBuddy — what-broke",
+  "source": "case-study",
+  "content": "The execution workflow needed a clearer distinction between a completed task and proven correctness. Typed receipts now preserve partial and failed outcomes, while the missing integrated test gate remains explicit. This is a documented reliability gap, not a claim of production readiness.",
+  "href": "/work/workbuddy#workbuddy-what-broke"
+}

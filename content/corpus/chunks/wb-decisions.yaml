@@ -1,0 +1,6 @@
+{
+  "title": "WorkBuddy — decisions",
+  "source": "case-study",
+  "content": "Bind approval to the exact change: Bind the proposal hash, canonical project root, target paths, branch and base commit before the approval pause. Recheck the baseline around execution so an approval cannot silently authorize a different proposal. Keep the working checkout separate: Apply changes in a dedicated review worktree and stage only approved paths. Check the commit parent and tree before reporting success. Retain failed or partial worktrees for inspection; do not automatically merge or switch the source checkout. Record outcomes without inventing verification: Typed per-change and batch receipts distinguish applied, refused, partial and failed outcomes. Failed batches do not feed success-memory extraction. Execution receipts explicitly say verified: false until an integrated verification gate exists.",
+  "href": "/work/workbuddy#workbuddy-decisions"
+}

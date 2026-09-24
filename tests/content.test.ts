@@ -7,7 +7,7 @@ import { getExperiment, isPublicExperiment } from "../lib/content/experiments";
 test("migrated content loads, preserves citations, and resolves every relationship", async () => {
   const catalog = await getCatalog(true);
   assert.deepEqual(validateCatalog(catalog), []);
-  assert.deepEqual(catalog.projects.map((entry) => entry.slug).sort(), ["company-brain", "desi-fit", "factory-attendance"]);
+  assert.deepEqual(catalog.projects.map((entry) => entry.slug).sort(), ["company-brain", "factory-attendance", "workbuddy"]);
   assert.equal(catalog.notes.length, 5);
   assert.equal(catalog.experiments.length, 3);
   for (const project of catalog.projects) {

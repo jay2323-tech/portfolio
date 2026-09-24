@@ -32,10 +32,10 @@ export function WorkbenchHero({ studies, portrait }: { studies: CaseStudy[]; por
           <div className={styles.folioContent}>
             <div className={styles.projectIntro}>
               <h2>{featured.title}</h2>
-              <span className={styles.status}>{featured.status === "live" ? "Production" : "In development"}</span>
+              <span className={styles.status}>{featured.status === "live" ? "Production" : featured.slug === "workbuddy" ? "Local prototype" : "In development"}</span>
               <p>{featured.summary}</p>
             </div>
-            {projectIndex === 0 ? <Image className={styles.note} src="/images/workbench/debug-note.png" alt="What broke: the answer cited the wrong chunk." width={280} height={210} /> : <aside className={styles.textNote}><span>WHAT BROKE</span><p>{projectIndex === 1 ? "Real entrances broke the lab assumptions." : "Collecting data was easier than justifying it."}</p></aside>}
+            {projectIndex === 0 ? <Image className={styles.note} src="/images/workbench/debug-note.png" alt="What broke: the answer cited the wrong chunk." width={280} height={210} /> : <aside className={styles.textNote}><span>WHAT BROKE</span><p>{projectIndex === 1 ? "Real entrances broke the lab assumptions." : "Applied does not mean verified."}</p></aside>}
             <figure className={styles.diagram}>
               {projectIndex === 0 ? <Image src="/images/workbench/retrieval-diagram.png?v=2" alt="Documents, retrieval, sources, and an answer with citations." width={2172} height={724} /> : <div className={styles.systemFacts}><p>{featured.architectureSummary}</p><dl>{featured.metrics.map((fact) => <div key={fact.label}><dt>{fact.label}</dt><dd>{fact.value}</dd></div>)}</dl></div>}
               <figcaption>{projectIndex === 0 ? "System illustration (not a product screenshot)" : "Architecture notes / system facts, not measured outcomes"}</figcaption>

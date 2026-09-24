@@ -14,10 +14,10 @@ const claims = [
     href: "/work/company-brain",
   },
   {
-    label: "DesiFit",
-    value: "DPDP-shaped product",
-    detail: "Consent-first data design under India’s Digital Personal Data Protection Act.",
-    href: "/work/desi-fit",
+    label: "WorkBuddy",
+    value: "Local engineering companion",
+    detail: "Project memory, approved plans, and isolated Git changes with execution receipts.",
+    href: "/work/workbuddy",
   },
   {
     label: "This site",

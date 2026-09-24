@@ -1,0 +1,87 @@
+{
+  "title": "WorkBuddy",
+  "problem": "Returning to a codebase means reconstructing context before you can safely review the next AI-proposed change.",
+  "status": "development",
+  "statusLabel": "LOCAL PROTOTYPE",
+  "domain": "Developer tools · Agents",
+  "year": "2026",
+  "coverImage": "/images/work/workbuddy.svg",
+  "metrics": [
+    {
+      "label": "Workflow",
+      "value": "approval-first"
+    },
+    {
+      "label": "Execution",
+      "value": "Git worktrees"
+    },
+    {
+      "label": "Memory",
+      "value": "SQLite + BM25"
+    }
+  ],
+  "tags": [
+    "Python",
+    "FastAPI",
+    "LangGraph",
+    "SQLite",
+    "macOS"
+  ],
+  "eyebrow": "CASE STUDY · LOCAL PROTOTYPE",
+  "headline": "Remember the project. Review the plan. Approve the change.",
+  "who": "WorkBuddy is a local engineering companion for developers returning to a project. It combines project understanding, saved plans and memory with reviewable AI-proposed code changes, through Telegram and a native macOS companion.",
+  "constraints": [
+    "Project understanding and plans require human confirmation.",
+    "Approval must bind to the exact proposal, project root, branch and base commit.",
+    "Local memory and project context need explicit sources and freshness boundaries.",
+    "A successful file application must not be described as a passing test."
+  ],
+  "architectureSummary": "Telegram and a native macOS companion share a FastAPI backend. SQLite stores plans, memory and task events; BM25 retrieves project documents. LangGraph pauses proposals for approval, then a model-free executor applies approved changes in isolated Git worktrees.",
+  "decisions": [
+    {
+      "title": "Bind approval to the exact change",
+      "body": "Bind the proposal hash, canonical project root, target paths, branch and base commit before the approval pause. Recheck the baseline around execution so an approval cannot silently authorize a different proposal."
+    },
+    {
+      "title": "Keep the working checkout separate",
+      "body": "Apply changes in a dedicated review worktree and stage only approved paths. Check the commit parent and tree before reporting success. Retain failed or partial worktrees for inspection; do not automatically merge or switch the source checkout."
+    },
+    {
+      "title": "Record outcomes without inventing verification",
+      "body": "Typed per-change and batch receipts distinguish applied, refused, partial and failed outcomes. Failed batches do not feed success-memory extraction. Execution receipts explicitly say verified: false until an integrated verification gate exists."
+    }
+  ],
+  "whatBroke": "The execution workflow needed a clearer distinction between a completed task and proven correctness. Typed receipts now preserve partial and failed outcomes, while the missing integrated test gate remains explicit. This is a documented reliability gap, not a claim of production readiness.",
+  "links": [
+    {
+      "label": "Architecture and decisions",
+      "href": "/work/workbuddy#workbuddy-architecture",
+      "external": false
+    }
+  ],
+  "role": "Engineering: agent workflows, local memory and desktop integration",
+  "timeframe": "2026 · working local prototype",
+  "summary": "A local engineering companion that remembers project context and turns AI proposals into reviewable changes.",
+  "evidence": [
+    {
+      "title": "Implementation notes",
+      "kind": "narrative",
+      "href": "/work/workbuddy#workbuddy-architecture",
+      "caption": "Summary of the local project architecture and status documentation reviewed on 24 September 2026; not a live execution trace."
+    }
+  ],
+  "resultContext": "The local status document dated 23 September 2026 reports 547 core tests and 136 desktop tests passing, with 7 GUI tests skipped. Those results were not rerun for this portfolio update. Live model paths, Telegram delivery and end-to-end reliability are not established by those counts.",
+  "limitations": [
+    "Working local prototype; no production adoption or customer outcomes claimed.",
+    "No integrated test-verification gate in the execution workflow yet.",
+    "The desktop companion does not provide screen context or voice input.",
+    "Shared Git metadata, concurrent changes and source freshness remain reliability work."
+  ],
+  "demoSlug": "approval-receipt",
+  "relatedNoteSlugs": [
+    "2026-09-24-workbuddy"
+  ],
+  "relatedExperimentSlugs": [
+    "approval-receipt"
+  ]
+}

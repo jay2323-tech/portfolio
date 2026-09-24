@@ -1,0 +1,6 @@
+{
+  "title": "WorkBuddy — architecture",
+  "source": "case-study",
+  "content": "Telegram and a native macOS companion share a FastAPI backend. SQLite stores plans, memory and task events; BM25 retrieves project documents. LangGraph pauses proposals for approval, then a model-free executor applies approved changes in isolated Git worktrees.",
+  "href": "/work/workbuddy#workbuddy-architecture"
+}

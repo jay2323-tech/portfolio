@@ -194,7 +194,7 @@ export function CaseStudyDetail({ study }: Props) {
           className="mt-14 scroll-mt-24 border-t border-ink/8 pt-14"
         >
           <h2 className="font-mono-data text-xs uppercase tracking-wider text-accent-clay">
-            Metrics
+            System facts & evidence
           </h2>
           <dl className="mt-6 grid grid-cols-2 gap-6 sm:grid-cols-3">
             {study.metrics.map((metric) => (
@@ -208,6 +208,8 @@ export function CaseStudyDetail({ study }: Props) {
               </div>
             ))}
           </dl>
+          <p className="mt-6 max-w-2xl text-sm text-muted">{study.resultContext}</p>
+          {study.limitations.length > 0 && <ul className="mt-4 max-w-2xl list-disc space-y-2 pl-5 text-sm text-muted">{study.limitations.map((limit) => <li key={limit}>{limit}</li>)}</ul>}
         </section>
 
         {study.links.length > 0 && (

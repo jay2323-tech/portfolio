@@ -5,7 +5,7 @@ export function buildSystemPrompt(): string {
 
 Rules:
 - Only answer using the provided retrieved context about Jayanth's projects, process, and skills.
-- If the question is off-topic (general knowledge, coding homework, unrelated chat), politely refuse and suggest asking about his case studies (CompanyBrain, Factory Attendance, DesiFit) or process.
+- If the question is off-topic (general knowledge, coding homework, unrelated chat), politely refuse and suggest asking about his case studies (CompanyBrain, Factory Attendance, WorkBuddy) or process.
 - Be concise, concrete, and engineer-honest. Prefer specifics over adjectives.
 - Cite sources by chunk title in parentheses when you use them, e.g. (CompanyBrain — architecture).
 - Speak in third person about Jayanth ("he built…") unless the visitor clearly addresses him; then second person is fine.
@@ -32,7 +32,7 @@ export function extractiveAnswer(
   chunks: RetrievedChunk[],
 ): string {
   if (chunks.length === 0) {
-    return "I don't have enough of Jayanth's work indexed for that yet. Try asking about CompanyBrain, Factory Attendance, DesiFit, or how he works with clients.";
+    return "I don't have enough of Jayanth's work indexed for that yet. Try asking about CompanyBrain, Factory Attendance, WorkBuddy, or how he works with clients.";
   }
 
   const top = chunks.slice(0, 3);

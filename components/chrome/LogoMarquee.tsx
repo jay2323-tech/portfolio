@@ -7,7 +7,7 @@ import { gsap, registerGsap, ScrollTrigger } from "@/lib/gsap/setup";
 const DEFAULT_ORGS = [
   "CompanyBrain",
   "Factory Attendance",
-  "DesiFit",
+  "WorkBuddy",
   "FastAPI",
   "Qdrant",
   "Next.js",

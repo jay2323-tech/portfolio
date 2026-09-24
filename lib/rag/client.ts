@@ -105,6 +105,6 @@ export async function askStream(
 export const EXAMPLE_QUESTIONS = [
   "What's the architecture of CompanyBrain?",
   "Has anything he built shipped to real users?",
-  "What is DesiFit and how does DPDP affect it?",
+  "How does WorkBuddy review and apply AI-proposed changes?",
   "How does Jayanth work with freelance clients?",
 ] as const;

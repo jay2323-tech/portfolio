@@ -1,0 +1,6 @@
+{
+  "title": "WorkBuddy — metrics",
+  "source": "case-study",
+  "content": "The local status document dated 23 September 2026 reports 547 core tests and 136 desktop tests passing, with 7 GUI tests skipped. Those results were not rerun for this portfolio update. Live model paths, Telegram delivery and end-to-end reliability are not established by those counts. Working local prototype; no production adoption or customer outcomes claimed. No integrated test-verification gate in the execution workflow yet. The desktop companion does not provide screen context or voice input. Shared Git metadata, concurrent changes and source freshness remain reliability work.",
+  "href": "/work/workbuddy#workbuddy-metrics"
+}

@@ -55,7 +55,7 @@ Preview URL and whether it is still running:
 - **Main visitor goals:** establish credibility quickly, explore engineering depth, and contact Jayanth.
 - **Two layers:** normal Explore content plus optional X-ray panels attached to real inspectable components. X-ray is not a decorative global wireframe filter.
 - **Signature experience:** one excellent “Break My Work” retrieval challenge before expanding to additional experiments.
-- **Existing project routes stay:** CompanyBrain, Factory Attendance, and DesiFit retain their URLs.
+- **Current projects:** CompanyBrain and Factory Attendance retain their URLs. WorkBuddy replaces DesiFit at `/work/workbuddy` per owner request on 2026-09-24.
 - **About and Contact stay on the homepage.** Do not add separate pages containing the same material by default.
 - **Work stays accessible on the homepage.** A separate work index is unnecessary for the current three projects.
 - **Optional play:** dragging, inspection, and Easter eggs never become prerequisites for reading or navigation.
@@ -78,11 +78,11 @@ For this redesign, use this plan for scope/order and `styles/tokens.css` plus th
 | `/` | Redesign existing | Introduction, work, featured challenge, process, notes, about, contact. |
 | `/work/company-brain` | Redesign existing | RAG product case study with evidence and an explorable request path. |
 | `/work/factory-attendance` | Redesign existing | Production operations story with a synthetic shift/exception demonstration. |
-| `/work/desi-fit` | Redesign existing | Product/data design story with a sample permission/data-flow demonstration. |
+| `/work/workbuddy` | Implemented content | Local engineering companion: memory, approval, isolated worktrees and execution receipts. |
 | `/lab` | New | Index of working experiments with truthful execution/status labels. |
 | `/lab/retrieval-challenge` | New | Flagship challenge, sources, reset, and explanation. |
 | `/lab/shift-simulator` | New | Synthetic attendance events and exception handling. |
-| `/lab/data-journey` | New | Sample permissions, data paths, and deletion simulation. |
+| `/lab/approval-receipt` | Planned | Fictional proposal/approval/receipt walkthrough; no real code execution. |
 | `/notes` | New | Searchable or simply filterable engineering notes/build updates. |
 | `/notes/[slug]` | New | Real readable note pages, linked to related work. |
 | `/colophon` | New | How the portfolio is designed and built; accessible from footer/utilities. |
@@ -242,7 +242,7 @@ Each phase must leave existing routes usable. Do not expose a clickable destinat
 - [ ] P5.3 Replace the duplicated “metrics” blocks with one evidence section. Put stack labels in technical details; describe the source/context of numerical claims.
 - [ ] P5.4 CompanyBrain: connect UI, API, retrieval, vector store, and response streaming in an inspectable architecture. Prepare source-backed examples and the citation-mismatch debugging exhibit.
 - [ ] P5.5 Factory Attendance: show the capture/event/report/exception workflow using staged or synthetic data; explain retry and operator resolution behavior.
-- [ ] P5.6 DesiFit: show sample onboarding, permission choices, purpose/data boundaries, and deletion design. Distinguish proposed behavior from implemented features.
+- [ ] P5.6 WorkBuddy: expand project memory, plan review and approval-bound execution evidence. Distinguish implemented behavior from verification and reliability work.
 - [ ] P5.7 Reuse the Lab experiment components as they become available; before that, use an honest recorded/static walkthrough rather than pretending a demo works.
 - [ ] P5.8 Add next-project, related-note, related-experiment, and contact paths. Ensure “Back to work” is always present even when project links are empty.
 - [ ] P5.9 Validate all existing RAG source deep-links after changing section layouts.
@@ -272,7 +272,7 @@ Each phase must leave existing routes usable. Do not expose a clickable destinat
 - [ ] P7.1 Complete `/lab` with featured challenge, experiment cards, execution/status labels, and meaningful links. Activate the global Lab route.
 - [ ] P7.2 Build `/lab/shift-simulator` with synthetic normal events, duplicates, ambiguous matches, and device interruption. Define expected outcomes for each fixture first.
 - [ ] P7.3 Show event history, exception queue, operator resolution, and resulting report; support reset and replay.
-- [ ] P7.4 Build `/lab/data-journey` with synthetic profile/activity/integration data, optional permissions, and visible changes to feature/data paths.
+- [ ] P7.4 Build `/lab/approval-receipt` with fictional proposals, approval choices, applied/refused outcomes and a separate verification result. Do not execute real code.
 - [ ] P7.5 Make deletion an explicit simulation on local sample data, show affected components, and support reset. Do not request visitors' real health or biometric data.
 - [ ] P7.6 Use the common Brief → Controls → Output → Explanation → Related project layout across experiments.
 - [ ] P7.7 Connect both experiments to their case studies and add focused tests for event/permission transitions and reset behavior.
@@ -468,3 +468,11 @@ Never remove build-folder isolation to solve a temporary preview problem. Check 
 - QA screenshots/comparison: `docs/planning/phase-3-qa/`; report: `design-qa.md`. Desktop 1487×1058, laptop 1280×720, mobile 390×844 checked; earlier phase checks include 320px and tablet.
 - Inspector model currently contains authored explanations and source links; live traces and code evidence should be added only when genuine artifacts exist.
 - Next: Phase 4 remaining homepage story, starting section order and evidence-oriented tools/notes/process. Preserve this hero.
+
+### 2026-09-24 — WorkBuddy replaces DesiFit
+
+- Source: owner-supplied `/Users/jayanthkrishna/workbuddy/` README, architecture and current status; no private runtime data or secrets read/copied.
+- Replaced DesiFit across hero, case study, About, notes, planned experiment and retrieval corpus. New case route `/work/workbuddy`; old DesiFit route removed. Historical QA records remain historical.
+- WorkBuddy is a local prototype, not production. Source-reported test counts are dated and explicitly not rerun for the portfolio. No repository URL invented.
+- Rebuilt local embeddings; four content tests and production build passed. Existing three image lint warnings remain unrelated. Desktop deck and mobile case-study checked in browser.
+- Next remains Phase 4 homepage sections, with WorkBuddy as the third project.

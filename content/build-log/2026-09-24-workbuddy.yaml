@@ -1,0 +1,15 @@
+{
+  "title": "WorkBuddy: applied does not mean verified",
+  "date": "2026-09-24",
+  "tag": "WorkBuddy",
+  "body": "WorkBuddy separates proposed changes, human approval, file application and verification. Its executor records typed outcomes and retains isolated review worktrees for inspection. Failed batches do not become success memories. The remaining boundary is explicit: execution receipts currently report verified: false because an integrated test gate is still being built.",
+  "publication": "published",
+  "summary": "Why execution receipts distinguish an applied change from a verified result.",
+  "relatedProjectSlugs": [
+    "workbuddy"
+  ],
+  "relatedExperimentSlugs": [
+    "approval-receipt"
+  ],
+  "media": []
+}

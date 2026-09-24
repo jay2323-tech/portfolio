@@ -80,7 +80,7 @@ export async function getAllCaseStudies(): Promise<CaseStudy[]> {
   const order = settings?.workOrder?.filter(Boolean) ?? [
     "company-brain",
     "factory-attendance",
-    "desi-fit",
+    "workbuddy",
   ];
   const slugs = await reader.collections.caseStudies.list();
   const studies = (

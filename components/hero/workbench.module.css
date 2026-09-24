@@ -50,7 +50,7 @@
 .deckStage { position: relative; }
 .folio { scroll-margin-top: 110px; }
 .folio[data-project="factory-attendance"] { background: #edf0df; }
-.folio[data-project="desi-fit"] { background: #f4e4e0; }
+.folio[data-project="workbuddy"] { background: #f4e4e0; }
 .textNote { position: absolute; right: -5px; top: 14px; width: 25%; padding: 18px; background: var(--butter); box-shadow: 0 7px 12px #29241b15; transform: rotate(4deg); }
 .textNote span { font: 9px var(--font-mono); letter-spacing: .1em; }
 .textNote p { font: italic 19px/1.35 Georgia, serif; margin-top: 8px; }
