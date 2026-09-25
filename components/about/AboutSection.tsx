@@ -1,11 +1,10 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-import { useReducedMotion } from "framer-motion";
+import { useRef } from "react";
 import { SectionHeader } from "@/components/chrome/SectionHeader";
 import { TimelineLine } from "./TimelineLine";
 import { TiltCard } from "./TiltCard";
-import { gsap, registerGsap, ScrollTrigger } from "@/lib/gsap/setup";
+import { useScrollReveal } from "@/lib/motion/useScrollReveal";
 import { onRowGlowMove } from "@/lib/motion/rowGlow";
 import { cn } from "@/lib/utils";
 import type { SiteAbout } from "@/lib/content/reader";
@@ -19,7 +18,6 @@ type Props = {
  */
 export function AboutSection({ content }: Props) {
   const sectionRef = useRef<HTMLElement>(null);
-  const reduce = useReducedMotion();
   const {
     coordinates,
     statement,
@@ -34,100 +32,7 @@ export function AboutSection({ content }: Props) {
     toolkit,
   } = content;
 
-  useEffect(() => {
-    if (reduce || !sectionRef.current) return;
-    registerGsap();
-    const root = sectionRef.current;
-
-    const ctx = gsap.context(() => {
-      const intro = root.querySelectorAll<HTMLElement>("[data-about-block]");
-      intro.forEach((el) => {
-        gsap.fromTo(
-          el,
-          { y: 28, opacity: 0 },
-          {
-            y: 0,
-            opacity: 1,
-            duration: 0.65,
-            ease: "power2.out",
-            clearProps: "transform,opacity",
-            scrollTrigger: {
-              trigger: el,
-              start: "top 90%",
-              toggleActions: "play none none none",
-            },
-          },
-        );
-      });
-
-      root.querySelectorAll<HTMLElement>("[data-timeline-row]").forEach((row) => {
-        gsap.fromTo(
-          row,
-          { x: -12, opacity: 0 },
-          {
-            x: 0,
-            opacity: 1,
-            duration: 0.5,
-            ease: "power2.out",
-            clearProps: "transform,opacity",
-            scrollTrigger: {
-              trigger: row,
-              start: "top 88%",
-              toggleActions: "play none none none",
-            },
-          },
-        );
-      });
-
-      const foundations = root.querySelectorAll<HTMLElement>(
-        "[data-foundation-cell]",
-      );
-      if (foundations.length) {
-        gsap.fromTo(
-          foundations,
-          { y: 30, opacity: 0 },
-          {
-            y: 0,
-            opacity: 1,
-            duration: 0.55,
-            stagger: 0.08,
-            ease: "back.out(1.4)",
-            clearProps: "transform,opacity",
-            scrollTrigger: {
-              trigger: root.querySelector("[data-foundations]"),
-              start: "top 85%",
-              toggleActions: "play none none none",
-            },
-          },
-        );
-      }
-
-      const tools = root.querySelectorAll<HTMLElement>("[data-toolkit-item]");
-      if (tools.length) {
-        gsap.fromTo(
-          tools,
-          { y: 16, opacity: 0, scale: 0.94 },
-          {
-            y: 0,
-            opacity: 1,
-            scale: 1,
-            duration: 0.45,
-            stagger: 0.05,
-            ease: "power2.out",
-            clearProps: "transform,opacity",
-            scrollTrigger: {
-              trigger: root.querySelector("[data-toolkit]"),
-              start: "top 88%",
-              toggleActions: "play none none none",
-            },
-          },
-        );
-      }
-    }, root);
-
-    ScrollTrigger.refresh();
-    return () => ctx.revert();
-  }, [reduce]);
+  useScrollReveal(sectionRef, "[data-about-block] > :not(ul):not(ol), [data-about-block] > ul > li, [data-about-block] > ol > li, [data-timeline-row], [data-foundation-cell], [data-toolkit-item], [data-foundations] > h4, [data-toolkit] > h4", { stagger: .08 });
 
   return (
     <section

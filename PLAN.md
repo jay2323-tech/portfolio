@@ -484,3 +484,11 @@ Never remove build-folder isolation to solve a temporary preview problem. Check 
 - Deck initialization now observes card dimensions even when the first layout cannot fit. Font readiness, viewport changes and reduced-motion changes all retry or tear down the enhancement; cleanup restores visible, accessible cards.
 - Verified optimized `next build` + `next start` at localhost:2006: desktop chapter changes, mobile fallback, desktop reactivation, compiled animation styles, inspector open, and zero overflow. Reduced-motion CSS/logic reviewed; OS preference emulation not performed.
 - GitHub reports previous production at 0156a39. Its listed Vercel URL requires login in the QA browser; direct deployed visual confirmation remains unavailable until an accessible production URL/session is provided.
+
+### 2026-09-25 — Section entrances and marquee pacing
+
+- Replaced one-shot position-based reveals in Articles, Lab, About and Contact with a shared viewport IntersectionObserver hook. Elements animate when entering the actual viewport and can replay on return. Default markup stays visible; reduced motion restores original styles.
+- Recent Articles and all section marquees now have a separate 64px entrance. Drift reads actual viewport geometry instead of stale ScrollTrigger positions after the hero pin. Travel is capped at 120px with 1.2s smoothing, plus 36px vertical/48px horizontal desktop padding.
+- Foundation cards reveal independently with 80ms stagger; About text, timeline rows, competencies and toolkit also rise into view. Header markup no longer starts permanently clipped.
+- Browser evidence: foundation first card opacity .2565 / y17.84 while later cards were opacity0 / y24; settled cards fully visible. Recent Articles entrance captured at opacity .1904 / x-51.82. Lab shifted from x-68.05 to -50.03 for a 144px scroll. No horizontal overflow in inspected desktop layout.
+- First motion patch 9a76063 reached Vercel Preview; the production deployment was still 0156a39. Check promotion before claiming the production domain is updated.

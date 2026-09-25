@@ -1,12 +1,11 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { useReducedMotion } from "framer-motion";
+import { useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 import { SectionHeader } from "@/components/chrome/SectionHeader";
 import { ContactForm } from "./ContactForm";
 import { Magnetic } from "@/components/chrome/Magnetic";
-import { gsap, registerGsap, ScrollTrigger } from "@/lib/gsap/setup";
+import { useScrollReveal } from "@/lib/motion/useScrollReveal";
 
 type Path = "hiring" | "project";
 
@@ -27,7 +26,6 @@ type Props = {
 export function ContactSection({ links }: Props) {
   const [path, setPath] = useState<Path>("hiring");
   const sectionRef = useRef<HTMLElement>(null);
-  const reduce = useReducedMotion();
   const emailLink =
     links.find((l) => l.href.startsWith("mailto:")) ?? links[0];
   const emailDisplay =
@@ -35,36 +33,7 @@ export function ContactSection({ links }: Props) {
   const emailHref =
     emailLink?.href ?? "mailto:cvjayanth005@gmail.com";
 
-  useEffect(() => {
-    if (reduce || !sectionRef.current) return;
-    registerGsap();
-    const root = sectionRef.current;
-
-    const ctx = gsap.context(() => {
-      const blocks = root.querySelectorAll<HTMLElement>("[data-contact-block]");
-      blocks.forEach((el) => {
-        gsap.fromTo(
-          el,
-          { y: 24, opacity: 0 },
-          {
-            y: 0,
-            opacity: 1,
-            duration: 0.6,
-            ease: "power2.out",
-            clearProps: "transform,opacity",
-            scrollTrigger: {
-              trigger: el,
-              start: "top 90%",
-              toggleActions: "play none none none",
-            },
-          },
-        );
-      });
-    }, root);
-
-    ScrollTrigger.refresh();
-    return () => ctx.revert();
-  }, [reduce]);
+  useScrollReveal(sectionRef, "[data-contact-block]", { stagger: .08 });
 
   return (
     <section

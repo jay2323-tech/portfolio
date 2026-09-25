@@ -1,10 +1,9 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import Link from "next/link";
-import { useReducedMotion } from "framer-motion";
 import { SectionHeader } from "@/components/chrome/SectionHeader";
-import { gsap, registerGsap, ScrollTrigger } from "@/lib/gsap/setup";
+import { useScrollReveal } from "@/lib/motion/useScrollReveal";
 import { onRowGlowMove } from "@/lib/motion/rowGlow";
 import { cn } from "@/lib/utils";
 import type { ArticleEntry } from "@/lib/content/site";
@@ -36,66 +35,9 @@ type Props = {
  */
 export function ArticlesSection({ entries }: Props) {
   const sectionRef = useRef<HTMLElement>(null);
-  const reduce = useReducedMotion();
   const items = entries;
 
-  useEffect(() => {
-    if (reduce || !sectionRef.current) return;
-    registerGsap();
-    const root = sectionRef.current;
-
-    const ctx = gsap.context(() => {
-      const meta = root.querySelector<HTMLElement>("[data-section-meta]");
-      const rows = root.querySelectorAll<HTMLElement>("[data-article-row]");
-
-      if (meta) {
-        gsap.fromTo(
-          meta,
-          { y: 16, opacity: 0 },
-          {
-            y: 0,
-            opacity: 1,
-            duration: 0.55,
-            ease: "power2.out",
-            clearProps: "transform,opacity",
-            scrollTrigger: {
-              trigger: meta,
-              start: "top 90%",
-              toggleActions: "play none none none",
-            },
-          },
-        );
-      }
-
-      gsap.fromTo(
-        rows,
-        {
-          x: -20,
-          opacity: 0,
-          rotateX: -12,
-          transformPerspective: 900,
-          transformOrigin: "50% 100%",
-        },
-        {
-          x: 0,
-          opacity: 1,
-          rotateX: 0,
-          duration: 0.55,
-          stagger: 0.06,
-          ease: "power2.out",
-          clearProps: "transform,opacity",
-          scrollTrigger: {
-            trigger: root.querySelector(".article-list") ?? root,
-            start: "top 88%",
-            toggleActions: "play none none none",
-          },
-        },
-      );
-    }, root);
-
-    ScrollTrigger.refresh();
-    return () => ctx.revert();
-  }, [reduce, items.length]);
+  useScrollReveal(sectionRef, "[data-article-row]", { stagger: .08 });
 
   return (
     <section

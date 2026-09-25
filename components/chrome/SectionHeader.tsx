@@ -6,6 +6,7 @@ import { MarqueeText } from "./MarqueeText";
 import { gsap, registerGsap, ScrollTrigger } from "@/lib/gsap/setup";
 import { countUp, parseLeadingCount } from "@/lib/motion/countUp";
 import { useSafeReducedMotion } from "@/lib/motion/useSafeReducedMotion";
+import { useScrollReveal } from "@/lib/motion/useScrollReveal";
 import { cn } from "@/lib/utils";
 
 type Props = {
@@ -36,6 +37,7 @@ export function SectionHeader({
 }: Props) {
   const rootRef = useRef<HTMLDivElement>(null);
   const reduce = useSafeReducedMotion();
+  useScrollReveal(rootRef, "[data-section-meta], [data-section-heading]", { stagger: .08 });
   const parsed = useMemo(
     () => (meta ? parseLeadingCount(meta) : null),
     [meta],
@@ -45,28 +47,10 @@ export function SectionHeader({
     if (reduce || !rootRef.current) return;
     registerGsap();
     const root = rootRef.current;
-    const heading = root.querySelector<HTMLElement>("[data-section-heading]");
     const countEl = root.querySelector<HTMLElement>("[data-section-count]");
     const kills: Array<() => void> = [];
 
     const ctx = gsap.context(() => {
-      if (heading && !heading.classList.contains("sr-only")) {
-        gsap.fromTo(
-          heading,
-          { clipPath: "inset(0 100% 0 0)" },
-          {
-            clipPath: "inset(0 0% 0 0)",
-            duration: 0.8,
-            ease: "power4.inOut",
-            scrollTrigger: {
-              trigger: heading,
-              start: "top 80%",
-              toggleActions: "play none none none",
-            },
-          },
-        );
-      }
-
       if (countEl && parsed) {
         ScrollTrigger.create({
           trigger: countEl,
@@ -102,7 +86,7 @@ export function SectionHeader({
               {parsed ? (
                 <span>
                   <span data-section-count className="text-ink tabular-nums">
-                    0
+                    {parsed.count}
                   </span>
                   {parsed.rest ? ` ${parsed.rest}` : ""}
                 </span>
@@ -117,7 +101,6 @@ export function SectionHeader({
           id={headingId}
           data-section-heading
           className="font-display mt-3 text-[clamp(2.25rem,5vw,4rem)] leading-[0.95] tracking-tight text-ink"
-          style={reduce ? undefined : { clipPath: "inset(0 100% 0 0)" }}
         >
           {title}
         </h2>

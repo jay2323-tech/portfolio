@@ -1,12 +1,12 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { ArchitectureDiagramCanvas } from "@/components/architecture-diagram/ArchitectureDiagram";
 import { LabNetworkCanvas } from "./LabNetworkCanvas";
 import { SectionHeader } from "@/components/chrome/SectionHeader";
 import { useAsk } from "@/components/ask-my-work/AskContext";
-import { gsap, registerGsap, ScrollTrigger } from "@/lib/gsap/setup";
+import { useScrollReveal } from "@/lib/motion/useScrollReveal";
 import { onRowGlowMove } from "@/lib/motion/rowGlow";
 import { cn } from "@/lib/utils";
 import type { SiteLab } from "@/lib/content/reader";
@@ -25,64 +25,7 @@ export function LabSection({ content }: Props) {
   const [diagramOpen, setDiagramOpen] = useState(true);
   const experiments = content.experiments ?? [];
 
-  useEffect(() => {
-    if (reduce || !sectionRef.current) return;
-    registerGsap();
-    const root = sectionRef.current;
-
-    const ctx = gsap.context(() => {
-      const meta = root.querySelector<HTMLElement>("[data-section-meta]");
-      const rows = root.querySelectorAll<HTMLElement>("[data-lab-row]");
-
-      if (meta) {
-        gsap.fromTo(
-          meta,
-          { y: 16, opacity: 0 },
-          {
-            y: 0,
-            opacity: 1,
-            duration: 0.55,
-            ease: "power2.out",
-            clearProps: "transform,opacity",
-            scrollTrigger: {
-              trigger: meta,
-              start: "top 90%",
-              toggleActions: "play none none none",
-            },
-          },
-        );
-      }
-
-      rows.forEach((row) => {
-        gsap.fromTo(
-          row,
-          {
-            y: 30,
-            opacity: 0,
-            rotateX: -12,
-            transformPerspective: 900,
-            transformOrigin: "50% 100%",
-          },
-          {
-            y: 0,
-            opacity: 1,
-            rotateX: 0,
-            duration: 0.65,
-            ease: "power2.out",
-            clearProps: "transform,opacity",
-            scrollTrigger: {
-              trigger: row,
-              start: "top 88%",
-              toggleActions: "play none none none",
-            },
-          },
-        );
-      });
-    }, root);
-
-    ScrollTrigger.refresh();
-    return () => ctx.revert();
-  }, [reduce]);
+  useScrollReveal(sectionRef, "[data-lab-row]", { stagger: .08 });
 
   return (
     <section

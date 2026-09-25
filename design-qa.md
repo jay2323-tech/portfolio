@@ -29,3 +29,7 @@ Phase 4 lower homepage sections; deeper evidence/case studies and runnable exper
 ## Production motion follow-up — 2026-09-24
 
 The optimized production build now includes object entrances, hover/focus/press feedback, sparkle drift and inspector entrance. The scroll deck retries its fit check after font/layout changes, observes even while disabled, and cleans up on viewport/preference changes. Browser checks at localhost:2006 confirmed desktop chapter transitions, mobile readable fallback, desktop reactivation and inspector animation names in computed CSS. No horizontal overflow. Production build passed with the existing three image warnings. Vercel's listed URL redirects to login, so this is local production verification, not a claim of deployed visual QA.
+
+## Section motion follow-up — 2026-09-25
+
+Confirmed actual in-flight DOM styles for staggered foundation reveals and Recent Articles horizontal entrance, followed by settled readable content. Lab drift is now tied to live viewport geometry: 144px scroll produced about 18px horizontal movement. Marquee padding is 36px vertically/48px horizontally on desktop. Shared reveals use IntersectionObserver and visible defaults, respecting live reduced-motion changes. The prior ScrollTrigger-based marquee was observed at its completed transform even while mid-viewport; this motivated removing cached trigger geometry from marquees.
