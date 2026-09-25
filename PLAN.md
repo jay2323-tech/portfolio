@@ -23,13 +23,13 @@ This is the source of truth for the next portfolio redesign. It records the dire
 | Product direction | Jayanth’s Workbench: Light Lab collage + optional X-ray inspection + playable engineering challenges. |
 | Scope authorization | User authorized phased implementation and selected displayed option 3 (Field Notes). Continue one coherent phase per session. |
 | Current public pages | Homepage, three `/work/[slug]` case studies, `/notes` and five note pages, `/lab` empty state, `/colophon`. Planned experiment details return 404. |
-| Current homepage order | Field Notes hero with three-project scroll deck → tools marquee → articles → lab → about → contact → footer. |
+| Current homepage order | Field Notes hero and three-project deck → Break My Work → How I Build → tools in context → three notes → About → Contact → Footer. |
 | Prior completed work | Responsive collage hero/navigation fixes; menu Escape/focus handling; reduced-motion CSS changes; preview build-folder isolation. |
 | Preview incident | Running a production build overwrote development manifests and left the hero hidden. Development now uses `.next-dev`; production uses `.next`. The collage has visible default CSS so it remains readable if JS fails. |
 | Previously checked | Desktop/mobile hero visuals; TypeScript; production build before the subsequent preview repair. After the preview repair, TypeScript and whitespace checks passed and the hero rendered in Browser without captured console errors. These are historical checks, not proof of future changes. |
 | Verification still needed | Phase 0 baseline is complete in `docs/planning/redesign-baseline.md`. Fix and verify the recorded defects during implementation; actual reduced-motion emulation and physical-device checks remain Phase 10 tasks. |
 | New redesign phases completed | Phases 0–3 implemented: Field Notes hero, reversible project deck, shared navigation, and real decision inspectors are now present. Physical-device and emulated reduced-motion QA remain Phase 10. |
-| Next task | Phase 4: assemble remaining homepage sections. Start P4.1 by comparing current lower sections against this plan. Keep the approved Field Notes deck; do not reintroduce the removed duplicate pinned case-study section. |
+| Next task | Phase 5: deepen the three case studies, starting with shared story/evidence structure (P5.1–P5.3). Prepare source-backed media and claims before building project interactions. |
 | Known content gaps | See `docs/planning/redesign-content-inventory.md`: centered portrait, project media and outcome evidence, verified statuses/claims, actual résumé PDF and social URLs, and approved demo fixtures. |
 
 ### Session handoff template
@@ -221,15 +221,15 @@ Each phase must leave existing routes usable. Do not expose a clickable destinat
 
 **Goal:** complete the homepage's readable story before expanding the demos.
 
-- [ ] P4.1 Update `app/(site)/page.tsx` to the section order in this plan.
-- [ ] P4.2 Redesign selected work with genuine imagery, role/status/evidence, and distinct links to each case study. All three projects must be accessible without scroll trapping.
-- [ ] P4.3 Implement the Break My Work section layout and explanation. Activate its playable controls when Phase 6 delivers the working experiment; no fake Run button.
-- [ ] P4.4 Adapt `components/process/ProcessSteps.tsx` where useful. Attach a real artifact to each process step.
-- [ ] P4.5 Replace the disconnected tools marquee with tools linked to the projects/decisions that use them.
-- [ ] P4.6 Replace article rows with three clear note previews. Connect them to actual note destinations when Phase 8 completes them; preserve useful inline content meanwhile.
-- [ ] P4.7 Simplify About: story, candid photo, a few milestones, current availability, and résumé destination once the actual PDF is available.
-- [ ] P4.8 Restyle Contact and Footer consistently while preserving functional existing form behavior.
-- [ ] P4.9 Keep historical anchors meaningful and ensure sticky navigation does not cover anchor headings.
+- [x] P4.1 Update `app/(site)/page.tsx` to the section order in this plan.
+- [x] P4.2 Keep the evidence-led three-project Field Notes deck, with separate case-study links and mobile document flow.
+- [x] P4.3 Implement the Break My Work section layout and explanation. Playable controls remain Phase 6; there is no fake Run button.
+- [x] P4.4 Adapt `components/process/ProcessSteps.tsx` and link each step to a real case-study artifact.
+- [x] P4.5 Replace the disconnected tools marquee with project decisions that explain each tool.
+- [x] P4.6 Replace article rows with three note previews connected to published notes.
+- [x] P4.7 Simplify About with story, candid photo, milestones, availability, and a résumé request email until the PDF exists.
+- [x] P4.8 Restyle Contact and Footer while preserving the existing form.
+- [x] P4.9 Preserve homepage anchors and give each section room below the sticky navigation.
 
 **Exit:** the full homepage is coherent and responsive, no section is an empty placeholder, every exposed link works, and outstanding feature activation is recorded.
 
@@ -492,3 +492,14 @@ Never remove build-folder isolation to solve a temporary preview problem. Check 
 - Foundation cards reveal independently with 80ms stagger; About text, timeline rows, competencies and toolkit also rise into view. Header markup no longer starts permanently clipped.
 - Browser evidence: foundation first card opacity .2565 / y17.84 while later cards were opacity0 / y24; settled cards fully visible. Recent Articles entrance captured at opacity .1904 / x-51.82. Lab shifted from x-68.05 to -50.03 for a 144px scroll. No horizontal overflow in inspected desktop layout.
 - First motion patch 9a76063 reached Vercel Preview; the production deployment was still 0156a39. Check promotion before claiming the production domain is updated.
+
+### 2026-09-25 — Phase 4 homepage story
+
+- Reassembled the homepage as Field Notes hero and project deck → Break My Work → How I Build → tools in context → three published note previews → About → Contact → Footer. Removed the disconnected tools and Lab marquees from this page.
+- Break My Work introduces three source-backed failure questions with links to actual case-study decisions and an Ask action. Runnable/resettable challenges still belong to Phase 6. The process and tools sections link to relevant case-study anchors.
+- About now contains a short story, candid portrait, project milestones, and availability. The résumé action requests the current document by email because no PDF is available. Contact keeps its existing form workflow and provides direct email.
+- Files: homepage route, `components/home/*`, ProcessSteps, ArticlesSection, AboutSection, ContactSection, Footer, About content, this plan.
+- Verification: optimized production build and content validation passed. Browser at 1280px desktop and 390×844 mobile showed the new sections, with no mobile horizontal overflow or captured console errors. Local homepage anchors resolved; mobile challenge/process/about views were inspected visually. Three existing image lint warnings remain.
+- Remaining: Phase 6 playable challenges, real résumé PDF and source-backed media/outcome evidence. Reduced-motion emulation and physical-device checks remain Phase 10.
+- Next exact action: begin P5.1–P5.3 with the shared case-study structure and evidence treatment; then deepen each project without inventing artifacts.
+- Preview: `http://localhost:2005/` while the local development server is running. GitHub branch push creates a Preview; production promotion has not been verified.

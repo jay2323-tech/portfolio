@@ -1,62 +1,21 @@
+import Link from "next/link";
+import { ArrowUpRight } from "lucide-react";
+import styles from "@/components/home/home.module.css";
+
 const steps = [
-  {
-    n: "01",
-    label: "Discovery",
-    body: "A short call to map the problem, constraints, and what “done” means. I need honest access to the current system, decision-maker, and any compliance limits up front.",
-  },
-  {
-    n: "02",
-    label: "Proposal",
-    body: "A concrete architecture and timeline — not a slide deck of buzzwords. You get tradeoffs in writing before any build clock starts.",
-  },
-  {
-    n: "03",
-    label: "Build",
-    body: "Visible checkpoints: working increments you can click, not a big reveal. Feedback windows are scheduled so scope does not silently expand.",
-  },
-  {
-    n: "04",
-    label: "Handoff",
-    body: "Docs, runbooks, and a support window after launch. If it only works while I’m watching the logs, it isn’t handed off.",
-  },
+  { n: "01", title: "Understand", description: "Name the people, real environment, and constraints before choosing an implementation.", artifact: "Factory floor context", href: "/work/factory-attendance#factory-attendance-context" },
+  { n: "02", title: "Map", description: "Draw the path from input to decision so handoffs and failure points become visible.", artifact: "CompanyBrain architecture", href: "/work/company-brain#company-brain-architecture" },
+  { n: "03", title: "Build", description: "Make tradeoffs explicit and leave a way to inspect what a system actually did.", artifact: "WorkBuddy decisions", href: "/work/workbuddy#workbuddy-decisions" },
+  { n: "04", title: "Verify", description: "Record evidence and limits. A completed change is a checkpoint, not proof that every test passed.", artifact: "WorkBuddy evidence & limits", href: "/work/workbuddy#workbuddy-metrics" },
 ] as const;
 
 export function ProcessSteps() {
-  return (
-    <section
-      id="process"
-      className="section-pad scroll-mt-20 border-t border-white/[0.06] bg-paper-50 py-[var(--section-gap-mobile)] text-ink-950 md:py-[var(--section-gap-desktop)]"
-      data-glass="paper"
-      aria-labelledby="process-heading"
-    >
-      <div className="mx-auto max-w-[var(--content-max)]">
-        <p className="font-mono-data text-xs uppercase tracking-[0.14em] text-ink-800/55">
-          Freelance
-        </p>
-        <h2
-          id="process-heading"
-          className="font-display mt-3 text-2xl tracking-tight text-ink-950 md:text-text-xl"
-        >
-          How this works
-        </h2>
-        <p className="mt-3 max-w-xl text-ink-800/75">
-          A real sequence — what I need from you at each stage.
-        </p>
-
-        <ol className="mt-12 grid gap-10 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
-          {steps.map((step) => (
-            <li key={step.n}>
-              <p className="font-mono-data text-xs text-accent-clay">{step.n}</p>
-              <h3 className="mt-2 text-lg font-medium tracking-tight text-ink-950">
-                {step.label}
-              </h3>
-              <p className="mt-3 text-sm leading-relaxed text-ink-800/75">
-                {step.body}
-              </p>
-            </li>
-          ))}
-        </ol>
-      </div>
-    </section>
-  );
+  return <section id="process" className={`${styles.section} ${styles.process}`} aria-labelledby="process-heading"><div className={styles.inner}>
+    <div className={styles.sectionTop}><div><p className={styles.eyebrow}>02 / METHOD & MATERIAL</p><h2 id="process-heading" className={styles.sectionTitle}>How I build.</h2>
+      <p className={styles.sectionIntro}>Four moves I can show through actual project notes, architecture, and decisions.</p></div></div>
+    <ol className={styles.stepList}>{steps.map((step) => <li key={step.n} className={styles.step}>
+      <span className={styles.stepNumber}>{step.n} / 04</span><h3>{step.title}</h3><p>{step.description}</p>
+      <Link className={styles.artifact} href={step.href}>{step.artifact}<ArrowUpRight size={16} aria-hidden="true" /></Link>
+    </li>)}</ol>
+  </div></section>;
 }

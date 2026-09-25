@@ -2,116 +2,24 @@
 
 import { useRef } from "react";
 import Link from "next/link";
-import { SectionHeader } from "@/components/chrome/SectionHeader";
+import { ArrowUpRight } from "lucide-react";
 import { useScrollReveal } from "@/lib/motion/useScrollReveal";
-import { onRowGlowMove } from "@/lib/motion/rowGlow";
-import { cn } from "@/lib/utils";
 import type { ArticleEntry } from "@/lib/content/site";
+import styles from "@/components/home/home.module.css";
 
-function formatDate(iso: string) {
-  const d = new Date(`${iso}T12:00:00`);
-  const mm = String(d.getMonth() + 1).padStart(2, "0");
-  const dd = String(d.getDate()).padStart(2, "0");
-  const yyyy = d.getFullYear();
-  return `${mm}/${dd}/${yyyy}`;
-}
+type Props = { entries: ArticleEntry[] };
 
-function estimateRead(body: string) {
-  const mins = Math.max(1, Math.ceil(body.split(/\s+/).length / 40));
-  return `${mins} MIN READ`;
-}
-
-function titleFromBody(body: string, label?: string) {
-  if (label) return label;
-  return body.length > 56 ? `${body.slice(0, 56).trim()}…` : body;
-}
-
-type Props = {
-  entries: ArticleEntry[];
-};
-
-/**
- * Recent Articles — L→R mint swipe + row x-stagger on scroll.
- */
 export function ArticlesSection({ entries }: Props) {
-  const sectionRef = useRef<HTMLElement>(null);
-  const items = entries;
-
-  useScrollReveal(sectionRef, "[data-article-row]", { stagger: .08 });
-
-  return (
-    <section
-      ref={sectionRef}
-      id="articles"
-      className="overflow-x-clip scroll-mt-20 border-b border-ink/8 bg-tint-blush py-[var(--section-gap-mobile)] md:py-[var(--section-gap-desktop)]"
-      aria-labelledby="articles-heading"
-    >
-      <SectionHeader
-        index="02"
-        meta={`${items.length} LIVE`}
-        title="Recent articles"
-        bgMarquee="RECENT ARTICLES"
-        headingId="articles-heading"
-      />
-
-      <ul className="article-list mt-10 md:mt-14">
-        {items.map((entry, i) => {
-          const n = String(i + 1).padStart(3, "0");
-          const title = titleFromBody(entry.body, entry.label);
-          return (
-            <li
-              key={entry.slug}
-              data-article-row
-              onMouseMove={onRowGlowMove}
-              className="row-glow border-t border-ink/10 last:border-b"
-            >
-              <Link
-                href={`/notes/${entry.slug}`}
-                data-cursor="view"
-                className={cn(
-                  "article-row-swipe group block text-ink outline-none",
-                )}
-              >
-                <div className="section-pad relative z-[1] mx-auto grid max-w-[var(--content-max)] gap-3 py-6 sm:grid-cols-[2.5rem_1fr_auto] sm:items-center sm:gap-6">
-                  <span className="min-w-[40px] font-mono-data text-xs tracking-[0.12em] text-muted transition-colors duration-300 group-hover:text-ink">
-                    {n}
-                  </span>
-
-                  <div className="min-w-0">
-                    <div className="hidden items-center gap-x-3 font-mono-data text-[10px] uppercase tracking-[0.14em] text-muted sm:flex">
-                      <time dateTime={entry.date}>{formatDate(entry.date)}</time>
-                      {entry.tag ? (
-                        <>
-                          <span className="opacity-40" aria-hidden>
-                            ·
-                          </span>
-                          <span>{entry.tag}</span>
-                        </>
-                      ) : null}
-                      <span className="opacity-40" aria-hidden>
-                        ·
-                      </span>
-                      <span>{estimateRead(entry.body)}</span>
-                    </div>
-
-                    <h3 className="font-display mt-2 text-[clamp(1.25rem,2.6vw,1.85rem)] leading-[0.95] tracking-tight text-ink">
-                      {title}
-                    </h3>
-
-                    <p className="mt-2 max-w-xl truncate text-sm text-muted transition-colors duration-300 group-hover:text-ink/80">
-                      {entry.body}
-                    </p>
-                  </div>
-
-                  <span className="font-mono-data text-[11px] tracking-[0.14em] text-accent-clay transition-transform duration-250 ease-out group-hover:translate-x-1 group-hover:text-ink">
-                    READ →
-                  </span>
-                </div>
-              </Link>
-            </li>
-          );
-        })}
-      </ul>
-    </section>
-  );
+  const root = useRef<HTMLElement>(null);
+  useScrollReveal(root, "[data-note-card]", { y: 22, stagger: .09 });
+  return <section ref={root} id="articles" className={`${styles.section} ${styles.notes}`} aria-labelledby="articles-heading"><div className={styles.inner}>
+    <div className={styles.sectionTop}><div><p className={styles.eyebrow}>04 / FROM THE BUILD LOG</p><h2 id="articles-heading" className={styles.sectionTitle}>Notes from the workbench.</h2>
+      <p className={styles.sectionIntro}>Short accounts of what changed, what broke, and what I learned while building.</p></div>
+      <Link className={styles.textLink} href="/notes">All notes <ArrowUpRight size={17} aria-hidden="true" /></Link></div>
+    <ul className={styles.notesGrid}>{entries.map((entry) => <li key={entry.slug} data-note-card className={styles.noteCard}>
+      <p className={styles.meta}><time dateTime={entry.date}>{entry.date}</time> / {entry.tag || "BUILD LOG"}</p>
+      <h3>{entry.label}</h3><p>{entry.summary}</p>
+      <Link href={`/notes/${entry.slug}`}>Read the note <ArrowUpRight size={17} aria-hidden="true" /></Link>
+    </li>)}</ul>
+  </div></section>;
 }

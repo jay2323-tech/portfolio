@@ -1,0 +1,70 @@
+.section { padding: clamp(78px, 10vw, 144px) 4%; scroll-margin-top: 82px; border-top: 1px solid #14141420; }
+.inner { max-width: 1450px; margin-inline: auto; }
+.eyebrow { font: 11px/1.5 var(--font-mono); letter-spacing: .16em; text-transform: uppercase; color: #58616a; }
+.sectionTitle { max-width: 17ch; margin: 15px 0 18px; font: 800 clamp(44px, 6.5vw, 92px)/.91 var(--font-display); letter-spacing: -.065em; }
+.sectionIntro { max-width: 65ch; font-size: clamp(17px, 1.5vw, 22px); line-height: 1.5; color: #3e4650; }
+.sectionTop { display: flex; justify-content: space-between; align-items: end; gap: 30px; margin-bottom: clamp(35px, 5vw, 72px); }
+.asideNote { max-width: 200px; color: #70482c; font: italic 20px/1.35 Georgia, serif; transform: rotate(-6deg); }
+.challenge { background: #f7f3e9; }
+.challengeGrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.challengeCard { min-width: 0; padding: clamp(24px, 3vw, 38px); min-height: 420px; border: 1px solid #14141418; box-shadow: 0 10px 24px #29241b0b; display: flex; flex-direction: column; background: #e3edf5; }
+.challengeCard:nth-child(2) { background: #edf0df; }
+.challengeCard:nth-child(3) { background: #f4e4e0; }
+.cardTop { display: flex; justify-content: space-between; align-items: start; gap: 12px; font: 11px var(--font-mono); letter-spacing: .08em; }
+.cardTop span:last-child { text-align: right; color: #56616a; }
+.challengeCard h3 { margin: 46px 0 12px; font: 750 clamp(29px, 2.7vw, 40px)/1.02 var(--font-display); letter-spacing: -.045em; }
+.challengeCard .question { max-width: 22ch; font: 600 clamp(22px, 2.2vw, 31px)/1.2 var(--font-display); letter-spacing: -.035em; }
+.challengeCard .explain { max-width: 40ch; margin: 22px 0 30px; line-height: 1.55; color: #3e4650; }
+.cardAction { margin-top: auto; display: inline-flex; align-items: center; gap: 10px; width: fit-content; min-height: 44px; border-bottom: 1px solid #a8622e; font: 13px var(--font-mono); }
+.challengeFoot { display: flex; flex-wrap: wrap; gap: 14px 25px; align-items: center; justify-content: space-between; margin-top: 34px; }
+.challengeFoot p { color: #58616a; font: 12px/1.5 var(--font-mono); }
+.textLink { min-height: 44px; display: inline-flex; align-items: center; gap: 10px; font: 13px var(--font-mono); text-decoration: underline; text-decoration-color: #b6753e; text-underline-offset: 6px; }
+.process { background: #fffefb; }
+.stepList { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: 1px solid #14141435; }
+.step { padding: 26px 24px 5px 0; border-right: 1px solid #14141422; min-width: 0; }
+.step + .step { padding-left: 24px; }
+.step:last-child { border-right: 0; }
+.stepNumber { font: 14px var(--font-mono); color: #a15c2c; }
+.step h3 { margin: 27px 0 12px; font: 700 clamp(26px, 2.4vw, 36px)/1 var(--font-display); letter-spacing: -.04em; }
+.step p { min-height: 118px; color: #3e4650; font-size: 15px; line-height: 1.6; }
+.artifact { display: inline-flex; gap: 10px; align-items: center; min-height: 44px; margin-top: 22px; font: 12px/1.4 var(--font-mono); border-bottom: 1px solid #a8622e; }
+.tools { background: #eaf4f2; }
+.toolGrid { display: grid; gap: 10px; border-top: 1px solid #14141440; }
+.toolRow { display: grid; grid-template-columns: minmax(140px, .65fr) minmax(170px, 1fr) minmax(220px, 1.5fr) auto; gap: 20px; align-items: center; padding: 26px 12px; border-bottom: 1px solid #14141428; }
+.toolRow h3 { font: 700 clamp(22px, 2.3vw, 34px)/1.1 var(--font-display); letter-spacing: -.04em; }
+.toolRow p { line-height: 1.5; color: #3e4650; }
+.toolRow .tag { font: 11px var(--font-mono); color: #5f6b6a; }
+.toolRow a { display: inline-flex; align-items: center; gap: 9px; min-height: 44px; white-space: nowrap; font: 12px var(--font-mono); border-bottom: 1px solid #a8622e; }
+.notes { background: #f8ece8; }
+.notesGrid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.noteCard { display: flex; flex-direction: column; padding: 28px; min-height: 300px; background: #fffdf8; box-shadow: 0 8px 17px #29241b0a; border: 1px solid #14141414; transform: rotate(-1deg); }
+.noteCard:nth-child(2) { transform: rotate(1deg); }
+.noteCard:nth-child(3) { transform: rotate(-.5deg); }
+.noteCard .meta { font: 11px var(--font-mono); color: #6a5550; letter-spacing: .05em; }
+.noteCard h3 { margin: 30px 0 15px; font: 700 clamp(25px, 2.35vw, 36px)/1.12 var(--font-display); letter-spacing: -.04em; }
+.noteCard p { line-height: 1.55; color: #515762; }
+.noteCard a { margin-top: auto; padding-top: 24px; display: inline-flex; gap: 10px; align-items: center; width: fit-content; font: 12px var(--font-mono); text-decoration: underline; text-decoration-color: #b6753e; text-underline-offset: 5px; }
+.about { background: #fff8e7; }
+.aboutGrid { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(250px, .8fr); gap: 8%; align-items: start; }
+.aboutStory { max-width: 690px; font-size: clamp(18px, 1.7vw, 24px); line-height: 1.5; }
+.aboutStory p + p { margin-top: 18px; }
+.aboutFacts { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 32px; }
+.aboutFacts span { padding: 8px 12px; border: 1px solid #14141427; border-radius: 99px; font: 10px var(--font-mono); }
+.aboutActions { display: flex; gap: 20px; flex-wrap: wrap; margin-top: 28px; }
+.photo { max-width: 320px; padding: 12px 12px 28px; background: #fff; box-shadow: 0 12px 20px #29241b1c; transform: rotate(3deg); }
+.photo img { width: 100%; height: 330px; object-fit: cover; object-position: 0 60%; }
+.photo figcaption { margin-top: 12px; text-align: center; font: italic 15px Georgia, serif; }
+.milestones { margin-top: 70px; border-top: 1px solid #14141435; }
+.milestones a { display: grid; grid-template-columns: 75px 1fr auto; gap: 20px; align-items: center; min-height: 66px; border-bottom: 1px solid #14141422; }
+.milestones strong { font: 600 20px var(--font-display); }
+.milestones span { font: 11px var(--font-mono); color: #5f6871; }
+.foundations { margin-top: 76px; }
+.foundationGrid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-top: 20px; }
+.foundationGrid li { min-height: 190px; padding: 24px; background: #e8f4ed; list-style: none; }
+.foundationGrid li:nth-child(even) { background: #f4e4e0; }
+.foundationGrid span { font: 11px var(--font-mono); color: #a15c2c; }
+.foundationGrid h4 { margin: 18px 0 9px; font: 700 23px/1.1 var(--font-display); }
+.foundationGrid p { font-size: 14px; line-height: 1.5; color: #445058; }
+@media (hover: hover) and (prefers-reduced-motion: no-preference) { .challengeCard, .noteCard { transition: translate 260ms ease, box-shadow 260ms ease; } .challengeCard:hover, .noteCard:hover { translate: 0 -5px; box-shadow: 0 18px 30px #29241b20; } .cardAction, .artifact, .toolRow a, .textLink { transition: color 180ms ease; } :is(.cardAction,.artifact,.toolRow a,.textLink):hover { color: #a15c2c; } }
+@media (max-width: 1000px) { .challengeGrid, .notesGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .stepList, .foundationGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .step:nth-child(2) { border-right: 0; } .step:nth-child(3) { padding-left: 0; } .toolRow { grid-template-columns: minmax(130px, .7fr) 1fr; } .toolRow a { justify-self: start; } }
+@media (max-width: 650px) { .section { padding: 78px 24px; } .sectionTop { align-items: start; flex-direction: column; gap: 8px; } .asideNote { display: none; } .challengeGrid, .notesGrid, .stepList, .foundationGrid { grid-template-columns: 1fr; } .challengeCard { min-height: 350px; } .step, .step + .step, .step:nth-child(3) { border-right: 0; border-bottom: 1px solid #14141420; padding: 25px 0; } .step p { min-height: 0; } .toolRow { grid-template-columns: 1fr; gap: 10px; } .noteCard { min-height: 250px; transform: none !important; } .aboutGrid { grid-template-columns: 1fr; gap: 38px; } .photo { width: 230px; } .photo img { height: 240px; } .milestones a { grid-template-columns: 50px 1fr auto; gap: 8px; } .milestones strong { font-size: 17px; } .foundationGrid li { min-height: 0; } }
