@@ -36,7 +36,7 @@ function asCaseStudy(
       label: m.label ?? "",
       value: m.value ?? "",
     })),
-    tags: (data.tags ?? []).filter(Boolean).slice(0, 4),
+    tags: (data.tags ?? []).filter(Boolean),
     eyebrow: data.eyebrow || "CASE STUDY",
     headline: data.headline || data.title,
     who: data.who ?? "",

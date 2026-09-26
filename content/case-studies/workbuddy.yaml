@@ -67,10 +67,10 @@
       "title": "Implementation notes",
       "kind": "narrative",
       "href": "/work/workbuddy#workbuddy-architecture",
-      "caption": "Summary of the local project architecture and status documentation reviewed on 24 September 2026; not a live execution trace."
+      "caption": "Summary of the local project architecture and status documentation reviewed on 27 September 2026; not a live execution trace."
     }
   ],
-  "resultContext": "The local status document dated 23 September 2026 reports 547 core tests and 136 desktop tests passing, with 7 GUI tests skipped. Those results were not rerun for this portfolio update. Live model paths, Telegram delivery and end-to-end reliability are not established by those counts.",
+  "resultContext": "The local status document dated 26 September 2026 reports 554 core tests and 136 desktop tests passing, with 7 GUI tests skipped. It also reports a disposable, model-free fixture covering an approved edit, a protected-path refusal and a failed verification check. Those checks were not rerun for this portfolio update. Live model paths, Telegram delivery and end-to-end reliability are not established by those results.",
   "limitations": [
     "Working local prototype; no production adoption or customer outcomes claimed.",
     "No integrated test-verification gate in the execution workflow yet.",

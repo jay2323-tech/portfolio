@@ -10,6 +10,7 @@
     "lint": "next lint",
     "embed-corpus": "tsx scripts/embed-corpus.ts",
     "check:content": "tsx scripts/validate-content.ts",
+    "check:case-pages": "node scripts/check-case-study-pages.mjs",
     "test:content": "tsx --test tests/content.test.ts"
   },
   "dependencies": {

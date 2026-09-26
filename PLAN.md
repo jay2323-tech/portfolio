@@ -28,8 +28,8 @@ This is the source of truth for the next portfolio redesign. It records the dire
 | Preview incident | Running a production build overwrote development manifests and left the hero hidden. Development now uses `.next-dev`; production uses `.next`. The collage has visible default CSS so it remains readable if JS fails. |
 | Previously checked | Desktop/mobile hero visuals; TypeScript; production build before the subsequent preview repair. After the preview repair, TypeScript and whitespace checks passed and the hero rendered in Browser without captured console errors. These are historical checks, not proof of future changes. |
 | Verification still needed | Phase 0 baseline is complete in `docs/planning/redesign-baseline.md`. Fix and verify the recorded defects during implementation; actual reduced-motion emulation and physical-device checks remain Phase 10 tasks. |
-| New redesign phases completed | Phases 0–3 implemented: Field Notes hero, reversible project deck, shared navigation, and real decision inspectors are now present. Physical-device and emulated reduced-motion QA remain Phase 10. |
-| Next task | Phase 5: deepen the three case studies, starting with shared story/evidence structure (P5.1–P5.3). Prepare source-backed media and claims before building project interactions. |
+| New redesign phases completed | Phases 0–4 implemented. Phase 5 case-study structure, inspectable exhibits, evidence treatment and source-link checks are implemented. Real product media remains a content follow-up under P5.2. Physical-device and emulated reduced-motion QA remain Phase 10. |
+| Next task | Phase 6: build the retrieval challenge. Start P6.1–P6.2 with a small public fixture corpus and supported, ambiguous, absent-evidence and conflicting-evidence cases. Keep the Phase 5 exhibit labelled illustrative; activate experiment links only after the runnable challenge passes its gates. |
 | Known content gaps | See `docs/planning/redesign-content-inventory.md`: centered portrait, project media and outcome evidence, verified statuses/claims, actual résumé PDF and social URLs, and approved demo fixtures. |
 
 ### Session handoff template
@@ -237,17 +237,19 @@ Each phase must leave existing routes usable. Do not expose a clickable destinat
 
 **Goal:** give each project depth, evidence, and a recognizable interactive centerpiece.
 
-- [ ] P5.1 Refactor the shared case-study template into: introduction → short version → product walkthrough → constraints → architecture → decisions → what broke → results/limits → related work.
-- [ ] P5.2 Add clear role/timeframe/status, real media, descriptive captions, and a short contents navigation on long pages.
-- [ ] P5.3 Replace the duplicated “metrics” blocks with one evidence section. Put stack labels in technical details; describe the source/context of numerical claims.
-- [ ] P5.4 CompanyBrain: connect UI, API, retrieval, vector store, and response streaming in an inspectable architecture. Prepare source-backed examples and the citation-mismatch debugging exhibit.
-- [ ] P5.5 Factory Attendance: show the capture/event/report/exception workflow using staged or synthetic data; explain retry and operator resolution behavior.
-- [ ] P5.6 WorkBuddy: expand project memory, plan review and approval-bound execution evidence. Distinguish implemented behavior from verification and reliability work.
-- [ ] P5.7 Reuse the Lab experiment components as they become available; before that, use an honest recorded/static walkthrough rather than pretending a demo works.
-- [ ] P5.8 Add next-project, related-note, related-experiment, and contact paths. Ensure “Back to work” is always present even when project links are empty.
-- [ ] P5.9 Validate all existing RAG source deep-links after changing section layouts.
+- [x] P5.1 Refactor the shared case-study template into: introduction → short version → product walkthrough → constraints → architecture → decisions → what broke → results/limits → related work.
+- [ ] P5.2 Role/timeframe/status, captions, and contents navigation are complete. Attach actual product screenshots or recordings when supplied; current exhibits are authored illustrations with explicit captions, per P5.7. Do not treat the existing placeholder SVG covers as product media.
+- [x] P5.3 Replace the duplicated “metrics” blocks with one evidence section. Put stack labels in technical details; describe the source/context of numerical claims.
+- [x] P5.4 CompanyBrain: connect UI, API, retrieval, vector store, and response streaming in expandable stages. The citation-mismatch exhibit uses labelled, authored fixture passages to explain the documented failure.
+- [x] P5.5 Factory Attendance: show the capture/event/report/exception workflow using a synthetic arrival; explain retry and operator resolution.
+- [x] P5.6 WorkBuddy: expand project memory, plan review and approval-bound execution evidence. Receipt exhibit separates application from verification. Evidence refreshed from the 26 September status document; reported checks were not rerun here.
+- [x] P5.7 Use accessible static exhibits and native expandable explanations. Reuse runnable Lab components when Phases 6–7 deliver them.
+- [x] P5.8 Add next-project, published related-note, public related-experiment, and contact paths. “Back to work” is always present. Planned experiments remain hidden through the public catalog gate.
+- [x] P5.9 Validate all existing RAG source deep-links against the rendered production HTML using `npm run check:case-pages` after the build.
 
 **Exit:** all three case studies tell complete, distinct stories with evidence and correct source links. Demo connections awaiting Phases 6–7 are explicitly tracked.
+
+**Checkpoint:** implementation and production QA passed on 27 September 2026. P5.2 has a remaining content dependency for genuine product media; it does not block Phase 6. See `docs/planning/phase-5-qa.md` for verification scope and source provenance.
 
 ## Phase 6 — Build the flagship retrieval challenge
 
@@ -503,3 +505,15 @@ Never remove build-folder isolation to solve a temporary preview problem. Check 
 - Remaining: Phase 6 playable challenges, real résumé PDF and source-backed media/outcome evidence. Reduced-motion emulation and physical-device checks remain Phase 10.
 - Next exact action: begin P5.1–P5.3 with the shared case-study structure and evidence treatment; then deepen each project without inventing artifacts.
 - Preview: `http://localhost:2005/` while the local development server is running. GitHub branch push creates a Preview; production promotion has not been verified.
+
+### 2026-09-27 — Phase 5 case-study refresh
+
+- Rebuilt all three case studies with large editorial introductions, role/timeframe/status, desktop contents rail, mobile contents links, constraints, inspectable architecture stages, decisions, failure notes and one evidence/limits section.
+- Added native expandable exhibits: CompanyBrain citation mismatch with authored passages; Factory Attendance synthetic exception path; WorkBuddy annotated applied/unverified receipt. No executable challenge is claimed.
+- Related content resolves through the public catalog using actual note titles. Next-project navigation cycles through the three projects; return-to-work and contact paths are always available. Planned experiments stay hidden.
+- Refreshed WorkBuddy evidence from its architecture and 26 September status documentation, read on 27 September. Synchronized the Ask corpus and rebuilt local embeddings. No WorkBuddy runtime or private databases were used.
+- Production build and four content tests passed. Added `check:case-pages`: all three server-rendered pages and 59 project/note/source links passed, including all 15 legacy case-study anchors. Desktop 1280×720, mobile 390×844 and narrow 320×740 inspected in the browser. Keyboard disclosure verified; checked layouts have no horizontal overflow or captured console errors.
+- Files: shared CaseStudyDetail, ProjectExhibit, case-study CSS module, work route, case-study reader, WorkBuddy content/corpus, rendered-page checker, package script, plan and QA report.
+- Remaining: genuine product screenshots/recordings (P5.2); runnable challenges (Phases 6–7); OS reduced-motion emulation and physical-device checks (Phase 10). Animation media-query cleanup and server-visible/native-disclosure fallbacks were reviewed in code.
+- Next exact action: P6.1–P6.2, define and build the isolated retrieval fixture corpus and its four evidence cases. Do not publish the planned experiment until executable UI and behavioral checks are ready.
+- Local development: `http://localhost:2005`; optimized preview: `http://localhost:2006`. GitHub branch remains `light-lab-rebuild`; public production promotion is not verified.
