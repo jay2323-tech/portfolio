@@ -15,7 +15,7 @@ const jetbrainsMono = JetBrains_Mono({
   weight: ["400", "500", "600"],
 });
 
-// Display face (Satoshi) loads via Fontshare CDN in globals.css → --font-display
+// Expressive display faces are self-hosted via globals.css.
 
 export const metadata: Metadata = {
   title: "Jayanth Krishna — AI Engineer",

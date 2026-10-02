@@ -133,3 +133,7 @@
   .receipt dd { text-align: left; }
   .flow li { padding: 18px; }
 }
+
+.title { font-family: var(--font-headline); font-size: clamp(32px, 5.6vw, 80px); font-weight: 700; line-height: 1.12; letter-spacing: -.035em; }
+.section h2, .outro h2, .headline, .exhibitQuestion, .related strong { font-family: var(--font-editorial); font-weight: 600; letter-spacing: -.025em; }
+@media(max-width:650px) { .title { font-size: clamp(23px, 6.6vw, 42px); line-height: 1.18; } }

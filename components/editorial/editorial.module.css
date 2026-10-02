@@ -37,3 +37,6 @@
   .empty { padding: 24px; }
   .prose { font-size: 17px; }
 }
+
+.header h1 { font-family: var(--font-editorial); font-weight: 600; letter-spacing: -.03em; line-height: 1.12; }
+.rowTitle, .prose h2, .prose h3 { font-family: var(--font-editorial); letter-spacing: -.015em; }

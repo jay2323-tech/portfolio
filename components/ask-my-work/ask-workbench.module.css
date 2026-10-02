@@ -114,3 +114,10 @@
   .modal .questionPaper { padding: 18px 14px; }
   .answerTop { align-items: start; flex-direction: column; }
 }
+
+.heading h2, .heading h3 { font-family: var(--font-editorial); font-weight: 650; letter-spacing: -.035em; }
+.sticky p { font: 600 32px/1.1 var(--font-hand); letter-spacing: 0; }
+.sticky > span, .tryLabel { font-family: var(--font-playful); font-size: 11px; letter-spacing: .01em; }
+.sourceNote h3, .sourceHeading h3 { font-family: var(--font-editorial); font-weight: 600; }
+.pipeline strong { font-family: var(--font-playful); font-weight: 400; font-size: 15px; }
+@media(max-width:650px) { .sticky p { font-size: 29px; } .pipeline strong { font-size: 13px; } }

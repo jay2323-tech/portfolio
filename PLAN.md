@@ -528,3 +528,11 @@ Never remove build-folder isolation to solve a temporary preview problem. Check 
 - Added the source document page, source slips, measured trace, paper diagram and sticky-note treatment. Homepage, Lab and shared Ask use the same component.
 - User confirms key exists in Vercel. Local missing-key behavior is intentional; Vercel login prevents deployed verification for now.
 - Next: complete P6.10/P6.11, then Phase 7. See phase-6 QA notes for repeatable commands and limitations.
+
+### 2 October 2026 — Four-font visual refresh
+
+- Added user-supplied Panchang, Trench Slab, Comico and Dancing Script as local WOFF2 files with bundled licenses under `public/fonts`.
+- Panchang: hero, major homepage headings and case-study titles. Trench Slab: project names, article/editorial headings and notebook headings. Comico: diagram labels, small playful labels and process numbers. Dancing Script: handwritten notes and photo captions. Inter remains the reading/interface face; JetBrains Mono remains technical metadata.
+- Removed external Satoshi CSS dependency. Mobile hero uses three deliberate lines to accommodate Panchang's width.
+- QA: production build/type/content checks passed; browser checked1440px desktop,390px mobile and320px narrow mobile. No homepage horizontal overflow at checked mobile widths; no captured browser errors. Existing image lint warnings remain unchanged.
+- Preview for this typography session: `http://localhost:2026/`. Live deployment verification remains separate from local visual QA.

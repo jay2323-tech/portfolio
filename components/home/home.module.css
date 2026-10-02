@@ -68,3 +68,11 @@
 @media (hover: hover) and (prefers-reduced-motion: no-preference) { .challengeCard, .noteCard { transition: translate 260ms ease, box-shadow 260ms ease; } .challengeCard:hover, .noteCard:hover { translate: 0 -5px; box-shadow: 0 18px 30px #29241b20; } .cardAction, .artifact, .toolRow a, .textLink { transition: color 180ms ease; } :is(.cardAction,.artifact,.toolRow a,.textLink):hover { color: #a15c2c; } }
 @media (max-width: 1000px) { .challengeGrid, .notesGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .stepList, .foundationGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .step:nth-child(2) { border-right: 0; } .step:nth-child(3) { padding-left: 0; } .toolRow { grid-template-columns: minmax(130px, .7fr) 1fr; } .toolRow a { justify-self: start; } }
 @media (max-width: 650px) { .section { padding: 78px 24px; } .sectionTop { align-items: start; flex-direction: column; gap: 8px; } .asideNote { display: none; } .challengeGrid, .notesGrid, .stepList, .foundationGrid { grid-template-columns: 1fr; } .challengeCard { min-height: 350px; } .step, .step + .step, .step:nth-child(3) { border-right: 0; border-bottom: 1px solid #14141420; padding: 25px 0; } .step p { min-height: 0; } .toolRow { grid-template-columns: 1fr; gap: 10px; } .noteCard { min-height: 250px; transform: none !important; } .aboutGrid { grid-template-columns: 1fr; gap: 38px; } .photo { width: 230px; } .photo img { height: 240px; } .milestones a { grid-template-columns: 50px 1fr auto; gap: 8px; } .milestones strong { font-size: 17px; } .foundationGrid li { min-height: 0; } }
+
+.sectionTitle { font-family: var(--font-headline); font-size: clamp(32px, 4.8vw, 68px); font-weight: 700; line-height: 1.12; letter-spacing: -.04em; }
+.asideNote { font: 600 29px/1.15 var(--font-hand); }
+.challengeCard h3, .noteCard h3, .step h3, .foundationGrid h4 { font-family: var(--font-editorial); font-weight: 600; letter-spacing: -.02em; }
+.photo figcaption { font: 600 23px/1.2 var(--font-hand); }
+.stepNumber { font-family: var(--font-playful); font-size: 20px; }
+@media(max-width:650px) { .sectionTitle { font-size: clamp(27px, 7.8vw, 44px); line-height: 1.15; } }
+.sectionTitle { letter-spacing: -.02em; }

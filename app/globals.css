@@ -1,17 +1,18 @@
-/*
- * Display face via Fontshare CDN.
- * Note: "Neue Montreal" is Pangram Pangram (not on Fontshare) — Satoshi is the
- * closest free grotesk on Fontshare. To use real Neue Montreal later: drop
- * woff2 files in /public/fonts/ and swap the @import for @font-face rules.
- */
-@import url("https://api.fontshare.com/v2/css?f[]=satoshi@400,500,600,700,900&display=swap");
-
 @import "tailwindcss";
 @import "../styles/tokens.css";
 @import "../styles/glass.css";
 
+@font-face { font-family: "Panchang"; src: url("/fonts/Panchang/Panchang-Variable.woff2") format("woff2"); font-weight: 200 800; font-style: normal; font-display: swap; }
+@font-face { font-family: "TrenchSlab"; src: url("/fonts/TrenchSlab/TrenchSlab-Variable.woff2") format("woff2"); font-weight: 300 700; font-style: normal; font-display: swap; }
+@font-face { font-family: "DancingScript"; src: url("/fonts/DancingScript/DancingScript-Variable.woff2") format("woff2"); font-weight: 400 700; font-style: normal; font-display: swap; }
+@font-face { font-family: "Comico"; src: url("/fonts/Comico/Comico-Regular.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
+
 :root {
-  --font-display: "Satoshi", "Inter", system-ui, sans-serif;
+  --font-display: var(--font-body), "Inter", system-ui, sans-serif;
+  --font-headline: "Panchang", sans-serif;
+  --font-editorial: "TrenchSlab", Georgia, serif;
+  --font-playful: "Comico", sans-serif;
+  --font-hand: "DancingScript", cursive;
 }
 
 @theme inline {
@@ -32,8 +33,8 @@
   --color-ok-signal: var(--ok-signal);
   --color-text-muted: var(--text-muted);
 
-  /* Display: Satoshi (Fontshare). Body/mono: next/font vars on <html>. */
-  --font-display: "Satoshi", var(--font-body), "Inter", system-ui, sans-serif;
+  /* Reading and interface typography; expressive faces are assigned by role. */
+  --font-display: var(--font-body), "Inter", system-ui, sans-serif;
   --font-sans: var(--font-body), "Inter", system-ui, sans-serif;
   --font-mono: var(--font-mono-jb), "JetBrains Mono", ui-monospace, monospace;
 
