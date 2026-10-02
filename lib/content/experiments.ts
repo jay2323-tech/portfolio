@@ -15,7 +15,7 @@ export type Experiment = {
 
 // Add a slug only after its executable UI is wired in /lab/[slug] and verified.
 // A CMS status change alone must not expose an unfinished demo.
-export const implementedExperimentSlugs: readonly string[] = [];
+export const implementedExperimentSlugs: readonly string[] = ["retrieval-challenge"];
 
 export function isPublicExperiment(entry: Experiment): boolean {
   return entry.status === "ready" && implementedExperimentSlugs.includes(entry.slug);

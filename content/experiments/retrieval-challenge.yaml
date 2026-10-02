@@ -1,9 +1,9 @@
-title: "Retrieval challenge"
-description: "Compare a fictional question with a small source set and inspect why a citation fits or fails."
-status: "planned"
-executionMode: "simulation"
+title: "Ask Jayanth’s work"
+description: "An open notebook about what I build, how I work, and what I learned. Ask a question, then inspect the passages behind the answer."
+status: "ready"
+executionMode: "live"
 relatedProjectSlug: "company-brain"
 relatedNoteSlugs: ["2026-05-12-companybrain", "2026-07-10-companybrain"]
-sampleInputs: [{"label": "Ambiguous ownership", "value": "Who owns onboarding?"}]
-explanation: "A planned deterministic simulation using fictional documents. The implementation will expose retrieved chunks and explain citation mismatches."
-limitations: ["Does not connect to CompanyBrain or its private documents.", "Does not measure a live model or retrieval service."]
+sampleInputs: [{"label": "Working process", "value": "How does Jayanth approach a new project?"}, {"label": "Engineering decisions", "value": "What broke while building CompanyBrain?"}]
+explanation: "## How the notebook answers\n\nA public Markdown document holds the source material. Local text embeddings and keyword ranking select relevant passages. A real model hosted by Groq writes an answer using those passages, and its source references are checked against the retrieved set. Open the source slips to judge the evidence yourself.\n\nThe API key stays on the server. If generation is unavailable, the interface shows the retrieved notes and an error. It does not substitute a canned model reply."
+limitations: ["This is a portfolio demo, not a connection to CompanyBrain or private company documents.", "The source document reflects published portfolio material; it is not an independent verification of project claims.", "A cited answer can still be mistaken. Check the original passages.", "Live generation requires a configured Groq key and an available model. Requests are limited per server instance."]

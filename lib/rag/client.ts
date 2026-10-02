@@ -1,110 +1,75 @@
-export type RetrievedMeta = {
-  id: string;
-  title: string;
-  score: number;
-  href?: string;
-};
-
+export type RetrievedMeta = { id: string; title: string; score: number; href?: string; content?: string };
+export type AskTrace = { retrievalMs: number; model: string; documentVersion: string };
 export type AskResult = {
-  chunks: RetrievedMeta[];
-  answer: string;
-  rateLimited?: boolean;
-  message?: string;
+  chunks: RetrievedMeta[]; answer: string; sourceIds?: string[]; unsupported?: boolean;
+  model?: string | null; generationMs?: number; rateLimited?: boolean; message?: string;
 };
-
 export type AskHandlers = {
-  onMeta?: (chunks: RetrievedMeta[]) => void;
+  onMeta?: (chunks: RetrievedMeta[], trace: AskTrace) => void;
   onToken?: (text: string, full: string) => void;
   onDone?: (result: AskResult) => void;
   onError?: (message: string) => void;
   signal?: AbortSignal;
 };
 
-export async function askStream(
-  query: string,
-  context: "hero" | "widget",
-  handlers: AskHandlers = {},
-): Promise<AskResult> {
-  const res = await fetch("/api/ask", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ query, context }),
-    signal: handlers.signal,
-  });
-
-  if (res.status === 429) {
-    const data = (await res.json().catch(() => ({}))) as {
-      message?: string;
-    };
-    const result: AskResult = {
-      chunks: [],
-      answer: "",
-      rateLimited: true,
-      message:
-        data.message ??
-        "You've hit the ask limit. Email cvjayanth005@gmail.com to go deeper.",
-    };
-    handlers.onError?.(result.message!);
-    return result;
-  }
-
+export async function askStream(query: string, context: "hero" | "widget" | "lab", handlers: AskHandlers = {}): Promise<AskResult> {
+  const res = await fetch("/api/ask", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ query, context }), signal: handlers.signal });
   if (!res.ok || !res.body) {
-    const text = await res.text();
-    throw new Error(text || `Ask failed (${res.status})`);
+    const data = await res.json().catch(() => ({}));
+    throw new Error(data.message || "The request could not be completed. Please try again.");
   }
-
   const reader = res.body.getReader();
   const decoder = new TextDecoder();
   let buffer = "";
-  let eventName = "message";
   let chunks: RetrievedMeta[] = [];
   let answer = "";
-
-  const handleData = (raw: string) => {
+  let completed: AskResult | undefined;
+  function handle(frame: string) {
+    const lines = frame.split("\n");
+    const event = lines.find((line) => line.startsWith("event:"))?.slice(6).trim();
+    const raw = lines.filter((line) => line.startsWith("data:")).map((line) => line.slice(5).trim()).join("\n");
     if (!raw) return;
-    try {
-      const data = JSON.parse(raw) as Record<string, unknown>;
-      if (eventName === "meta") {
-        chunks = (data.retrievedChunks as RetrievedMeta[]) ?? [];
-        handlers.onMeta?.(chunks);
-      } else if (eventName === "token") {
-        const t = String(data.text ?? "");
-        answer += t;
-        handlers.onToken?.(t, answer);
-      } else if (eventName === "error") {
-        handlers.onError?.(String(data.message ?? "error"));
-      }
-    } catch {
-      // ignore partial JSON
-    }
-  };
-
-  while (true) {
-    const { done, value } = await reader.read();
-    if (done) break;
-    buffer += decoder.decode(value, { stream: true });
-    const lines = buffer.split("\n");
-    buffer = lines.pop() ?? "";
-
-    for (const line of lines) {
-      if (line.startsWith("event:")) {
-        eventName = line.slice(6).trim();
-      } else if (line.startsWith("data:")) {
-        handleData(line.slice(5).trim());
-      } else if (line.trim() === "") {
-        eventName = "message";
-      }
+    const data = JSON.parse(raw);
+    if (event === "meta") {
+      chunks = data.retrievedChunks ?? [];
+      handlers.onMeta?.(chunks, data);
+    } else if (event === "token") {
+      answer += String(data.text ?? "");
+      handlers.onToken?.(String(data.text ?? ""), answer);
+    } else if (event === "error") {
+      throw new Error(String(data.message || "The answer could not be completed."));
+    } else if (event === "done") {
+      completed = { chunks, answer, sourceIds: data.sourceIds ?? [], unsupported: Boolean(data.unsupported), model: data.model ?? null, generationMs: data.generationMs };
     }
   }
-
-  const result: AskResult = { chunks, answer };
-  handlers.onDone?.(result);
-  return result;
+  try {
+    while (true) {
+      const { done, value } = await reader.read();
+      buffer += done ? decoder.decode() : decoder.decode(value, { stream: true });
+      buffer = buffer.replace(/\r\n/g, "\n");
+      let boundary;
+      while ((boundary = buffer.indexOf("\n\n")) !== -1) {
+        handle(buffer.slice(0, boundary));
+        buffer = buffer.slice(boundary + 2);
+      }
+      if (done) break;
+    }
+    if (buffer.trim()) handle(buffer);
+    if (!completed) throw new Error("The connection ended before the answer finished. Please retry.");
+    handlers.onDone?.(completed);
+    return completed;
+  } catch (error) {
+    handlers.onError?.(error instanceof Error ? error.message : "The request failed.");
+    throw error;
+  } finally {
+    await reader.cancel().catch(() => {});
+    reader.releaseLock();
+  }
 }
 
 export const EXAMPLE_QUESTIONS = [
-  "What's the architecture of CompanyBrain?",
-  "Has anything he built shipped to real users?",
-  "How does WorkBuddy review and apply AI-proposed changes?",
-  "How does Jayanth work with freelance clients?",
+  "Who is Jayanth and what does he build?",
+  "How does Jayanth approach a new project?",
+  "What broke while building CompanyBrain?",
+  "How does WorkBuddy handle approval and verification?",
 ] as const;

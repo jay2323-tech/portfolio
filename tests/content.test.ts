@@ -20,15 +20,15 @@ test("migrated content loads, preserves citations, and resolves every relationsh
 
 test("planned experiments and unknown slugs cannot become public destinations", async () => {
   const catalog = await getCatalog();
-  assert.equal(catalog.experiments.length, 0);
-  assert.equal(await getExperiment("retrieval-challenge"), null);
+  assert.equal(catalog.experiments.length, 1);
+  assert.equal(await getExperiment("shift-simulator"), null);
   assert.equal(await getExperiment("does-not-exist"), null);
   assert.equal(await getArticle("does-not-exist"), null);
   const all = await getCatalog(true);
   all.notes[0].publication = "draft";
   const links = relatedLinks(all, { notes: all.notes.map((note) => note.slug), experiments: all.experiments.map((entry) => entry.slug) });
-  assert.equal(links.length, 4);
-  assert.ok(links.every((link) => link.kind === "Note" && link.href !== `/notes/${all.notes[0].slug}`));
+  assert.equal(links.length, 5);
+  assert.ok(links.every((link) => link.href !== `/notes/${all.notes[0].slug}`));
 });
 
 test("broken content references fail validation before a build", async () => {
@@ -41,7 +41,8 @@ test("broken content references fail validation before a build", async () => {
 
 test("changing CMS status cannot publish an unimplemented experiment", async () => {
   const catalog = await getCatalog(true);
-  catalog.experiments[0].status = "ready";
-  assert.equal(isPublicExperiment(catalog.experiments[0]), false);
+  const planned = catalog.experiments.find((entry) => entry.status === "planned")!;
+  planned.status = "ready";
+  assert.equal(isPublicExperiment(planned), false);
   assert.match(validateCatalog(catalog).join("\n"), /registered, verified implementation/);
 });

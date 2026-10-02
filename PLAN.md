@@ -22,14 +22,14 @@ This is the source of truth for the next portfolio redesign. It records the dire
 |---|---|
 | Product direction | Jayanth’s Workbench: Light Lab collage + optional X-ray inspection + playable engineering challenges. |
 | Scope authorization | User authorized phased implementation and selected displayed option 3 (Field Notes). Continue one coherent phase per session. |
-| Current public pages | Homepage, three `/work/[slug]` case studies, `/notes` and five note pages, `/lab` empty state, `/colophon`. Planned experiment details return 404. |
+| Current public pages | Homepage, three `/work/[slug]` case studies, `/notes` and five note pages, `/lab` with the personal retrieval notebook, `/colophon`. Planned experiment details return 404. |
 | Current homepage order | Field Notes hero and three-project deck → Break My Work → How I Build → tools in context → three notes → About → Contact → Footer. |
 | Prior completed work | Responsive collage hero/navigation fixes; menu Escape/focus handling; reduced-motion CSS changes; preview build-folder isolation. |
 | Preview incident | Running a production build overwrote development manifests and left the hero hidden. Development now uses `.next-dev`; production uses `.next`. The collage has visible default CSS so it remains readable if JS fails. |
 | Previously checked | Desktop/mobile hero visuals; TypeScript; production build before the subsequent preview repair. After the preview repair, TypeScript and whitespace checks passed and the hero rendered in Browser without captured console errors. These are historical checks, not proof of future changes. |
 | Verification still needed | Phase 0 baseline is complete in `docs/planning/redesign-baseline.md`. Fix and verify the recorded defects during implementation; actual reduced-motion emulation and physical-device checks remain Phase 10 tasks. |
 | New redesign phases completed | Phases 0–4 implemented. Phase 5 case-study structure, inspectable exhibits, evidence treatment and source-link checks are implemented. Real product media remains a content follow-up under P5.2. Physical-device and emulated reduced-motion QA remain Phase 10. |
-| Next task | Phase 6: build the retrieval challenge. Start P6.1–P6.2 with a small public fixture corpus and supported, ambiguous, absent-evidence and conflicting-evidence cases. Keep the Phase 5 exhibit labelled illustrative; activate experiment links only after the runnable challenge passes its gates. |
+| Next task | Verify the real Groq response on Vercel with its existing key (dashboard currently requires login). Then Phase 7: attendance and approval simulations. See `docs/planning/phase-6-qa.md`. |
 | Known content gaps | See `docs/planning/redesign-content-inventory.md`: centered portrait, project media and outcome evidence, verified statuses/claims, actual résumé PDF and social URLs, and approved demo fixtures. |
 
 ### Session handoff template
@@ -255,17 +255,21 @@ Each phase must leave existing routes usable. Do not expose a clickable destinat
 
 **Goal:** deliver one impressive experiment end to end and integrate it into the homepage and CompanyBrain page.
 
-- [ ] P6.1 Create an isolated, small public fixture corpus; avoid mixing experimental documents into the real portfolio corpus accidentally.
-- [ ] P6.2 Provide prepared cases for a supported question, ambiguous question, absent evidence, and conflicting evidence.
-- [ ] P6.3 Build the UI with input, examples, Run, cancel where applicable, reset, response, source passages, and explanation.
-- [ ] P6.4 Choose the implementation from the Phase 1 boundary: actual retrieval/model execution where available or a clearly labelled deterministic simulation. Never silently replace a failed live request with a fake live answer.
-- [ ] P6.5 Make unavailable evidence explicit. Highlight supporting passages accurately; do not invent confidence percentages or latency figures.
-- [ ] P6.6 Add X-ray trace of observable request/retrieval/response stages and source metadata. Measure actual timings if displayed.
-- [ ] P6.7 Handle empty input, rapid repeated runs, cancellation/reset, missing configuration, rate limits, and backend failure. Late responses must not overwrite a newer run.
-- [ ] P6.8 Add focused behavioral tests for evidence mapping, unsupported questions, and reset/stale-response handling.
-- [ ] P6.9 Complete `/lab/retrieval-challenge`; embed a compact version on the homepage and connect it to CompanyBrain.
+**Scope update, 2 October 2026:** user requested a real personal knowledge demo using the existing Vercel Groq key. This replaces the fictional-document simulation plan. Public portfolio notes are now the sole active retrieval source.
 
-**Exit:** a visitor can run all prepared cases, inspect the evidence, understand the execution mode, reset, and reach the related case study. The homepage's signature challenge is now fully functional.
+- [x] P6.1 Create `public/documents/jayanth-knowledge.md` from documented identity, process, skills, project decisions and limits; expose a readable source page.
+- [x] P6.2 Provide prepared questions about identity, process, CompanyBrain failures, and WorkBuddy approvals; test absent-evidence retrieval.
+- [x] P6.3 Build paper/sticky-note/paperclip UI with a pipeline diagram, examples, submit, stop, reset, answer and source slips.
+- [x] P6.4 Implement server-side Groq generation with configurable model; no canned fallback for failed live requests.
+- [x] P6.5 Validate cited IDs against retrieved passages and explicitly report missing evidence.
+- [x] P6.6 Show observable retrieval/generation timings and distinguish retrieved from cited sources.
+- [x] P6.7 Handle invalid input, cancellation, missing configuration, provider failures and instance-local rate limits; abort and generation guards prevent stale updates.
+- [x] P6.8 Test retrieval, citations, Groq request contract, SSE byte boundaries, incomplete/error streams and API missing-key/unsupported cases. Browser-check reset and modal Escape/focus restoration.
+- [x] P6.9 Publish the registered Lab route, embed on the homepage, replace the shared Ask panel and connect CompanyBrain through related experiments.
+- [ ] P6.10 Verify a successful real model reply and citations on Vercel. Key is confirmed there by the user, absent locally; dashboard requires sign-in. Verify both production and preview variable scope. Do not claim live verification from mocked provider tests.
+- [ ] P6.11 Exercise Stop → immediate new question against a live slow request and emulate reduced motion in a supported browser. Physical-device checks remain Phase 10.
+
+**Exit:** the implementation and local production checks are complete. Successful deployed Groq generation remains the release verification gate. Do not copy the key into public code or source notes.
 
 ## Phase 7 — Complete the Lab and remaining experiments
 
@@ -517,3 +521,10 @@ Never remove build-folder isolation to solve a temporary preview problem. Check 
 - Remaining: genuine product screenshots/recordings (P5.2); runnable challenges (Phases 6–7); OS reduced-motion emulation and physical-device checks (Phase 10). Animation media-query cleanup and server-visible/native-disclosure fallbacks were reviewed in code.
 - Next exact action: P6.1–P6.2, define and build the isolated retrieval fixture corpus and its four evidence cases. Do not publish the planned experiment until executable UI and behavioral checks are ready.
 - Local development: `http://localhost:2005`; optimized preview: `http://localhost:2006`. GitHub branch remains `light-lab-rebuild`; public production promotion is not verified.
+
+### 2 October 2026 — Personal retrieval notebook
+
+- Replaced the active Ask endpoint and UI with retrieval from one public document and real Groq generation. The old separate corpus/provider helpers are no longer on the active API path.
+- Added the source document page, source slips, measured trace, paper diagram and sticky-note treatment. Homepage, Lab and shared Ask use the same component.
+- User confirms key exists in Vercel. Local missing-key behavior is intentional; Vercel login prevents deployed verification for now.
+- Next: complete P6.10/P6.11, then Phase 7. See phase-6 QA notes for repeatable commands and limitations.
