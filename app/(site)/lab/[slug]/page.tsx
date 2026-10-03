@@ -4,6 +4,8 @@ import { getExperiment, getExperiments } from "@/lib/content/experiments";
 import { getCatalog, relatedLinks } from "@/lib/content/catalog";
 import { EditorialPage, MarkdownBody, RelatedReading } from "@/components/editorial/EditorialPage";
 
+import { ShiftExperiment } from "@/components/lab/ShiftExperiment";
+import { ApprovalExperiment } from "@/components/lab/ApprovalExperiment";
 import { AskWorkbench } from "@/components/ask-my-work/AskWorkbench";
 
 type Props = { params: Promise<{ slug: string }> };
@@ -18,6 +20,8 @@ export default async function ExperimentPage({ params }: Props) {
   const links = relatedLinks(await getCatalog(), { projects: experiment.relatedProjectSlug ? [experiment.relatedProjectSlug] : [], notes: experiment.relatedNoteSlugs });
   return <EditorialPage eyebrow={`Lab / ${experiment.executionMode}`} title={experiment.title} intro={experiment.description} back="/lab" backLabel="All experiments">
     {experiment.slug === "retrieval-challenge" && <AskWorkbench />}
+    {experiment.slug === "approval-receipt" && <ApprovalExperiment />}
+    {experiment.slug === "shift-simulator" && <ShiftExperiment />}
     <MarkdownBody>{experiment.explanation}</MarkdownBody>
     {!!experiment.limitations.length && <MarkdownBody>{`## What this cannot prove\n\n${experiment.limitations.map((limitation) => `- ${limitation}`).join("\n")}`}</MarkdownBody>}
     <RelatedReading links={links} />

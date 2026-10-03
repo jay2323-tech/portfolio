@@ -1,9 +1,9 @@
 title: "Shift simulator"
 description: "Explore attendance exceptions using fictional punches around a shift boundary."
-status: "planned"
+status: "ready"
 executionMode: "simulation"
 relatedProjectSlug: "factory-attendance"
 relatedNoteSlugs: ["2026-06-22-freelance"]
 sampleInputs: [{"label": "Overnight shift", "value": "Shift 22:00\u201306:00; punches 21:58 and 06:04 the following day."}]
-explanation: "A planned simulation of shift boundaries and exception handling. Inputs will be synthetic attendance events; no camera or biometric data is involved."
+explanation: "Step through six fictional events: a normal arrival, duplicate punch, uncertain match, device interruption, buffered checkout and reconnect. Resolve the exception as a supervisor and inspect the overnight report. Reset to replay; sample deletion only clears local simulation state."
 limitations: ["Does not perform facial recognition.", "Does not connect to payroll or a production attendance system."]

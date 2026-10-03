@@ -15,7 +15,7 @@ import { editorialTransition } from "@/lib/motion/easing";
 /** Two-line playful labels — main word + a chatty subtitle underneath. */
 const links = [
   { href: "#work", label: "Work", sub: "Projects" },
-  { href: "#lab", label: "Lab", sub: "Experiments" },
+  { href: "/lab", label: "Lab", sub: "Experiments" },
   { href: "/notes", label: "Notes", sub: "Writing" },
   { href: "#about", label: "About", sub: "Me stuff" },
   { href: "#contact", label: "Contact", sub: "Say hi" },

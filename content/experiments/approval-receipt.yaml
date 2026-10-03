@@ -1,7 +1,7 @@
 {
   "title": "Approval receipt",
-  "description": "Explore how a proposal, approval and execution receipt differ.",
-  "status": "planned",
+  "description": "Inspect a fictional code change, approve or reject it, and read the receipt. Does applied mean verified?",
+  "status": "ready",
   "executionMode": "simulation",
   "relatedProjectSlug": "workbuddy",
   "relatedNoteSlugs": [
@@ -13,9 +13,10 @@
       "value": "Compare an applied change with a failed verification check."
     }
   ],
-  "explanation": "Planned fictional, deterministic walkthrough of proposal approval and execution outcomes. It will not execute code or modify repositories.",
+  "explanation": "Try four deterministic situations: a clean change, a failed check, a stale baseline and a protected path. Approval, execution and verification are separate decisions. Reset any situation to try the other choice.",
   "limitations": [
-    "Not implemented or publicly runnable yet.",
-    "Illustrates the workflow; does not prove agent reliability."
+    "Uses fictional proposals and predefined outcomes; no code is executed or files modified.",
+    "The passing verification fixture illustrates a concept, not a claim that WorkBuddy has an integrated verification gate.",
+    "Does not measure model quality or production reliability."
   ]
 }

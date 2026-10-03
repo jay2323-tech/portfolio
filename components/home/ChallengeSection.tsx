@@ -9,8 +9,8 @@ import styles from "./home.module.css";
 
 const challenges = [
   { number: "01", project: "CompanyBrain", title: "Where did that answer come from?", description: "The wrong source chunk can make a fluent answer unreliable. Inspect why the retrieval path exposes citations and chunk metadata.", href: "/work/company-brain#company-brain-what-broke", action: "Inspect the failure", type: "RETRIEVAL / SOURCES" },
-  { number: "02", project: "Factory Attendance", title: "What happens to a doubtful punch?", description: "Lighting, queues, and ambiguous matches change the design. Follow the retry and human exception decision from the factory floor.", href: "/work/factory-attendance#factory-attendance-decisions", action: "Follow the decision", type: "EDGE / EXCEPTIONS" },
-  { number: "03", project: "WorkBuddy", title: "Does applied mean verified?", description: "An approved change can land in a review worktree while tests remain unproven. See how the receipt makes that boundary visible.", href: "/work/workbuddy#workbuddy-decisions", action: "Read the receipt logic", type: "APPROVAL / EXECUTION" },
+  { number: "02", project: "Factory Attendance", title: "What happens to a doubtful punch?", description: "Lighting, queues, and ambiguous matches change the design. Follow the retry and human exception decision from the factory floor.", href: "/lab/shift-simulator", action: "Play the shift", type: "EDGE / EXCEPTIONS" },
+  { number: "03", project: "WorkBuddy", title: "Does applied mean verified?", description: "An approved change can land in a review worktree while tests remain unproven. See how the receipt makes that boundary visible.", href: "/lab/approval-receipt", action: "Try the approval experiment", type: "APPROVAL / EXECUTION" },
 ] as const;
 
 export function ChallengeSection() {

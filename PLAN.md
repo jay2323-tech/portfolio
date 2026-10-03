@@ -29,7 +29,7 @@ This is the source of truth for the next portfolio redesign. It records the dire
 | Previously checked | Desktop/mobile hero visuals; TypeScript; production build before the subsequent preview repair. After the preview repair, TypeScript and whitespace checks passed and the hero rendered in Browser without captured console errors. These are historical checks, not proof of future changes. |
 | Verification still needed | Phase 0 baseline is complete in `docs/planning/redesign-baseline.md`. Fix and verify the recorded defects during implementation; actual reduced-motion emulation and physical-device checks remain Phase 10 tasks. |
 | New redesign phases completed | Phases 0–4 implemented. Phase 5 case-study structure, inspectable exhibits, evidence treatment and source-link checks are implemented. Real product media remains a content follow-up under P5.2. Physical-device and emulated reduced-motion QA remain Phase 10. |
-| Next task | Verify the real Groq response on Vercel with its existing key (dashboard currently requires login). Then Phase 7: attendance and approval simulations. See `docs/planning/phase-6-qa.md`. |
+| Next task | Phase 8: contextual Ask, notes and colophon. Phase 7 browser-only Lab simulations are implemented. User reports Groq setup done; live model verification has not been independently repeated. |
 | Known content gaps | See `docs/planning/redesign-content-inventory.md`: centered portrait, project media and outcome evidence, verified statuses/claims, actual résumé PDF and social URLs, and approved demo fixtures. |
 
 ### Session handoff template
@@ -275,13 +275,13 @@ Each phase must leave existing routes usable. Do not expose a clickable destinat
 
 **Goal:** extend the same interaction quality to two additional engineering examples.
 
-- [ ] P7.1 Complete `/lab` with featured challenge, experiment cards, execution/status labels, and meaningful links. Activate the global Lab route.
-- [ ] P7.2 Build `/lab/shift-simulator` with synthetic normal events, duplicates, ambiguous matches, and device interruption. Define expected outcomes for each fixture first.
-- [ ] P7.3 Show event history, exception queue, operator resolution, and resulting report; support reset and replay.
-- [ ] P7.4 Build `/lab/approval-receipt` with fictional proposals, approval choices, applied/refused outcomes and a separate verification result. Do not execute real code.
-- [ ] P7.5 Make deletion an explicit simulation on local sample data, show affected components, and support reset. Do not request visitors' real health or biometric data.
-- [ ] P7.6 Use the common Brief → Controls → Output → Explanation → Related project layout across experiments.
-- [ ] P7.7 Connect both experiments to their case studies and add focused tests for event/permission transitions and reset behavior.
+- [x] P7.1 Complete `/lab` with featured challenge, experiment cards, execution/status labels, and meaningful links. Activate the global Lab route.
+- [x] P7.2 Build `/lab/shift-simulator` with synthetic normal events, duplicates, ambiguous matches, and device interruption. Define expected outcomes for each fixture first.
+- [x] P7.3 Show event history, exception queue, operator resolution, and resulting report; support reset and replay.
+- [x] P7.4 Build `/lab/approval-receipt` with fictional proposals, approval choices, applied/refused outcomes and a separate verification result. Do not execute real code.
+- [x] P7.5 Make deletion an explicit simulation on local sample data, show affected components, and support reset. Do not request visitors' real health or biometric data.
+- [x] P7.6 Use the common Brief → Controls → Output → Explanation → Related project layout across experiments.
+- [x] P7.7 Connect both experiments to their case studies and add focused tests for event/permission transitions and reset behavior.
 
 **Exit:** all three experiments have repeatable sample behavior, keyboard/touch controls, honest labels, and related-project links. No “coming soon” card pretends to be playable.
 
@@ -536,3 +536,13 @@ Never remove build-folder isolation to solve a temporary preview problem. Check 
 - Removed external Satoshi CSS dependency. Mobile hero uses three deliberate lines to accommodate Panchang's width.
 - QA: production build/type/content checks passed; browser checked1440px desktop,390px mobile and320px narrow mobile. No homepage horizontal overflow at checked mobile widths; no captured browser errors. Existing image lint warnings remain unchanged.
 - Preview for this typography session: `http://localhost:2026/`. Live deployment verification remains separate from local visual QA.
+
+### 3 October 2026 — Phase 7 interactive Lab
+
+- Built `/lab/approval-receipt`: four fictional proposals, approve/reject, refused baseline/protected-path outcomes, distinct applied and verified fields, reset. Successful verification is explicitly a sample fixture, not a claim about WorkBuddy's current backend.
+- Built `/lab/shift-simulator`: six synthetic overnight events, duplicate suppression, uncertain-match review, offline buffering, reconnect replay, incomplete/complete attendance report, supervisor acceptance/dismissal and reset. Local sample-data clearing lists affected state and has a confirmation step.
+- Both experiments are deterministic browser-only state machines. No AI requests, repository writes, camera access or employee data. The Groq notebook remains a separate live experiment.
+- Added Lab cards with execution labels and featured notebook; global Lab navigation now opens `/lab`. Homepage and case-study related links reach the simulations.
+- Verification: 14 behavior/content/API tests passed. Browser tested desktop approval failure receipt and390px mobile refusal/focus; attendance replay produced2 accepted A punches, then3 after supervisor accepted B, with B still incomplete. Reset/clear and narrow layout checks recorded below when complete.
+- Next phase: Phase 8 — contextual Ask, notes and colophon. Groq live verification was reported done by user, not independently rerun in this session.
+- Final Phase 7 QA: clear sample data followed by Reset restored0/6 events, zero records and no pending exception.320px attendance layout has no horizontal overflow. Desktop Lab cards render correctly; no captured browser errors. Final production build and62 case-study relationships/citation links pass. Reduced-motion styling omits the receipt stamp animation; OS-level emulation remains part of Phase10.
