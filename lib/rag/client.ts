@@ -1,3 +1,4 @@
+import type { ProjectContext } from "./page-context";
 export type RetrievedMeta = { id: string; title: string; score: number; href?: string; content?: string };
 export type AskTrace = { retrievalMs: number; model: string; documentVersion: string };
 export type AskResult = {
@@ -10,10 +11,11 @@ export type AskHandlers = {
   onDone?: (result: AskResult) => void;
   onError?: (message: string) => void;
   signal?: AbortSignal;
+  pageContext?: ProjectContext;
 };
 
 export async function askStream(query: string, context: "hero" | "widget" | "lab", handlers: AskHandlers = {}): Promise<AskResult> {
-  const res = await fetch("/api/ask", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ query, context }), signal: handlers.signal });
+  const res = await fetch("/api/ask", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ query, context, pageContext: handlers.pageContext }), signal: handlers.signal });
   if (!res.ok || !res.body) {
     const data = await res.json().catch(() => ({}));
     throw new Error(data.message || "The request could not be completed. Please try again.");

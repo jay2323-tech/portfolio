@@ -29,7 +29,7 @@ This is the source of truth for the next portfolio redesign. It records the dire
 | Previously checked | Desktop/mobile hero visuals; TypeScript; production build before the subsequent preview repair. After the preview repair, TypeScript and whitespace checks passed and the hero rendered in Browser without captured console errors. These are historical checks, not proof of future changes. |
 | Verification still needed | Phase 0 baseline is complete in `docs/planning/redesign-baseline.md`. Fix and verify the recorded defects during implementation; actual reduced-motion emulation and physical-device checks remain Phase 10 tasks. |
 | New redesign phases completed | Phases 0–4 implemented. Phase 5 case-study structure, inspectable exhibits, evidence treatment and source-link checks are implemented. Real product media remains a content follow-up under P5.2. Physical-device and emulated reduced-motion QA remain Phase 10. |
-| Next task | Phase 8: contextual Ask, notes and colophon. Phase 7 browser-only Lab simulations are implemented. User reports Groq setup done; live model verification has not been independently repeated. |
+| Next task | Phase 9: contact delivery, résumé and supporting states. Phase 8 contextual Ask, Notes and colophon are implemented; deployed Groq generation was not independently repeated locally. |
 | Known content gaps | See `docs/planning/redesign-content-inventory.md`: centered portrait, project media and outcome evidence, verified statuses/claims, actual résumé PDF and social URLs, and approved demo fixtures. |
 
 ### Session handoff template
@@ -289,14 +289,14 @@ Each phase must leave existing routes usable. Do not expose a clickable destinat
 
 **Goal:** connect play, reading, and engineering evidence.
 
-- [ ] P8.1 Complete `/notes` with the existing build-log content, clear categories, dates, and an honest featured note. Short updates remain short.
-- [ ] P8.2 Complete `/notes/[slug]` with readable typography, relevant media/code, accurate reading estimates if used, and related project/experiment links.
-- [ ] P8.3 Update homepage previews and activate the Notes navigation route. Remove links that point back to the same section without opening content.
-- [ ] P8.4 Add the current page/project context and relevant suggested questions to Ask My Work. Extend its API contract only as needed and validate context on the server.
-- [ ] P8.5 Keep source-backed answers, clear unsupported-answer behavior, interruption/retry handling, and links to exact evidence. Context should improve retrieval without excluding relevant cross-project evidence unnecessarily.
-- [ ] P8.6 Update corpus entries/URLs for published content. Run the existing corpus/embedding workflow when its inputs change and verify it succeeds with the available configuration.
-- [ ] P8.7 Build `/colophon`: design choices, component/content architecture, retrieval flow, accessibility/motion decisions, and selected implementation details.
-- [ ] P8.8 Add a real X-ray example for the portfolio itself. Publish performance measurements only with their device/test conditions.
+- [x] P8.1 Complete `/notes` with the existing build-log content, clear categories, dates, and an honest featured note. Short updates remain short.
+- [x] P8.2 Complete `/notes/[slug]` with readable typography, relevant media/code, accurate reading estimates if used, and related project/experiment links.
+- [x] P8.3 Update homepage previews and activate the Notes navigation route. Remove links that point back to the same section without opening content.
+- [x] P8.4 Add the current page/project context and relevant suggested questions to Ask My Work. Extend its API contract only as needed and validate context on the server.
+- [x] P8.5 Keep source-backed answers, clear unsupported-answer behavior, interruption/retry handling, and links to exact evidence. Context should improve retrieval without excluding relevant cross-project evidence unnecessarily.
+- [x] P8.6 Update the active public knowledge document with portfolio architecture and experiment details; verify local retrieval and document anchors. The legacy corpus embedding workflow was superseded in Phase 6; README now documents the actual path.
+- [x] P8.7 Build `/colophon`: design choices, component/content architecture, retrieval flow, accessibility/motion decisions, and selected implementation details.
+- [x] P8.8 Add a real X-ray example for the portfolio itself. Publish performance measurements only with their device/test conditions.
 
 **Exit:** notes have real destinations, Ask supports page context with accurate citations, and the colophon explains the actual implementation.
 
@@ -546,3 +546,13 @@ Never remove build-folder isolation to solve a temporary preview problem. Check 
 - Verification: 14 behavior/content/API tests passed. Browser tested desktop approval failure receipt and390px mobile refusal/focus; attendance replay produced2 accepted A punches, then3 after supervisor accepted B, with B still incomplete. Reset/clear and narrow layout checks recorded below when complete.
 - Next phase: Phase 8 — contextual Ask, notes and colophon. Groq live verification was reported done by user, not independently rerun in this session.
 - Final Phase 7 QA: clear sample data followed by Reset restored0/6 events, zero records and no pending exception.320px attendance layout has no horizontal overflow. Desktop Lab cards render correctly; no captured browser errors. Final production build and62 case-study relationships/citation links pass. Reduced-motion styling omits the receipt stamp animation; OS-level emulation remains part of Phase10.
+
+### 8 October 2026 — Phase 8 connected reading and Ask
+
+- Added allowlisted project context to Ask requests. Route-specific questions appear on projects, related notes and simulations. Explicit project references override implicit context; generic personal questions remain global. Route changes remount the modal request UI and abort pending requests.
+- Notes index features the latest real note, topic filters and source-length reading estimates. Short entries remain short; existing project and experiment relationships stay intact. Added contextual Ask entry points to notes and case studies.
+- Rebuilt colophon with a responsive architecture diagram, four-font specimen, a real implementation decision inspector, retrieval flow and honest limits. No invented performance measurements.
+- Expanded the canonical public Markdown notes with portfolio implementation details and corrected README instructions: legacy corpus embeddings are not used by the active API.
+- Verified17 behavior/content tests; production build passed after fixing a client directive import order. Browser checked1440px Notes, filtering5→2 CompanyBrain entries, WorkBuddy implicit question retrieval, colophon inspection dialog,390px article/diagram without overflow. Local model generation remains unavailable without a local key; retrieval correctly preserves sources in the error state.
+- Next: Phase9. Live production deployment verification and broader device/reduced-motion QA remain release checks.
+- Final Phase8 gate:18 tests pass, final production build passes,62 rendered case-study relationships/citation links pass.320px Notes has no horizontal overflow; no captured browser errors. All verification is local; no Vercel deployment or live Groq call was asserted.

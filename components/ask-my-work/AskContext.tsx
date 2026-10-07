@@ -24,7 +24,7 @@ export function AskProvider({ children }: { children: ReactNode }) {
   const [draft, setDraft] = useState("");
 
   const openAsk = useCallback((nextDraft?: string) => {
-    if (typeof nextDraft === "string") setDraft(nextDraft);
+    setDraft(nextDraft ?? "");
     setOpen(true);
   }, []);
 

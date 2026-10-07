@@ -1,3 +1,5 @@
+import { ContextAsk } from "@/components/ask-my-work/ContextAsk";
+import { readingLabel } from "@/lib/content/reading";
 import type { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
@@ -16,12 +18,13 @@ export default async function NotePage({ params }: Props) {
   const note = await getArticle((await params).slug);
   if (!note) notFound();
   const links = relatedLinks(await getCatalog(), { projects: note.relatedProjectSlugs, experiments: note.relatedExperimentSlugs });
-  return <EditorialPage eyebrow={`${noteDate(note.date)} / ${note.tag || "Field note"}`} title={note.label} back="/notes" backLabel="All field notes">
+  return <EditorialPage eyebrow={`${noteDate(note.date)} / ${note.tag || "Field note"} / ${readingLabel(note.body)}`} title={note.label} back="/notes" backLabel="All field notes">
     <MarkdownBody>{note.body}</MarkdownBody>
     {note.media.map((media) => <figure className={styles.media} key={media.src}>
       <Image src={media.src} alt={media.alt} width={1200} height={800} unoptimized />
       {media.caption && <figcaption>{media.caption}</figcaption>}
     </figure>)}
+    <ContextAsk question={note.relatedProjectSlugs.length ? "What decisions shaped this project?" : "How is this portfolio built?"} />
     <RelatedReading links={links} />
   </EditorialPage>;
 }

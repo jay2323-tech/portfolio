@@ -40,3 +40,5 @@
 
 .header h1 { font-family: var(--font-editorial); font-weight: 600; letter-spacing: -.03em; line-height: 1.12; }
 .rowTitle, .prose h2, .prose h3 { font-family: var(--font-editorial); letter-spacing: -.015em; }
+
+.filters{display:flex;flex-wrap:wrap;gap:10px;margin:30px 0 20px}.filters button{min-height:44px;padding:8px 18px;border:1px solid #b5a590;border-radius:99px;font:12px var(--font-mono);cursor:pointer}.filters button[aria-pressed=true]{background:#985b2c;color:#fffaf0;border-color:#985b2c}.featured{margin-top:24px;background:#f1e4ce;padding:15px 30px;border:1px solid #d4bea0;position:relative}.featured .row{border-bottom:0}.featured .rowTitle{font-size:clamp(28px,4vw,48px);max-width:23ch}.readNote{font:14px var(--font-playful);margin-top:12px}.prose blockquote{border-left:3px solid #b16e36;padding:18px 24px;background:#f6eedb;font-family:var(--font-editorial)}@media(max-width:650px){.featured{padding:8px 20px}}

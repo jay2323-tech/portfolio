@@ -1,5 +1,7 @@
 "use client";
 
+import { ContextAsk } from "@/components/ask-my-work/ContextAsk";
+
 import { useLayoutEffect, useRef } from "react";
 import Link from "next/link";
 import { ProjectExhibit } from "./ProjectExhibit";
@@ -137,6 +139,6 @@ export function CaseStudyDetail({ study, nextStudy, related }: Props) {
           </aside>
         </div>
       </div>
-    </article>
+    <ContextAsk /></article>
   );
 }

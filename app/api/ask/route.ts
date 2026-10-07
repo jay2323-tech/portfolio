@@ -1,3 +1,4 @@
+import { validatePageContext, contextualQuestion, type ProjectContext } from "@/lib/rag/page-context";
 import { retrieveKnowledge, KNOWLEDGE_VERSION } from "@/lib/rag/knowledge";
 import { generateGroqAnswer, groqModel } from "@/lib/rag/groq";
 import { getClientIp, takeRateLimitToken } from "@/lib/rag/rate-limit";
@@ -10,11 +11,14 @@ export function GET() {
 
 export async function POST(req: Request) {
   let query: string;
+  let pageContext: ProjectContext | undefined;
   try {
     const raw = await req.text();
     if (raw.length > 2048) return Response.json({ message: "Please keep your question under 500 characters." }, { status: 413 });
     const body = JSON.parse(raw);
     if (typeof body?.query !== "string") throw new Error();
+    pageContext = validatePageContext(body.pageContext);
+    if (body.pageContext !== undefined && !pageContext) throw new Error();
     query = body.query.trim();
     if (!query || query.length > 500) throw new Error();
   } catch {
@@ -23,9 +27,10 @@ export async function POST(req: Request) {
   const limit = takeRateLimitToken(getClientIp(req));
   if (!limit.ok) return Response.json({ message: "The question limit is reached. Please try later or email Jayanth." }, { status: 429, headers: { "Retry-After": "360" } });
 
+  const groundedQuery = contextualQuestion(query, pageContext);
   const started = performance.now();
   let chunks;
-  try { chunks = retrieveKnowledge(query); }
+  try { chunks = retrieveKnowledge(groundedQuery); }
   catch { return Response.json({ message: "The source notes could not be loaded. Please try again later." }, { status: 503 }); }
   const retrievalMs = Math.round(performance.now() - started);
   const upstream = new AbortController();
@@ -49,7 +54,7 @@ export async function POST(req: Request) {
           push("error", { message: "The source notes are available, but live replies are not connected yet. You can inspect the retrieved passages below.", code: "not_configured" });
         } else {
           const generationStart = performance.now();
-          const result = await generateGroqAnswer(query, chunks, upstream.signal);
+          const result = await generateGroqAnswer(groundedQuery, chunks, upstream.signal);
           push("token", { text: result.answer });
           push("done", { ...result, generationMs: Math.round(performance.now() - generationStart), model: groqModel() });
         }

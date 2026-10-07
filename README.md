@@ -22,15 +22,17 @@ npm run dev
 # → http://localhost:2005/keystatic
 ```
 
-Collections: case studies, articles, RAG corpus. Singletons: hero, about, lab, contact, settings.
+Collections include case studies, articles and experiment metadata. Changes write repository content under `content/`.
 
-Changes write YAML under `content/` (git diffs). After editing **RAG corpus** chunks:
+### Ask source and page context
 
-```bash
-npm run embed-corpus
-```
+The active Ask endpoint retrieves from `public/documents/jayanth-knowledge.md`. Edit this document, update `KNOWLEDGE_VERSION` in `lib/rag/knowledge.ts`, and redeploy. The source is displayed at `/about/source-notes`. Local feature-hashed embeddings are computed directly; the legacy `embed-corpus` script and CMS corpus collection do not update the active Ask source.
 
-That syncs `content/corpus/corpus.json` and regenerates `corpus-embeddings.json` so Ask My Work stays current.
+`lib/rag/page-context.ts` maps supported project, note and experiment routes to an allowlisted project ID. New related note routes should be added there. The server validates IDs, resolves implicit project references, and preserves explicit cross-project questions. It never treats page text as evidence.
+
+Generation uses server-only `GROQ_API_KEY` and optional `GROQ_MODEL`. The key must never have a `NEXT_PUBLIC_` prefix. Local preview needs its own `.env.local` configuration; a Vercel key does not automatically exist locally.
+
+Checks: `node --import tsx --test tests/*.test.ts`, `npm run build`, and `npm run check:case-pages`.
 
 For production editing on Vercel, set `NEXT_PUBLIC_KEYSTATIC_GITHUB_REPO=owner/repo` (see `.env.example`).
 
@@ -55,4 +57,4 @@ Set env vars from `.env.example` in the Vercel dashboard.
 
 ## Stack
 
-Next.js 15 · Tailwind 4 · TypeScript · Framer Motion · GSAP · Keystatic · local/optional OpenAI+Anthropic RAG
+Next.js 15 · Tailwind 4 · TypeScript · Framer Motion · GSAP · Keystatic · local retrieval + Groq generation

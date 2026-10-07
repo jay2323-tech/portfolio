@@ -2,6 +2,8 @@
 
 import { useEffect, useId, useRef, useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { contextForPath, contextDetails } from "@/lib/rag/page-context";
 import { ArrowRight, ArrowUpRight, FileText, ScanSearch, Sparkles, Quote, Paperclip, RotateCcw, X } from "lucide-react";
 import { askStream, EXAMPLE_QUESTIONS, type AskResult, type AskTrace, type RetrievedMeta } from "@/lib/rag/client";
 import styles from "./ask-workbench.module.css";
@@ -10,6 +12,10 @@ type Props = { variant?: "full" | "compact" | "modal"; initialQuestion?: string;
 type Phase = "idle" | "retrieving" | "generating" | "done" | "error" | "cancelled";
 export function AskWorkbench({ variant = "full", initialQuestion = "", onClose }: Props) {
   const id = useId();
+  const pathname = usePathname();
+  const pageContext = contextForPath(pathname);
+  const pageDetails = pageContext ? contextDetails(pageContext) : null;
+  const examples = pageDetails?.questions ?? EXAMPLE_QUESTIONS;
   const [input, setInput] = useState(initialQuestion);
   const [question, setQuestion] = useState("");
   const [phase, setPhase] = useState<Phase>("idle");
@@ -52,6 +58,7 @@ export function AskWorkbench({ variant = "full", initialQuestion = "", onClose }
     try {
       const answer = await askStream(query, variant === "modal" ? "widget" : "lab", {
         signal: ac.signal,
+        pageContext,
         onMeta: (chunks, details) => {
           if (run !== generation.current || ac.signal.aborted) return;
           setSources(chunks); setTrace(details); setPhase("generating");
@@ -84,8 +91,8 @@ export function AskWorkbench({ variant = "full", initialQuestion = "", onClose }
           <div className={styles.actions}><button className={styles.primary} disabled={busy || !input.trim()} type="submit">{busy ? "Following the notes…" : "Ask the work"}<ArrowRight size={20} aria-hidden="true" /></button>
             {busy ? <button type="button" className={styles.textButton} onClick={cancel}>Stop</button> : <button type="button" className={styles.textButton} onClick={reset}><RotateCcw size={14} aria-hidden="true" /> Reset</button>}</div>
         </form>
-        <p className={styles.tryLabel}>A FEW THREADS TO PULL</p>
-        <div className={styles.examples}>{EXAMPLE_QUESTIONS.map((example) => <button key={example} disabled={busy} onClick={() => { setInput(example); inputRef.current?.focus(); }}>{example}<ArrowUpRight size={14} aria-hidden="true" /></button>)}</div>
+        <p className={styles.tryLabel}>{pageDetails ? `READING WITH YOU / ${pageDetails.title}` : "A FEW THREADS TO PULL"}</p>
+        <div className={styles.examples}>{examples.map((example) => <button key={example} disabled={busy} onClick={() => { setInput(example); inputRef.current?.focus(); }}>{example}<ArrowUpRight size={14} aria-hidden="true" /></button>)}</div>
         <p className={styles.privacy}>Questions and selected public passages are sent to Groq to generate a reply. Each question starts fresh.</p>
       </div>
       <aside className={styles.sourceNote}><FileText size={25} strokeWidth={1.3} aria-hidden="true" /><p className={styles.eyebrow}>THE SOURCE MATERIAL</p><h3>Jayanth, <br />in his working notes.</h3><p>Projects. Process. Decisions. The things that worked—and the parts still being built.</p><Link href="/about/source-notes" onClick={onClose}>Read the document <ArrowUpRight size={16} aria-hidden="true" /></Link><span className={styles.connection}>{configured === null ? "Checking live connection…" : configured ? "Groq configured / live generation" : "Live replies awaiting connection"}</span></aside>

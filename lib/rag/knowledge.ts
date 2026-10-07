@@ -3,7 +3,7 @@ import path from "node:path";
 import { localEmbed, cosineSimilarity } from "./embed";
 import type { RetrievedChunk } from "./types";
 
-export const KNOWLEDGE_VERSION = "2026-10-02";
+export const KNOWLEDGE_VERSION = "2026-10-08";
 export const KNOWLEDGE_DOWNLOAD = "/documents/jayanth-knowledge.md";
 export const KNOWLEDGE_PAGE = "/about/source-notes";
 export type KnowledgeSection = { id: string; title: string; content: string };

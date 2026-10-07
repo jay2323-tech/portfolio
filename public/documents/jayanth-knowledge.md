@@ -1,6 +1,6 @@
 # Jayanth Krishna — the working notes
 
-Prepared on 2 October 2026 from the portfolio's authored case studies, About page, and process notes. Project status is described as documented, not continuously monitored. This is the public source document used by Ask My Work.
+Prepared on 2 October 2026; portfolio implementation notes updated on 8 October 2026. Based on the portfolio's authored case studies, About page, and process notes. Project status is described as documented, not continuously monitored. This is the public source document used by Ask My Work.
 
 ## Identity
 
@@ -49,3 +49,11 @@ The WorkBuddy status document dated 26 September 2026, reviewed for the portfoli
 ## Opportunities and contact
 
 The portfolio lists Jayanth as open to internships, freelance projects, and full-time roles, with global relocation open. He is based in Bengaluru. Contact him at cvjayanth005@gmail.com to confirm availability, discuss a role or build, or request his current résumé. This document does not establish a salary expectation, a university or graduation date, a list of employers, or a current contract rate. If a question requires those details, the answer should say they are not documented and suggest contacting him.
+
+## Portfolio design and architecture
+
+This portfolio uses a Light Lab editorial direction: paper surfaces, annotated diagrams and inspectable engineering decisions. Panchang supplies major headings, Trench Slab editorial titles, Comico playful labels and Dancing Script personal annotations. Inter is the reading/interface face; JetBrains Mono labels technical details. The expressive fonts are self-hosted. Next.js, React and TypeScript render the site. Keystatic edits repository content for projects, notes and experiment metadata. Content relationships are checked before a production build. The colophon at /colophon describes these decisions.
+
+## Portfolio Ask and experiments
+
+Ask retrieves from this public Markdown document using local feature-hashed text embeddings and keyword ranking. A server-side Groq request writes an answer; the default configured model is openai/gpt-oss-20b, overridable through the server environment. Citation IDs are validated against retrieved passages, but a cited answer can still be mistaken. Project pages and related notes supply an allowlisted context to clarify phrases such as this project; explicit project names take priority. Each question starts fresh. Provider errors are shown without a canned generated answer. The API has per-instance request limits. Approval and attendance Lab experiments are deterministic browser-only simulations with fictional data, reset controls and no model calls, real code execution, repository changes, cameras or payroll connection. The attendance simulation illustrates duplicate suppression, human exception handling and offline replay. The approval simulation separates permission, application and verification. These simulations do not establish production reliability.
